@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Fragment } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { createMuiTheme, colors } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+import Top from './pages/Top';
+
+const AppTheme = createMuiTheme({
+  palette: {
+    primary: { main: colors.teal[800] },
+    secondary: { main: colors.grey[500] },
+  },
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <ThemeProvider theme={AppTheme}>
+          <Switch>
+            <Route path="/:date?" component={Top} />
+          </Switch>
+        </ThemeProvider>
+      </BrowserRouter>
+      <ToastContainer autoClose={6000} closeButton={false} draggable={false} position="top-center" />
+    </Fragment>
   );
-}
+};
 
 export default App;
