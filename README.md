@@ -44,13 +44,14 @@ https://kawasawa.github.io/koyomi/2000-01-01
 
 本プログラムは以下を主な基盤として採用し、構築されています。
 
-| 構成要素             | 採用項目     |
-| -------------------- | ------------ |
-| プログラミング言語   | TypeScript   |
-| フレームワーク       | React        |
-| デザインテンプレート | Material-UI  |
-| ルーティング管理     | React Router |
-| ステート管理         | React Redux  |
+| 構成要素             | 採用項目      |
+| -------------------- | ------------- |
+| プログラミング言語   | TypeScript    |
+| フレームワーク       | React         |
+| デザインテンプレート | Material-UI   |
+| ルーティング管理     | React Router  |
+| ステート管理         | React Redux   |
+| 多言語対応           | React i18next |
 
 ## 謝辞
 
