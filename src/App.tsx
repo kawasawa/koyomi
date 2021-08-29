@@ -3,9 +3,20 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { createMuiTheme, colors } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 
+import jaJson from './locales/ja.json';
 import Top from './pages/Top';
+
+i18n.use(initReactI18next).init({
+  resources: {
+    ja: { translation: jaJson },
+  },
+  lng: 'ja',
+  fallbackLng: 'ja',
+});
 
 const AppTheme = createMuiTheme({
   palette: {

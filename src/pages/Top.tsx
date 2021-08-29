@@ -1,6 +1,7 @@
 import { Fragment, KeyboardEvent, MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import {
   AppBar,
@@ -20,6 +21,7 @@ import {
 import { AccountBox, GitHub, Menu } from '@material-ui/icons';
 import clsx from 'clsx';
 import 'date-fns';
+import * as util from 'util';
 
 import './Top.css';
 import { setDate } from '../stores/slices/viewSlice';
@@ -76,22 +78,25 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
+  const [t] = useTranslation();
+
   const [anchor, setAnchor] = useState<Anchor>('left');
   const [anchorState, setAnchorState] = useState({ top: false, left: false, bottom: false, right: false });
 
   const targetDate = props.match.params.date ? new Date(props.match.params.date) : new Date();
   if (isNaN(targetDate.getDate())) {
-    toast.info('日付は yyyy-MM-dd の形式で指定してください。');
-    console.log(`FormatError: ${props.match.params.date}`);
+    toast.info(t('message.error.date-format'));
+    console.log(`error.date-format: ${props.match.params.date}`);
     history.push(`/`);
     return null;
   }
   if (targetDate < MinDate || MaxDate < targetDate) {
-    toast.info(`日付は ${formatDate(MinDate)} から ${formatDate(MaxDate)} までの範囲で指定してください。`);
-    console.log(`RangeError: ${targetDate}`);
+    toast.info(util.format(t('message.error.date-range'), formatDate(MinDate), formatDate(MaxDate)));
+    console.log(`error.date-range: ${targetDate}`);
     history.push(`/`);
     return null;
   }
+  console.log(`info.date: ${targetDate}`);
   dispatch(setDate(targetDate));
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (event: KeyboardEvent | MouseEvent) => {
@@ -105,7 +110,7 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
       <img className={classes.appIcon} src={`${process.env.PUBLIC_URL}/logo192.png`} alt="logo" loading="lazy" />
       <div style={{ width: 20 }} />
       <Typography variant="h6" noWrap>
-        こよみ
+        {t('label.app-title')}
       </Typography>
     </Box>
   );
@@ -126,13 +131,13 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
           <ListItemIcon>
             <GitHub />
           </ListItemIcon>
-          <ListItemText primary="リポジトリ" />
+          <ListItemText primary={t('label.repository')} />
         </ListItemLink>
         <ListItemLink href="https://kawasawa.github.io/" target="_blank">
           <ListItemIcon>
             <AccountBox />
           </ListItemIcon>
-          <ListItemText primary="作成者" />
+          <ListItemText primary={t('label.creator')} />
         </ListItemLink>
       </List>
     </Box>
@@ -164,7 +169,7 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
         <Typography variant="body2" color="textSecondary" align="center">
           {'© '}
           <Link color="inherit" href="https://kawasawa.github.io/" target="_blank">
-            Kazuki Awasawa
+            {t('label.app-author')}
           </Link>
           {' All Rights Reserved.'}
         </Typography>
