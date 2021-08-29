@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 
 import { AppState } from '../stores/root';
@@ -21,6 +22,7 @@ export const formatDate = (date: Date) => {
 const DateInput = () => {
   const history = useHistory();
   const classes = useStyles();
+  const [t] = useTranslation();
   const { date } = useSelector((state: AppState) => state.view);
 
   return (
@@ -28,7 +30,7 @@ const DateInput = () => {
       className={classes.datePicker}
       value={date}
       name="date"
-      label="日付"
+      label={t('label.date')}
       minDate={MinDate}
       maxDate={MaxDate}
       margin="normal"
