@@ -46,5 +46,5 @@ const DateInput = () => {
 
 export default DateInput;
 
-export const MinDate = new Date('1900-01-01 00:00:00');
+export const MinDate = new Date('1868-01-01 00:00:00');
 export const MaxDate = new Date('2099-12-31 23:59:59');
