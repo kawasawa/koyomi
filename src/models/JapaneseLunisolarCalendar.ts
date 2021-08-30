@@ -14,7 +14,7 @@
 // ============================================================
 
 /** タイムゾーン */
-const TIME_ZONE = new Date().getTimezoneOffset() / 1440;
+const TIME_ZONE = -0.375;
 /** 一日に相当するミリ秒数 */
 const DAY_MILLISECONDS = 86400000;
 /** 平均朔望月 */
@@ -46,6 +46,12 @@ declare global {
      * @returns Date インスタンス
      */
     setJulianDay(julianDay: number): Date;
+
+    /**
+     * 東京地方時が採用されていた期間であるかどうかを判定します。
+     * @returns 判定結果
+     */
+    isTokyoLocalTime(): boolean;
   }
 }
 
@@ -54,12 +60,21 @@ declare global {
 // ============================================================
 
 Date.prototype.getJulianDay = function (): number {
-  const date = new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12);
+  // 1888 年以降は日本標準時 (GMT+0900)、それより前は東京地方時 (GMT+0918) が使用される
+  // ここでは東京地方時の期間であっても、日本標準時とみなし計算を行う
+  const date = this.isTokyoLocalTime()
+    ? new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12, 18, 59)
+    : new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12);
   return JULIAN_CORRECTION - TIME_ZONE + date.getTime() / DAY_MILLISECONDS;
 };
+
 Date.prototype.setJulianDay = function (julianDay: number): Date {
   this.setTime((TIME_ZONE - JULIAN_CORRECTION + julianDay) * DAY_MILLISECONDS);
   return this;
+};
+
+Date.prototype.isTokyoLocalTime = function (): boolean {
+  return this.getFullYear() < 1888;
 };
 
 // ============================================================
@@ -205,16 +220,9 @@ export default class JapaneseLunisolarCalendar {
     // 月齢の算出
     // ------------------------------------------------------------
 
-    // 月齢計算の基準は正午となる
     // 小数第一位までの精度で導出する
     // 朔望月は 29.3 から 29.8 の範囲となる
-    const lunaJulianDay = new Date(
-      this.date.getFullYear(),
-      this.date.getMonth(),
-      this.date.getDate(),
-      12
-    ).getJulianDay();
-    let lunaAge = Math.round((lunaJulianDay - this.calcSakuTime(lunaJulianDay)) * 10.0) / 10.0;
+    let lunaAge = Math.round((julianDay - this.calcSakuTime(julianDay)) * 10.0) / 10.0;
     if (29.8 < lunaAge) lunaAge -= 29.8;
     if (lunaAge < 0.0) lunaAge = 29.3;
     this.lunaAge = lunaAge;
