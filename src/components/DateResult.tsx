@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Button,
@@ -10,7 +11,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { Alert } from '@material-ui/lab';
 import * as util from 'util';
 
 import { AppState } from '../stores/root';
@@ -203,6 +204,9 @@ const getZodiacImage = (junishi?: string) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+  alert: {
+    marginBottom: theme.spacing(2),
+  },
   card: {
     minWidth: 275,
   },
@@ -386,53 +390,60 @@ const DateResult = () => {
   ];
 
   return (
-    <Grid container spacing={2}>
-      {cardInfo.map(({ title, value, kana, summary1, summary2, url, image, icon }) => (
-        <Grid item xs={12} sm={6} md={4}>
-          <Card className={classes.card}>
-            <CardMedia className={classes.image} image={image} />
-            <CardContent>
-              <Box className={classes.titleBox}>
-                <Typography variant="subtitle1" color="primary" gutterBottom>
-                  {title}
+    <Box>
+      {date.isTokyoLocalTime() ? (
+        <Alert className={classes.alert} variant="standard" severity="warning">
+          {t('message.warning.old-year')}
+        </Alert>
+      ) : null}
+      <Grid container spacing={2}>
+        {cardInfo.map(({ title, value, kana, summary1, summary2, url, image, icon }) => (
+          <Grid item xs={12} sm={6} md={4}>
+            <Card className={classes.card}>
+              <CardMedia className={classes.image} image={image} />
+              <CardContent>
+                <Box className={classes.titleBox}>
+                  <Typography variant="subtitle1" color="primary" gutterBottom>
+                    {title}
+                  </Typography>
+                  {icon ? <img className={classes.icon} src={icon} alt="icon" loading="lazy" /> : null}
+                </Box>
+                <Grid container direction="row" alignItems="center">
+                  <Grid item>
+                    <Box ml={1}>
+                      <Typography variant="h5" color="textPrimary" gutterBottom>
+                        {value}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item>
+                    <Box ml={1.5}>
+                      <Typography variant="h6" color="textSecondary" gutterBottom>
+                        {kana}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Typography variant="body1" color="textPrimary" gutterBottom>
+                  {summary1}
                 </Typography>
-                {icon ? <img className={classes.icon} src={icon} alt="icon" loading="lazy" /> : null}
-              </Box>
-              <Grid container direction="row" alignItems="center">
-                <Grid item>
-                  <Box ml={1}>
-                    <Typography variant="h5" color="textPrimary" gutterBottom>
-                      {value}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item>
-                  <Box ml={1.5}>
-                    <Typography variant="h6" color="textSecondary" gutterBottom>
-                      {kana}
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-              <Typography variant="body1" color="textPrimary" gutterBottom>
-                {summary1}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                {summary2}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <div style={{ flex: '1 0 0' }} />
-              {url ? (
-                <Button size="small" color="secondary" href={url} target="_blank">
-                  {t('label.learn-more')}
-                </Button>
-              ) : null}
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+                <Typography variant="body2" color="textSecondary">
+                  {summary2}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <div style={{ flex: '1 0 0' }} />
+                {url ? (
+                  <Button size="small" color="secondary" href={url} target="_blank">
+                    {t('label.learn-more')}
+                  </Button>
+                ) : null}
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 

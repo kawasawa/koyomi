@@ -46,6 +46,12 @@ declare global {
      * @returns Date インスタンス
      */
     setJulianDay(julianDay: number): Date;
+
+    /**
+     * 東京地方時が採用されていた期間であるかどうかを判定します。
+     * @returns 判定結果
+     */
+    isTokyoLocalTime(): boolean;
   }
 }
 
@@ -54,12 +60,21 @@ declare global {
 // ============================================================
 
 Date.prototype.getJulianDay = function (): number {
-  const date = new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12);
+  // 1888 年以降は日本標準時 (GMT+0900)、それより前は東京地方時 (GMT+0918) が使用される
+  // ここでは東京地方時の期間であっても、日本標準時とみなし計算を行う
+  const date = this.isTokyoLocalTime()
+    ? new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12, 18, 59)
+    : new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12);
   return JULIAN_CORRECTION - TIME_ZONE + date.getTime() / DAY_MILLISECONDS;
 };
+
 Date.prototype.setJulianDay = function (julianDay: number): Date {
   this.setTime((TIME_ZONE - JULIAN_CORRECTION + julianDay) * DAY_MILLISECONDS);
   return this;
+};
+
+Date.prototype.isTokyoLocalTime = function (): boolean {
+  return this.getFullYear() < 1888;
 };
 
 // ============================================================
