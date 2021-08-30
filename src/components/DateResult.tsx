@@ -376,7 +376,7 @@ const DateResult = () => {
     {
       title: t('label.julian-day'),
       value: julianDay.toString(),
-      summary1: `${t('label.julian-day')}: ${julianDayRevise.toString()} ／ ${t(
+      summary1: `${t('label.julian-day-revise')}: ${julianDayRevise.toString()} ／ ${t(
         'label.lilian-day'
       )}: ${lilianDay.toString()}`,
       summary2: t('text.julian-day'),
