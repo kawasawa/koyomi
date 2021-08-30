@@ -14,7 +14,7 @@
 // ============================================================
 
 /** タイムゾーン */
-const TIME_ZONE = new Date().getTimezoneOffset() / 1440;
+const TIME_ZONE = -0.375;
 /** 一日に相当するミリ秒数 */
 const DAY_MILLISECONDS = 86400000;
 /** 平均朔望月 */
@@ -220,16 +220,9 @@ export default class JapaneseLunisolarCalendar {
     // 月齢の算出
     // ------------------------------------------------------------
 
-    // 月齢計算の基準は正午となる
     // 小数第一位までの精度で導出する
     // 朔望月は 29.3 から 29.8 の範囲となる
-    const lunaJulianDay = new Date(
-      this.date.getFullYear(),
-      this.date.getMonth(),
-      this.date.getDate(),
-      12
-    ).getJulianDay();
-    let lunaAge = Math.round((lunaJulianDay - this.calcSakuTime(lunaJulianDay)) * 10.0) / 10.0;
+    let lunaAge = Math.round((julianDay - this.calcSakuTime(julianDay)) * 10.0) / 10.0;
     if (29.8 < lunaAge) lunaAge -= 29.8;
     if (lunaAge < 0.0) lunaAge = 29.3;
     this.lunaAge = lunaAge;
