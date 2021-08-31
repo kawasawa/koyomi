@@ -11,7 +11,7 @@ import { getJpWeek } from '../../models/CalendarInfo';
 
 class JaDateFnsUtils extends DateFnsUtils {
   getYearText = (date: Date) => this.format(date, 'y年');
-  getDatePickerHeaderText = (date: Date) => `${this.format(date, 'M月 d日')}（${getJpWeek(date).value}）`;
+  getDatePickerHeaderText = (date: Date) => `${this.format(date, 'M月 d日')} (${getJpWeek(date).value})`;
   getCalendarHeaderText = (date: Date) => this.format(date, 'y年 M月');
 }
 
