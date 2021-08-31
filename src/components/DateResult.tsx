@@ -203,6 +203,15 @@ const getZodiacImage = (junishi?: string) => {
   return zodiacImage;
 };
 
+const getAge = (birthDate: Date) => {
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const thisYearsBirthday = new Date(todayYear, birthDate.getMonth(), birthDate.getDate());
+  let age = todayYear - birthDate.getFullYear();
+  if (today < thisYearsBirthday) age--;
+  return age;
+};
+
 const useStyles = makeStyles((theme) => ({
   alert: {
     marginBottom: theme.spacing(2),
@@ -221,6 +230,26 @@ const useStyles = makeStyles((theme) => ({
   titleBox: {
     display: 'flex',
   },
+  balloon: {
+    display: 'block',
+    boxSizing: 'border-box',
+    margin: '-3px 0 0 5px',
+    padding: '0px 10px',
+    background: '#fafafa',
+    border: '1px solid #aaa',
+    borderRadius: 3,
+  },
+  balloonBefore: {
+    display: 'block',
+    width: 10,
+    height: 10,
+    margin: '-6px 0 0 10px',
+    background: '#fafafa',
+    borderLeft: '1px solid #aaa',
+    borderBottom: '1px solid #aaa',
+    transform: 'rotate(135deg)',
+    WebkitTransform: 'rotate(135deg)',
+  },
 }));
 
 const DateResult = () => {
@@ -235,6 +264,7 @@ const DateResult = () => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const eraYear = year - Math.floor((calendarInfo?.era.startAt ?? NaN) / 10000) + 1;
+  const age = getAge(date);
   const julianDayExact = date.getJulianDay();
   const julianDay = Math.floor(julianDayExact * 10) / 10;
   const julianDayRevise = julianDay - 2400000.5;
@@ -255,6 +285,7 @@ const DateResult = () => {
       )} (${calendarInfo?.jpWeek.value})`,
       summary1: calendarInfo?.era.summary,
       summary2: t('text.japanese-calendar'),
+      balloon: 1 <= age ? util.format(t('label.age'), age) : null,
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/CEF2BBCB2FB8B5B9E6.html',
       image: JapanImage,
     },
@@ -398,7 +429,7 @@ const DateResult = () => {
         </Alert>
       ) : null}
       <Grid container spacing={2}>
-        {cardInfo.map(({ title, value, kana, summary1, summary2, url, image, icon }) => (
+        {cardInfo.map(({ title, value, kana, summary1, summary2, balloon, url, image, icon }) => (
           <Grid item xs={12} sm={6} md={4}>
             <Card className={classes.card}>
               <CardMedia className={classes.image} image={image} />
@@ -433,6 +464,14 @@ const DateResult = () => {
                 </Typography>
               </CardContent>
               <CardActions>
+                {balloon ? (
+                  <Box className={classes.balloon}>
+                    <Box className={classes.balloonBefore} />
+                    <Typography variant="subtitle2" color="textPrimary" gutterBottom>
+                      {balloon}
+                    </Typography>
+                  </Box>
+                ) : null}
                 <div style={{ flex: '1 0 0' }} />
                 {url ? (
                   <Button size="small" color="secondary" href={url} target="_blank">
