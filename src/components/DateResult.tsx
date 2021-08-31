@@ -252,7 +252,7 @@ const DateResult = () => {
         `${calendarInfo?.era.value} ${eraYear === 1 ? '元' : eraYear}`,
         month,
         day
-      )}（${calendarInfo?.jpWeek.value}）`,
+      )} (${calendarInfo?.jpWeek.value})`,
       summary1: calendarInfo?.era.summary,
       summary2: t('text.japanese-calendar'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/CEF2BBCB2FB8B5B9E6.html',
