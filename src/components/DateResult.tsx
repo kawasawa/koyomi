@@ -265,11 +265,10 @@ const DateResult = () => {
   const day = date.getDate();
   const eraYear = year - Math.floor((calendarInfo?.era.startAt ?? NaN) / 10000) + 1;
   const age = getAge(date);
-  const julianDayExact = date.getJulianDay();
-  const julianDay = Math.floor(julianDayExact * 10) / 10;
+  const julianDay = date.getJulianDay();
   const julianDayRevise = julianDay - 2400000.5;
   const lilianDay = julianDay - 2299159.5;
-  const eclipticCoordinate = getEclipticCoordinate(julianDayExact + 1);
+  const eclipticCoordinate = getEclipticCoordinate(julianDay + 1);
   const { season4Image, season24Image, season72Image } = getSeasonImage(calendarInfo?.season.season4.value);
   const zodiacImage = getZodiacImage(calendarInfo?.etoYear.junishi.value);
   const moonIcon = moonIcons[Math.floor(calendar.lunaAge)];

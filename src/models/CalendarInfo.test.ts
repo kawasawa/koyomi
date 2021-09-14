@@ -39,16 +39,18 @@ test('歴中の生成', () => {
 });
 
 test('元号の取得', () => {
-  expect(() => getEra(createDate(1868, 9, 7))).toThrow(RangeError);
-  expect(getEra(createDate(1868, 9, 8))).toBe(ERAS[0]);
-  expect(getEra(createDate(1912, 7, 29))).toBe(ERAS[0]);
-  expect(getEra(createDate(1912, 7, 30))).toBe(ERAS[1]);
-  expect(getEra(createDate(1926, 12, 24))).toBe(ERAS[1]);
-  expect(getEra(createDate(1926, 12, 25))).toBe(ERAS[2]);
-  expect(getEra(createDate(1989, 1, 7))).toBe(ERAS[2]);
-  expect(getEra(createDate(1989, 1, 8))).toBe(ERAS[3]);
-  expect(getEra(createDate(2019, 4, 30))).toBe(ERAS[3]);
-  expect(getEra(createDate(2019, 5, 1))).toBe(ERAS[4]);
+  expect(() => getEra(createDate(1865, 4, 7))).toThrow(RangeError);
+  expect(getEra(createDate(1865, 4, 8))).toBe(ERAS[0]);
+  expect(getEra(createDate(1868, 9, 7))).toBe(ERAS[0]);
+  expect(getEra(createDate(1868, 9, 8))).toBe(ERAS[1]);
+  expect(getEra(createDate(1912, 7, 29))).toBe(ERAS[1]);
+  expect(getEra(createDate(1912, 7, 30))).toBe(ERAS[2]);
+  expect(getEra(createDate(1926, 12, 24))).toBe(ERAS[2]);
+  expect(getEra(createDate(1926, 12, 25))).toBe(ERAS[3]);
+  expect(getEra(createDate(1989, 1, 7))).toBe(ERAS[3]);
+  expect(getEra(createDate(1989, 1, 8))).toBe(ERAS[4]);
+  expect(getEra(createDate(2019, 4, 30))).toBe(ERAS[4]);
+  expect(getEra(createDate(2019, 5, 1))).toBe(ERAS[5]);
 });
 
 test('和風月名の取得', () => {
