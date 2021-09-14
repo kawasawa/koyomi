@@ -59,6 +59,7 @@ declare global {
 // プロトタイプ宣言
 // ============================================================
 
+/* eslint-disable */
 Date.prototype.getJulianDay = function (): number {
   // 1888 年以降は日本標準時 (GMT+0900)、それより前は東京地方時 (GMT+0918) が使用される
   // ここでは東京地方時の期間であっても、日本標準時とみなし計算を行う
@@ -76,6 +77,7 @@ Date.prototype.setJulianDay = function (julianDay: number): Date {
 Date.prototype.isTokyoLocalTime = function (): boolean {
   return this.getFullYear() < 1888;
 };
+/* eslint-enable */
 
 // ============================================================
 // クラス

@@ -429,8 +429,8 @@ const DateResult = () => {
         </Alert>
       ) : null}
       <Grid container spacing={2}>
-        {cardInfo.map(({ title, value, kana, summary1, summary2, balloon, url, image, icon }) => (
-          <Grid item xs={12} sm={6} md={4}>
+        {cardInfo.map(({ title, value, kana, summary1, summary2, balloon, url, image, icon }, i) => (
+          <Grid key={i} item xs={12} sm={6} md={4}>
             <Card className={classes.card}>
               <CardMedia className={classes.image} image={image} />
               <CardContent>

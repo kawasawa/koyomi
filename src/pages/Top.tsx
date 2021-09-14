@@ -1,4 +1,4 @@
-import { Fragment, KeyboardEvent, MouseEvent, useState } from 'react';
+import { KeyboardEvent, MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -80,23 +80,23 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
   const classes = useStyles();
   const [t] = useTranslation();
 
-  const [anchor, setAnchor] = useState<Anchor>('left');
+  const anchor: Anchor = 'left';
   const [anchorState, setAnchorState] = useState({ top: false, left: false, bottom: false, right: false });
 
   const targetDate = props.match.params.date ? new Date(props.match.params.date) : new Date();
   if (isNaN(targetDate.getDate())) {
     toast.info(t('message.error.date-format'));
-    console.log(`error.date-format: ${props.match.params.date}`);
+    console.error(`Error: Invalid format. ${props.match.params.date}`);
     history.push(`/`);
     return null;
   }
   if (targetDate < MinDate || MaxDate < targetDate) {
     toast.info(util.format(t('message.error.date-range'), formatDate(MinDate), formatDate(MaxDate)));
-    console.log(`error.date-range: ${targetDate}`);
+    console.error(`Error: Out of range. ${targetDate}`);
     history.push(`/`);
     return null;
   }
-  console.log(`info.date: ${targetDate}`);
+  console.info(`Info: TargetDate = ${targetDate}`);
   dispatch(setDate(targetDate));
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (event: KeyboardEvent | MouseEvent) => {
@@ -145,16 +145,14 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
 
   return (
     <Box className={classes.root}>
-      <AppBar position="sticky" color="default" className={classes.header}>
+      <AppBar className={classes.header} position="sticky" color="default">
         <Toolbar>
-          <Fragment key={anchor}>
-            <IconButton className={classes.menuButton} edge="start" onClick={toggleDrawer(anchor, true)}>
-              <Menu />
-            </IconButton>
-            <Drawer anchor={anchor} open={anchorState[anchor]} onClose={toggleDrawer(anchor, false)}>
-              {menuList(anchor)}
-            </Drawer>
-          </Fragment>
+          <IconButton className={classes.menuButton} edge="start" onClick={toggleDrawer(anchor, true)}>
+            <Menu />
+          </IconButton>
+          <Drawer anchor={anchor} open={anchorState[anchor]} onClose={toggleDrawer(anchor, false)}>
+            {menuList(anchor)}
+          </Drawer>
           {appLogo(classes.titleBox)}
           <div style={{ flex: '1 0 0' }} />
           <DateInput />
