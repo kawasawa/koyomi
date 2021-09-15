@@ -167,7 +167,7 @@ export const getEtoDay = (date: Date) => {
  * @returns [四季, 二十四節気, 七十二候]
  */
 export const getSeaseon = (calendar: JapaneseLunisolarCalendar) => {
-  const julianDay = calendar.date.getJulianDay();
+  const julianDay = Math.floor(calendar.date.getJulianDay());
 
   const i_s72 = getEclipticCoordinate(julianDay + 1, eclipticCoordinateValues.season72) / 5;
   const season72 = SEASON72[i_s72];

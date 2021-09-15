@@ -1,7 +1,6 @@
-import { Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { createMuiTheme, colors } from '@material-ui/core';
+import { createTheme, colors } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -18,7 +17,7 @@ i18n.use(initReactI18next).init({
   fallbackLng: 'ja',
 });
 
-const AppTheme = createMuiTheme({
+const AppTheme = createTheme({
   palette: {
     primary: { main: colors.teal[800] },
     secondary: { main: colors.grey[500] },
@@ -27,7 +26,7 @@ const AppTheme = createMuiTheme({
 
 const App = () => {
   return (
-    <Fragment>
+    <>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ThemeProvider theme={AppTheme}>
           <Switch>
@@ -36,7 +35,7 @@ const App = () => {
         </ThemeProvider>
       </BrowserRouter>
       <ToastContainer autoClose={6000} closeButton={false} draggable={false} position="top-center" />
-    </Fragment>
+    </>
   );
 };
 
