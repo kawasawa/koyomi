@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 
 import { AppState } from '../stores/root';
+import { formatDate } from '../utils/date';
 import JaDatePicker from './atoms/JaDatePicker';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,14 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const formatDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = ('00' + (date.getMonth() + 1)).slice(-2);
-  const day = ('00' + date.getDate()).slice(-2);
-  return `${year}-${month}-${day}`;
-};
-
-const DateInput = () => {
+const DateInput = ({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) => {
   const history = useHistory();
   const classes = useStyles();
   const [t] = useTranslation();
@@ -31,8 +25,8 @@ const DateInput = () => {
       value={date}
       name="date"
       label={t('label.date')}
-      minDate={MinDate}
-      maxDate={MaxDate}
+      minDate={minDate}
+      maxDate={maxDate}
       margin="normal"
       variant="inline"
       inputVariant="filled"
@@ -40,11 +34,9 @@ const DateInput = () => {
       animateYearScrolling={true}
       disableKeyboardInput={true}
       onChange={(date) => history.push(`/${formatDate(date!)}`)}
+      data-testid="date-picker"
     />
   );
 };
 
 export default DateInput;
-
-export const MinDate = new Date('1868-01-01 00:00:00');
-export const MaxDate = new Date('2099-12-31 23:59:59');

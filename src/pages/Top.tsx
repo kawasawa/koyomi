@@ -1,6 +1,6 @@
 import { KeyboardEvent, MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, RouteComponentProps } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import {
@@ -10,7 +10,6 @@ import {
   Divider,
   Drawer,
   IconButton,
-  Link,
   List,
   ListItemIcon,
   ListItemText,
@@ -24,9 +23,19 @@ import 'date-fns';
 import * as util from 'util';
 
 import './Top.css';
+import {
+  SYSTEM_MAX_DATE,
+  SYSTEM_MIN_DATE,
+  LOG_E_INVALID_FORMAT,
+  LOG_E_OUT_OF_RANGE,
+  URL_CREATORPAGE,
+  URL_REPOSITORY,
+} from '../constant';
 import { setDate } from '../stores/slices/viewSlice';
-import ListItemLink from '../components/atoms/ListItemList';
-import DateInput, { formatDate, MaxDate, MinDate } from '../components/DateInput';
+import { formatDate } from '../utils/date';
+import ListItemLink from '../components/atoms/ListItemLink';
+import Copyright from '../components/Copyright';
+import DateInput from '../components/DateInput';
 import DateResult from '../components/DateResult';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
@@ -74,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
+const Top = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -83,16 +92,19 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
   const anchor: Anchor = 'left';
   const [anchorState, setAnchorState] = useState({ top: false, left: false, bottom: false, right: false });
 
-  const targetDate = props.match.params.date ? new Date(props.match.params.date) : new Date();
+  const params = useParams<{ date?: string }>();
+  console.info(`Info: params.date = ${params.date}`);
+
+  const targetDate = params.date ? new Date(params.date) : new Date();
   if (isNaN(targetDate.getDate())) {
+    console.error(`Error: ${LOG_E_INVALID_FORMAT} ${params.date}`);
     toast.info(t('message.error.date-format'));
-    console.error(`Error: Invalid format. ${props.match.params.date}`);
     history.push(`/`);
     return null;
   }
-  if (targetDate < MinDate || MaxDate < targetDate) {
-    toast.info(util.format(t('message.error.date-range'), formatDate(MinDate), formatDate(MaxDate)));
-    console.error(`Error: Out of range. ${targetDate}`);
+  if (targetDate < SYSTEM_MIN_DATE || SYSTEM_MAX_DATE < targetDate) {
+    console.error(`Error: ${LOG_E_OUT_OF_RANGE} ${targetDate}`);
+    toast.info(util.format(t('message.error.date-range'), formatDate(SYSTEM_MIN_DATE), formatDate(SYSTEM_MAX_DATE)));
     history.push(`/`);
     return null;
   }
@@ -127,13 +139,13 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
       {appLogo(classes.menuTopBox)}
       <Divider />
       <List>
-        <ListItemLink href="https://github.com/kawasawa/koyomi" target="_blank">
+        <ListItemLink href={URL_REPOSITORY} target="_blank">
           <ListItemIcon>
             <GitHub />
           </ListItemIcon>
           <ListItemText primary={t('label.repository')} />
         </ListItemLink>
-        <ListItemLink href="https://kawasawa.github.io/" target="_blank">
+        <ListItemLink href={URL_CREATORPAGE} target="_blank">
           <ListItemIcon>
             <AccountBox />
           </ListItemIcon>
@@ -155,7 +167,7 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
           </Drawer>
           {appLogo(classes.titleBox)}
           <div style={{ flex: '1 0 0' }} />
-          <DateInput />
+          <DateInput minDate={SYSTEM_MIN_DATE} maxDate={SYSTEM_MAX_DATE} />
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg">
@@ -164,13 +176,7 @@ const Top = (props: {} & RouteComponentProps<{ date: string }>) => {
         </Box>
       </Container>
       <Box className={classes.footer}>
-        <Typography variant="body2" color="textSecondary" align="center">
-          {'© '}
-          <Link color="inherit" href="https://kawasawa.github.io/" target="_blank">
-            {t('label.app-author')}
-          </Link>
-          {' All Rights Reserved.'}
-        </Typography>
+        <Copyright />
       </Box>
     </Box>
   );

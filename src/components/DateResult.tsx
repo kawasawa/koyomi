@@ -1,22 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Grid,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import * as util from 'util';
 
 import { AppState } from '../stores/root';
+import { getAge } from '../utils/date';
 import createCalendarInfo, { getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
+import DateResultItem, { DateResultItemProps } from './DateResultItem';
 
 import AutumnImage from '../resources/autumn.jpg';
 import Autumn2Image from '../resources/autumn2.jpg';
@@ -125,7 +117,7 @@ const moonIcons = [
   Moon29Icon,
 ];
 
-const getSeasonImage = (season4?: string) => {
+export const getSeasonImage = (season4?: string) => {
   let season4Image: string, season24Image: string, season72Image: string;
   switch (season4) {
     case '春':
@@ -144,20 +136,16 @@ const getSeasonImage = (season4?: string) => {
       season72Image = Autumn3Image;
       break;
     case '冬':
+    default:
       season4Image = WinterImage;
       season24Image = Winter2Image;
       season72Image = Winter3Image;
-      break;
-    default:
-      season4Image = SpringImage;
-      season24Image = Spring2Image;
-      season72Image = Spring3Image;
       break;
   }
   return { season4Image, season24Image, season72Image };
 };
 
-const getZodiacImage = (junishi?: string) => {
+export const getZodiacImage = (junishi?: string) => {
   let zodiacImage: string;
   switch (junishi) {
     case '子':
@@ -194,61 +182,16 @@ const getZodiacImage = (junishi?: string) => {
       zodiacImage = DogImage;
       break;
     case '亥':
-      zodiacImage = BoarImage;
-      break;
     default:
-      zodiacImage = MouseImage;
+      zodiacImage = BoarImage;
       break;
   }
   return zodiacImage;
 };
 
-const getAge = (birthDate: Date) => {
-  const today = new Date();
-  const todayYear = today.getFullYear();
-  const thisYearsBirthday = new Date(todayYear, birthDate.getMonth(), birthDate.getDate());
-  let age = todayYear - birthDate.getFullYear();
-  if (today < thisYearsBirthday) age--;
-  return age;
-};
-
 const useStyles = makeStyles((theme) => ({
   alert: {
     marginBottom: theme.spacing(2),
-  },
-  card: {
-    minWidth: 275,
-  },
-  image: {
-    height: 120,
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    marginLeft: theme.spacing(2),
-  },
-  titleBox: {
-    display: 'flex',
-  },
-  balloon: {
-    display: 'block',
-    boxSizing: 'border-box',
-    margin: '-3px 0 0 5px',
-    padding: '0px 10px',
-    background: '#fafafa',
-    border: '1px solid #aaa',
-    borderRadius: 3,
-  },
-  balloonBefore: {
-    display: 'block',
-    width: 10,
-    height: 10,
-    margin: '-6px 0 0 10px',
-    background: '#fafafa',
-    borderLeft: '1px solid #aaa',
-    borderBottom: '1px solid #aaa',
-    transform: 'rotate(135deg)',
-    WebkitTransform: 'rotate(135deg)',
   },
 }));
 
@@ -273,7 +216,7 @@ const DateResult = () => {
   const zodiacImage = getZodiacImage(calendarInfo?.etoYear.junishi.value);
   const moonIcon = moonIcons[Math.floor(calendar.lunaAge)];
 
-  const cardInfo = [
+  const cardInfo: DateResultItemProps[] = [
     {
       title: t('label.japanese-calendar'),
       value: `${util.format(
@@ -284,7 +227,7 @@ const DateResult = () => {
       )} (${calendarInfo?.jpWeek.value})`,
       summary1: calendarInfo?.era.summary,
       summary2: t('text.japanese-calendar'),
-      balloon: 1 <= age ? util.format(t('label.age'), age) : null,
+      balloon: 1 <= age ? util.format(t('label.age'), age) : undefined,
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/CEF2BBCB2FB8B5B9E6.html',
       image: JapanImage,
     },
@@ -330,8 +273,8 @@ const DateResult = () => {
               calendarInfo?.season.season24.value,
               calendarInfo?.season.season24.startAt
             ),
-      kana: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.kana : null,
-      summary1: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.summary : null,
+      kana: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.kana : undefined,
+      summary1: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.summary : undefined,
       summary2: t('text.season24'),
       url: 'https://www.ndl.go.jp/koyomi/chapter3/s7.html',
       image: season24Image,
@@ -423,62 +366,14 @@ const DateResult = () => {
   return (
     <Box>
       {date.isTokyoLocalTime() ? (
-        <Alert className={classes.alert} variant="standard" severity="warning">
+        <Alert className={classes.alert} variant="standard" severity="warning" data-testid="data-result-alert">
           {t('message.warning.old-year')}
         </Alert>
       ) : null}
-      <Grid container spacing={2}>
-        {cardInfo.map(({ title, value, kana, summary1, summary2, balloon, url, image, icon }, i) => (
+      <Grid container spacing={2} data-testid="data-result-list">
+        {cardInfo.map((props, i) => (
           <Grid key={i} item xs={12} sm={6} md={4}>
-            <Card className={classes.card}>
-              <CardMedia className={classes.image} image={image} />
-              <CardContent>
-                <Box className={classes.titleBox}>
-                  <Typography variant="subtitle1" color="primary" gutterBottom>
-                    {title}
-                  </Typography>
-                  {icon ? <img className={classes.icon} src={icon} alt="icon" loading="lazy" /> : null}
-                </Box>
-                <Grid container direction="row" alignItems="center">
-                  <Grid item>
-                    <Box ml={1}>
-                      <Typography variant="h5" color="textPrimary" gutterBottom>
-                        {value}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item>
-                    <Box ml={1.5}>
-                      <Typography variant="h6" color="textSecondary" gutterBottom>
-                        {kana}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Typography variant="body1" color="textPrimary" gutterBottom>
-                  {summary1}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {summary2}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                {balloon ? (
-                  <Box className={classes.balloon}>
-                    <Box className={classes.balloonBefore} />
-                    <Typography variant="subtitle2" color="textPrimary" gutterBottom>
-                      {balloon}
-                    </Typography>
-                  </Box>
-                ) : null}
-                <div style={{ flex: '1 0 0' }} />
-                {url ? (
-                  <Button size="small" color="secondary" href={url} target="_blank">
-                    {t('label.learn-more')}
-                  </Button>
-                ) : null}
-              </CardActions>
-            </Card>
+            <DateResultItem props={props} />
           </Grid>
         ))}
       </Grid>
