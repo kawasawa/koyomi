@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { createTheme, colors } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
@@ -7,7 +7,8 @@ import { initReactI18next } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 
 import jaJson from './locales/ja.json';
-import Top from './pages/Top';
+import store from './stores/root';
+import Router from './Router';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -24,19 +25,13 @@ const AppTheme = createTheme({
   },
 });
 
-const App = () => {
-  return (
-    <>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <ThemeProvider theme={AppTheme}>
-          <Switch>
-            <Route path="/:date?" component={Top} />
-          </Switch>
-        </ThemeProvider>
-      </BrowserRouter>
+const App = () => (
+  <Provider store={store}>
+    <ThemeProvider theme={AppTheme}>
+      <Router />
       <ToastContainer autoClose={6000} closeButton={false} draggable={false} position="top-center" />
-    </>
-  );
-};
+    </ThemeProvider>
+  </Provider>
+);
 
 export default App;
