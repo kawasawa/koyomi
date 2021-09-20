@@ -2,10 +2,13 @@
 
 <div>
   <a href="https://kawasawa.github.io/koyomi/">
-    <img src="https://img.shields.io/badge/-GitHub Pages-2A579A.svg?logo=github&style=flat-square" alt="Store">
+    <img src="https://img.shields.io/badge/-GitHub Pages-2A579A.svg?logo=github" alt="Store">
   </a>
   <a href="https://github.com/kawasawa/koyomi/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/kawasawa/koyomi.svg?style=flat-square" alt="License">
+    <img src="https://img.shields.io/github/license/kawasawa/koyomi.svg" alt="License">
+  </a>
+  <a href="https://codecov.io/gh/kawasawa/koyomi">
+    <img src="https://codecov.io/gh/kawasawa/koyomi/branch/main/graph/badge.svg?token=Y8M4S5UMDL"/>
   </a>
 </div>
 
