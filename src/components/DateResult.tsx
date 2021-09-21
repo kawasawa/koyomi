@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Box, Grid, makeStyles } from '@material-ui/core';
@@ -9,42 +10,19 @@ import { getAge } from '../utils/date';
 import createCalendarInfo, { getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 import DateResultItem, { DateResultItemProps } from './DateResultItem';
+import { getSeasonImage, getZodiacImage } from './ImageGetter';
 
-import AutumnImage from '../resources/autumn.jpg';
-import Autumn2Image from '../resources/autumn2.jpg';
-import Autumn3Image from '../resources/autumn3.jpg';
-import BoarImage from '../resources/boar.jpg';
 import CalendarImage from '../resources/calendar.jpg';
-import ChickenImage from '../resources/chicken.jpg';
 import ClockImage from '../resources/clock.jpg';
-import CowImage from '../resources/cow.jpg';
-import DogImage from '../resources/dog.jpg';
-import DragonImage from '../resources/dragon.jpg';
-import HorseImage from '../resources/horse.jpg';
 import JapanImage from '../resources/japan.jpg';
-import MonkeyImage from '../resources/monkey.jpg';
 import MoonImage from '../resources/moon.jpg';
 import MosesImage from '../resources/moses.jpg';
-import MouseImage from '../resources/mouse.jpg';
-import RabbitImage from '../resources/rabbit.jpg';
 import RokuyoImage from '../resources/rokuyo.jpg';
 import SeaImage from '../resources/sea.jpg';
-import SheepImage from '../resources/sheep.jpg';
 import SignSnakeCharmerImage from '../resources/sign-snake-charmer.jpg';
 import SighImage from '../resources/sign.jpg';
-import SnakeImage from '../resources/snake.jpg';
 import SolarImage from '../resources/solar.jpg';
-import SpringImage from '../resources/spring.jpg';
-import Spring2Image from '../resources/spring2.jpg';
-import Spring3Image from '../resources/spring3.jpg';
-import SummerImage from '../resources/summer.jpg';
-import Summer2Image from '../resources/summer2.jpg';
-import Summer3Image from '../resources/summer3.jpg';
-import TigerImage from '../resources/tiger.jpg';
 import WeekImage from '../resources/week.jpg';
-import WinterImage from '../resources/winter.jpg';
-import Winter2Image from '../resources/winter2.jpg';
-import Winter3Image from '../resources/winter3.jpg';
 
 // ============================================================
 // 月の満ち欠けのイラストを下記からお借りしています。
@@ -117,85 +95,15 @@ const moonIcons = [
   Moon29Icon,
 ];
 
-export const getSeasonImage = (season4?: string) => {
-  let season4Image: string, season24Image: string, season72Image: string;
-  switch (season4) {
-    case '春':
-      season4Image = SpringImage;
-      season24Image = Spring2Image;
-      season72Image = Spring3Image;
-      break;
-    case '夏':
-      season4Image = SummerImage;
-      season24Image = Summer2Image;
-      season72Image = Summer3Image;
-      break;
-    case '秋':
-      season4Image = AutumnImage;
-      season24Image = Autumn2Image;
-      season72Image = Autumn3Image;
-      break;
-    case '冬':
-    default:
-      season4Image = WinterImage;
-      season24Image = Winter2Image;
-      season72Image = Winter3Image;
-      break;
-  }
-  return { season4Image, season24Image, season72Image };
-};
-
-export const getZodiacImage = (junishi?: string) => {
-  let zodiacImage: string;
-  switch (junishi) {
-    case '子':
-      zodiacImage = MouseImage;
-      break;
-    case '丑':
-      zodiacImage = CowImage;
-      break;
-    case '寅':
-      zodiacImage = TigerImage;
-      break;
-    case '卯':
-      zodiacImage = RabbitImage;
-      break;
-    case '辰':
-      zodiacImage = DragonImage;
-      break;
-    case '巳':
-      zodiacImage = SnakeImage;
-      break;
-    case '午':
-      zodiacImage = HorseImage;
-      break;
-    case '未':
-      zodiacImage = SheepImage;
-      break;
-    case '申':
-      zodiacImage = MonkeyImage;
-      break;
-    case '酉':
-      zodiacImage = ChickenImage;
-      break;
-    case '戌':
-      zodiacImage = DogImage;
-      break;
-    case '亥':
-    default:
-      zodiacImage = BoarImage;
-      break;
-  }
-  return zodiacImage;
-};
-
 const useStyles = makeStyles((theme) => ({
   alert: {
     marginBottom: theme.spacing(2),
   },
 }));
 
-const DateResult = () => {
+const DateResult = memo(() => {
+  console.log('DEBUG: render DataResult');
+
   const classes = useStyles();
   const [t] = useTranslation();
 
@@ -379,6 +287,6 @@ const DateResult = () => {
       </Grid>
     </Box>
   );
-};
+});
 
 export default DateResult;

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -60,7 +61,9 @@ export type DateResultItemProps = {
   image: string;
 };
 
-const DateResultItem = ({ props }: { props: DateResultItemProps }) => {
+const DateResultItem = memo(({ props }: { props: DateResultItemProps }) => {
+  console.log('DEBUG: render DataResultItem');
+
   const classes = useStyles();
   const [t] = useTranslation();
 
@@ -117,6 +120,6 @@ const DateResultItem = ({ props }: { props: DateResultItemProps }) => {
       </CardActions>
     </Card>
   );
-};
+});
 
 export default DateResultItem;
