@@ -1,8 +1,11 @@
+import { memo } from 'react';
 import { Link, Typography } from '@material-ui/core';
 
 import { APP_AUTHOR, URL_CREATORPAGE } from '../constant';
 
-const Copyright = () => {
+const Copyright = memo(() => {
+  console.log('DEBUG: render Copyright');
+
   return (
     <Typography variant="body2" color="textSecondary" align="center" data-testid="copyright">
       {'© '}
@@ -12,6 +15,6 @@ const Copyright = () => {
       {' All Rights Reserved.'}
     </Typography>
   );
-};
+});
 
 export default Copyright;

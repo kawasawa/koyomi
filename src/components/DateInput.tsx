@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DateInput = ({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) => {
+const DateInput = memo(({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) => {
+  console.log('DEBUG: render DataInput');
+
   const history = useHistory();
   const classes = useStyles();
   const [t] = useTranslation();
@@ -37,6 +40,6 @@ const DateInput = ({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) => 
       data-testid="date-picker"
     />
   );
-};
+});
 
 export default DateInput;
