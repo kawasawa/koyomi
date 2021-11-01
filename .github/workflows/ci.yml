@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build
-        run: yarn build && cp build/index.html build/404.html
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
