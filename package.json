@@ -35,11 +35,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp build/index.html build/404.html",
+    "build:win": "react-scripts build && copy build\\index.html build\\404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext js,jsx,ts,tsx --max-warnings 0",
-    "deploy": "yarn build && copy build\\index.html build\\404.html && gh-pages -d build"
+    "deploy:local": "yarn build:win && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
