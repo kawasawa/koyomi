@@ -1,9 +1,9 @@
-import { memo } from 'react';
 import { Link, Typography } from '@material-ui/core';
+import React, { memo } from 'react';
 
 import { APP_AUTHOR, URL_CREATORPAGE } from '../constant';
 
-const Copyright = memo(() => {
+const Copyright = memo(function _() {
   console.log('DEBUG: render Copyright');
 
   return (

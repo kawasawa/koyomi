@@ -1,20 +1,20 @@
-import { memo } from 'react';
+import { makeStyles } from '@material-ui/core';
+import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
 
 import { AppState } from '../stores/root';
 import { formatDate } from '../utils/date';
 import JaDatePicker from './atoms/JaDatePicker';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   datePicker: {
     width: '25ch',
   },
 }));
 
-const DateInput = memo(({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) => {
+const DateInput = memo(function _({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) {
   console.log('DEBUG: render DataInput');
 
   const history = useHistory();
@@ -36,7 +36,9 @@ const DateInput = memo(({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }
       disableToolbar={false}
       animateYearScrolling={true}
       disableKeyboardInput={true}
-      onChange={(date) => history.push(`/${formatDate(date!)}`)}
+      onChange={(date) => {
+        if (date) history.push(`/${formatDate(date)}`);
+      }}
       data-testid="date-picker"
     />
   );

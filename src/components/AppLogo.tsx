@@ -1,15 +1,15 @@
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Box, makeStyles, Typography } from '@material-ui/core';
+import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   appIcon: {
     width: 32,
     height: 32,
   },
 }));
 
-const AppLogo = memo(({ className }: { className: string }) => {
+const AppLogo = memo(function _({ className }: { className: string }) {
   console.log('DEBUG: render AppLog');
 
   const classes = useStyles();

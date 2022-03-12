@@ -1,5 +1,3 @@
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -11,6 +9,8 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -61,7 +61,7 @@ export type DateResultItemProps = {
   image: string;
 };
 
-const DateResultItem = memo(({ props }: { props: DateResultItemProps }) => {
+const DateResultItem = memo(function _({ props }: { props: DateResultItemProps }) {
   console.log('DEBUG: render DataResultItem');
 
   const classes = useStyles();

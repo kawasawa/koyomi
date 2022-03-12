@@ -1,28 +1,27 @@
-import SpringImage from '../resources/spring.jpg';
-import Spring2Image from '../resources/spring2.jpg';
-import Spring3Image from '../resources/spring3.jpg';
-import SummerImage from '../resources/summer.jpg';
-import Summer2Image from '../resources/summer2.jpg';
-import Summer3Image from '../resources/summer3.jpg';
-import AutumnImage from '../resources/autumn.jpg';
-import Autumn2Image from '../resources/autumn2.jpg';
-import Autumn3Image from '../resources/autumn3.jpg';
-import WinterImage from '../resources/winter.jpg';
-import Winter2Image from '../resources/winter2.jpg';
-import Winter3Image from '../resources/winter3.jpg';
-
-import BoarImage from '../resources/boar.jpg';
-import ChickenImage from '../resources/chicken.jpg';
-import CowImage from '../resources/cow.jpg';
-import DogImage from '../resources/dog.jpg';
-import DragonImage from '../resources/dragon.jpg';
-import HorseImage from '../resources/horse.jpg';
-import MonkeyImage from '../resources/monkey.jpg';
-import MouseImage from '../resources/mouse.jpg';
-import RabbitImage from '../resources/rabbit.jpg';
-import SheepImage from '../resources/sheep.jpg';
-import SnakeImage from '../resources/snake.jpg';
-import TigerImage from '../resources/tiger.jpg';
+import AutumnImage from '../assets/autumn.jpg';
+import Autumn2Image from '../assets/autumn2.jpg';
+import Autumn3Image from '../assets/autumn3.jpg';
+import BoarImage from '../assets/boar.jpg';
+import ChickenImage from '../assets/chicken.jpg';
+import CowImage from '../assets/cow.jpg';
+import DogImage from '../assets/dog.jpg';
+import DragonImage from '../assets/dragon.jpg';
+import HorseImage from '../assets/horse.jpg';
+import MonkeyImage from '../assets/monkey.jpg';
+import MouseImage from '../assets/mouse.jpg';
+import RabbitImage from '../assets/rabbit.jpg';
+import SheepImage from '../assets/sheep.jpg';
+import SnakeImage from '../assets/snake.jpg';
+import SpringImage from '../assets/spring.jpg';
+import Spring2Image from '../assets/spring2.jpg';
+import Spring3Image from '../assets/spring3.jpg';
+import SummerImage from '../assets/summer.jpg';
+import Summer2Image from '../assets/summer2.jpg';
+import Summer3Image from '../assets/summer3.jpg';
+import TigerImage from '../assets/tiger.jpg';
+import WinterImage from '../assets/winter.jpg';
+import Winter2Image from '../assets/winter2.jpg';
+import Winter3Image from '../assets/winter3.jpg';
 
 export const getSeasonImage = (season4?: string) => {
   let season4Image: string, season24Image: string, season72Image: string;
@@ -52,6 +51,7 @@ export const getSeasonImage = (season4?: string) => {
   return { season4Image, season24Image, season72Image };
 };
 
+/* eslint-disable */
 export const getZodiacImage = (junishi?: string) => {
   let zodiacImage: string;
   switch (junishi) {
@@ -95,3 +95,4 @@ export const getZodiacImage = (junishi?: string) => {
   }
   return zodiacImage;
 };
+/* eslint-enable */

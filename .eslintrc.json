@@ -1,0 +1,48 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    // ESModules の機能を有効化
+    "sourceType": "module"
+  },
+  "env": {
+    // JavaScript のバージョン
+    "es2015": true,
+    // ブラウザで実行されるコードを検証
+    "browser": true
+  },
+  "settings": {
+    "react": {
+      // eslint-plugin-react で適用される React のバージョン
+      "version": "detect"
+    }
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "simple-import-sort"],
+  "extends": [
+    // ESLint の JavaScript ルールセットで初期化
+    "eslint:recommended",
+    // TypeScript のルールセットを追加
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    // React のルールセットを追加
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    // Prettier のルールセットを追加
+    "prettier"
+  ],
+  "rules": {
+    // 循環的複雑度
+    "complexity": ["error", 10],
+    // import のソート
+    "simple-import-sort/imports": "error",
+    // export のソート
+    "simple-import-sort/exports": "error",
+    // var の禁止
+    "no-var": "error",
+    // const の推奨
+    "prefer-const": "error",
+    // 関数の戻り値に型推論を許容
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // props の検証を無効化
+    "react/prop-types": "off"
+  }
+}

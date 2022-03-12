@@ -1,12 +1,12 @@
-import { KeyboardEvent, MouseEvent, memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Box, Divider, Drawer, IconButton, List, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import { AccountBox, GitHub, Menu } from '@material-ui/icons';
 import clsx from 'clsx';
+import React, { KeyboardEvent, memo, MouseEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { URL_CREATORPAGE, URL_REPOSITORY } from '../constant';
-import ListItemLink from './atoms/ListItemLink';
 import AppLogo from './AppLogo';
+import ListItemLink from './atoms/ListItemLink';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-const DrawerMenu = memo(({ anchor }: { anchor: Anchor }) => {
+const DrawerMenu = memo(function _({ anchor }: { anchor: Anchor }) {
   console.log('DEBUG: render DrawerMenu');
 
   const [anchorState, setAnchorState] = useState({ top: false, left: false, bottom: false, right: false });
@@ -35,7 +35,7 @@ const DrawerMenu = memo(({ anchor }: { anchor: Anchor }) => {
   const [t] = useTranslation();
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (event: KeyboardEvent | MouseEvent) => {
-    var e = event as KeyboardEvent;
+    const e = event as KeyboardEvent;
     if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) return;
     setAnchorState({ ...anchorState, [anchor]: open });
   };

@@ -1,9 +1,11 @@
-import { ToastContainer } from 'react-toastify';
-import { createTheme, colors } from '@material-ui/core';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { colors, createTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import i18n from 'i18next';
+import React from 'react';
 import { initReactI18next } from 'react-i18next';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 import jaJson from './locales/ja.json';
 import Router from './Router';
