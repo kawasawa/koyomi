@@ -6,25 +6,27 @@ on:
 
 jobs:
   deploy:
-    name: deploy
     runs-on: ubuntu-latest
+    env:
+      NODE_VERSION: 14
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "14"
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Yarn
+      - name: Install packages
         run: yarn install
 
       - name: Lint
         run: yarn lint
 
       - name: Test
-        run: yarn test --coverage --watchAll=false
+        run: yarn test:cov
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v1
