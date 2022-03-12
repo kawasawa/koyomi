@@ -1,66 +1,63 @@
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import * as util from 'util';
 
-import { AppState } from '../stores/root';
-import { getAge } from '../utils/date';
-import createCalendarInfo, { getEclipticCoordinate } from '../models/CalendarInfo';
-import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
-import DateResultItem, { DateResultItemProps } from './DateResultItem';
-import { getSeasonImage, getZodiacImage } from './ImageGetter';
-
-import CalendarImage from '../resources/calendar.jpg';
-import ClockImage from '../resources/clock.jpg';
-import JapanImage from '../resources/japan.jpg';
-import MoonImage from '../resources/moon.jpg';
-import MosesImage from '../resources/moses.jpg';
-import RokuyoImage from '../resources/rokuyo.jpg';
-import SeaImage from '../resources/sea.jpg';
-import SignSnakeCharmerImage from '../resources/sign-snake-charmer.jpg';
-import SighImage from '../resources/sign.jpg';
-import SolarImage from '../resources/solar.jpg';
-import WeekImage from '../resources/week.jpg';
-
+import CalendarImage from '../assets/calendar.jpg';
+import ClockImage from '../assets/clock.jpg';
+import JapanImage from '../assets/japan.jpg';
+import MoonImage from '../assets/moon.jpg';
 // ============================================================
 // 月の満ち欠けのイラストを下記からお借りしています。
 //
 // koyomi.js: 今日のこよみ
 // http://kikuchisan.net/
 // ============================================================
-
-import Moon0Icon from '../resources/moon/moon0.gif';
-import Moon1Icon from '../resources/moon/moon1.gif';
-import Moon2Icon from '../resources/moon/moon2.gif';
-import Moon3Icon from '../resources/moon/moon3.gif';
-import Moon4Icon from '../resources/moon/moon4.gif';
-import Moon5Icon from '../resources/moon/moon5.gif';
-import Moon6Icon from '../resources/moon/moon6.gif';
-import Moon7Icon from '../resources/moon/moon7.gif';
-import Moon8Icon from '../resources/moon/moon8.gif';
-import Moon9Icon from '../resources/moon/moon9.gif';
-import Moon10Icon from '../resources/moon/moon10.gif';
-import Moon11Icon from '../resources/moon/moon11.gif';
-import Moon12Icon from '../resources/moon/moon12.gif';
-import Moon13Icon from '../resources/moon/moon13.gif';
-import Moon14Icon from '../resources/moon/moon14.gif';
-import Moon15Icon from '../resources/moon/moon15.gif';
-import Moon16Icon from '../resources/moon/moon16.gif';
-import Moon17Icon from '../resources/moon/moon17.gif';
-import Moon18Icon from '../resources/moon/moon18.gif';
-import Moon19Icon from '../resources/moon/moon19.gif';
-import Moon20Icon from '../resources/moon/moon20.gif';
-import Moon21Icon from '../resources/moon/moon21.gif';
-import Moon22Icon from '../resources/moon/moon22.gif';
-import Moon23Icon from '../resources/moon/moon23.gif';
-import Moon24Icon from '../resources/moon/moon24.gif';
-import Moon25Icon from '../resources/moon/moon25.gif';
-import Moon26Icon from '../resources/moon/moon26.gif';
-import Moon27Icon from '../resources/moon/moon27.gif';
-import Moon28Icon from '../resources/moon/moon28.gif';
-import Moon29Icon from '../resources/moon/moon29.gif';
+import Moon0Icon from '../assets/moon/moon0.gif';
+import Moon1Icon from '../assets/moon/moon1.gif';
+import Moon2Icon from '../assets/moon/moon2.gif';
+import Moon3Icon from '../assets/moon/moon3.gif';
+import Moon4Icon from '../assets/moon/moon4.gif';
+import Moon5Icon from '../assets/moon/moon5.gif';
+import Moon6Icon from '../assets/moon/moon6.gif';
+import Moon7Icon from '../assets/moon/moon7.gif';
+import Moon8Icon from '../assets/moon/moon8.gif';
+import Moon9Icon from '../assets/moon/moon9.gif';
+import Moon10Icon from '../assets/moon/moon10.gif';
+import Moon11Icon from '../assets/moon/moon11.gif';
+import Moon12Icon from '../assets/moon/moon12.gif';
+import Moon13Icon from '../assets/moon/moon13.gif';
+import Moon14Icon from '../assets/moon/moon14.gif';
+import Moon15Icon from '../assets/moon/moon15.gif';
+import Moon16Icon from '../assets/moon/moon16.gif';
+import Moon17Icon from '../assets/moon/moon17.gif';
+import Moon18Icon from '../assets/moon/moon18.gif';
+import Moon19Icon from '../assets/moon/moon19.gif';
+import Moon20Icon from '../assets/moon/moon20.gif';
+import Moon21Icon from '../assets/moon/moon21.gif';
+import Moon22Icon from '../assets/moon/moon22.gif';
+import Moon23Icon from '../assets/moon/moon23.gif';
+import Moon24Icon from '../assets/moon/moon24.gif';
+import Moon25Icon from '../assets/moon/moon25.gif';
+import Moon26Icon from '../assets/moon/moon26.gif';
+import Moon27Icon from '../assets/moon/moon27.gif';
+import Moon28Icon from '../assets/moon/moon28.gif';
+import Moon29Icon from '../assets/moon/moon29.gif';
+import MosesImage from '../assets/moses.jpg';
+import RokuyoImage from '../assets/rokuyo.jpg';
+import SeaImage from '../assets/sea.jpg';
+import SighImage from '../assets/sign.jpg';
+import SignSnakeCharmerImage from '../assets/sign-snake-charmer.jpg';
+import SolarImage from '../assets/solar.jpg';
+import WeekImage from '../assets/week.jpg';
+import createCalendarInfo, { getEclipticCoordinate } from '../models/CalendarInfo';
+import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
+import { AppState } from '../stores/root';
+import { getAge } from '../utils/date';
+import DateResultItem, { DateResultItemProps } from './DateResultItem';
+import { getSeasonImage, getZodiacImage } from './ImageGetter';
 
 const moonIcons = [
   Moon0Icon,
@@ -101,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DateResult = memo(() => {
+const DateResult = memo(function _() {
   console.log('DEBUG: render DataResult');
 
   const classes = useStyles();

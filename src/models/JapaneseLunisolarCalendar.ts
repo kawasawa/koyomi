@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // ============================================================
 // 旧暦計算処理
 //
@@ -59,7 +61,6 @@ declare global {
 // プロトタイプ宣言
 // ============================================================
 
-/* eslint-disable */
 Date.prototype.getJulianDay = function (): number {
   // 1888 年以降は日本標準時 (GMT+0900)、それより前は東京地方時 (GMT+0918) が使用される
   // ここでは東京地方時の期間であっても、日本標準時とみなし計算を行う
@@ -79,7 +80,6 @@ Date.prototype.setJulianDay = function (julianDay: number): Date {
 Date.prototype.isTokyoLocalTime = function (): boolean {
   return this.getFullYear() < 1888;
 };
-/* eslint-enable */
 
 // ============================================================
 // クラス
@@ -92,15 +92,15 @@ export default class JapaneseLunisolarCalendar {
   /** 西暦の日付 */
   date: Date;
   /** 旧暦年 */
-  year: number = NaN;
+  year = NaN;
   /** 旧暦月 */
-  month: number = NaN;
+  month = NaN;
   /** 旧暦日 */
-  day: number = NaN;
+  day = NaN;
   /** 月齢 */
-  lunaAge: number = NaN;
+  lunaAge = NaN;
   /** 閏月 */
-  isLeapMonth: boolean = false;
+  isLeapMonth = false;
 
   /**
    * 新しいインスタンスを生成します。
@@ -202,7 +202,7 @@ export default class JapaneseLunisolarCalendar {
     let needAdjustIndex = true;
     const fJd = Math.floor(julianDay);
     for (; sakuIndex < 5; sakuIndex++) {
-      let fJdSaku = Math.floor(saku[sakuIndex].julianDay);
+      const fJdSaku = Math.floor(saku[sakuIndex].julianDay);
       if (fJdSaku < fJd) continue;
 
       if (fJd === fJdSaku) needAdjustIndex = false;
@@ -252,7 +252,7 @@ export default class JapaneseLunisolarCalendar {
 
     // 直前の二分二至の黄経 λsun0 を算出する
     // λsun(t): t = (tm + 0.5 - 2451545) / 36525;
-    let lambda_sun0 = longitude * Math.floor(calcSunLongitude(calcJulianCenturyNumber(t1 + t2)) / longitude);
+    const lambda_sun0 = longitude * Math.floor(calcSunLongitude(calcJulianCenturyNumber(t1 + t2)) / longitude);
 
     // 直前の二分二至の時刻を算出する
     // 誤差が ±1.0 sec 以内に収束するまで繰り返す
@@ -304,9 +304,9 @@ export default class JapaneseLunisolarCalendar {
     let delta_t2 = 1;
     for (let i = 0; !coverage(delta_t1, delta_t2); i++) {
       // 太陽の黄経 λsun(t), 月の黄経 λmoon(t) を算出する
-      let t = calcJulianCenturyNumber(t1 + t2);
-      let lambda_sun = calcSunLongitude(t);
-      let lambda_moon = calcMoonLongitude(t);
+      const t = calcJulianCenturyNumber(t1 + t2);
+      const lambda_sun = calcSunLongitude(t);
+      const lambda_moon = calcMoonLongitude(t);
 
       // 月と太陽の黄経差 Δλ を算出する
       // Δλ = λmoon - λsun
@@ -480,3 +480,5 @@ export const calcMoonLongitude = (dynamicalTime: number) => {
 
   return normalizeAngle(th + ang);
 };
+
+/* eslint-enable */

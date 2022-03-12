@@ -1,20 +1,21 @@
+import 'date-fns';
+
+import { AppBar, Box, Container, makeStyles, Toolbar } from '@material-ui/core';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { AppBar, Box, Container, makeStyles, Toolbar } from '@material-ui/core';
-import 'date-fns';
 import * as util from 'util';
 
-import './Top.css';
-import { SYSTEM_MAX_DATE, SYSTEM_MIN_DATE, LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE } from '../constant';
-import { setDate } from '../stores/slices/viewSlice';
-import { formatDate } from '../utils/date';
 import AppLogo from '../components/AppLogo';
 import Copyright from '../components/Copyright';
 import DateInput from '../components/DateInput';
 import DateResult from '../components/DateResult';
 import DrawerMenu from '../components/DrawerMenu';
+import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE, SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constant';
+import { setDate } from '../stores/slices/viewSlice';
+import { formatDate } from '../utils/date';
 
 const useStyles = makeStyles((theme) => ({
   root: {
