@@ -1,11 +1,12 @@
 {
   "files": {
     "main.css": "/koyomi/static/css/main.d9e75851.chunk.css",
-    "main.js": "/koyomi/static/js/main.c387d33f.chunk.js",
+    "main.js": "/koyomi/static/js/main.cedfd6d2.chunk.js",
     "runtime-main.js": "/koyomi/static/js/runtime-main.8c8a6a06.js",
     "static/css/2.b68ad890.chunk.css": "/koyomi/static/css/2.b68ad890.chunk.css",
     "static/js/2.5df0152b.chunk.js": "/koyomi/static/js/2.5df0152b.chunk.js",
     "index.html": "/koyomi/index.html",
+    "service-worker.js": "/koyomi/service-worker.js",
     "static/js/2.5df0152b.chunk.js.LICENSE.txt": "/koyomi/static/js/2.5df0152b.chunk.js.LICENSE.txt",
     "static/media/autumn.d9a820d8.jpg": "/koyomi/static/media/autumn.d9a820d8.jpg",
     "static/media/autumn2.1b536cc1.jpg": "/koyomi/static/media/autumn2.1b536cc1.jpg",
@@ -48,6 +49,6 @@
     "static/css/2.b68ad890.chunk.css",
     "static/js/2.5df0152b.chunk.js",
     "static/css/main.d9e75851.chunk.css",
-    "static/js/main.c387d33f.chunk.js"
+    "static/js/main.cedfd6d2.chunk.js"
   ]
 }
