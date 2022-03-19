@@ -1,7 +1,7 @@
 import {
   Box,
-  Button,
   Card,
+  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -10,14 +10,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: 275,
   },
   image: {
-    height: 120,
+    height: 140,
   },
   icon: {
     width: 24,
@@ -65,59 +64,53 @@ const DateResultItem = memo(function _({ props }: { props: DateResultItemProps }
   console.log('DEBUG: render DataResultItem');
 
   const classes = useStyles();
-  const [t] = useTranslation();
-
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.image} component="img" src={props.image} data-testid="data-result-image" />
-      <CardContent>
-        <Box className={classes.titleBox}>
-          <Typography variant="subtitle1" color="primary" gutterBottom data-testid="data-result-title">
-            {props.title}
-          </Typography>
-          {props.icon ? (
-            <img className={classes.icon} src={props.icon} alt="icon" loading="lazy" data-testid="data-result-icon" />
-          ) : null}
-        </Box>
-        <Grid container direction="row" alignItems="center">
-          <Grid item>
-            <Box ml={1}>
-              <Typography variant="h5" color="textPrimary" gutterBottom data-testid="data-result-value">
-                {props.value}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box ml={1.5}>
-              <Typography variant="h6" color="textSecondary" gutterBottom data-testid="data-result-kana">
-                {props.kana}
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-        <Typography variant="body1" color="textPrimary" gutterBottom data-testid="data-result-summary1">
-          {props.summary1}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" data-testid="data-result-summary2">
-          {props.summary2}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        {props.balloon ? (
-          <Box className={classes.balloon}>
-            <Box className={classes.balloonBefore} />
-            <Typography variant="subtitle2" color="textPrimary" gutterBottom data-testid="data-result-balloon">
-              {props.balloon}
+      <CardActionArea onClick={() => window.open(props.url, '_blank', 'noreferrer')}>
+        <CardMedia className={classes.image} component="img" src={props.image} data-testid="data-result-image" />
+        <CardContent>
+          <Box className={classes.titleBox}>
+            <Typography variant="subtitle1" color="primary" gutterBottom data-testid="data-result-title">
+              {props.title}
             </Typography>
+            {props.icon ? (
+              <img className={classes.icon} src={props.icon} alt="icon" loading="lazy" data-testid="data-result-icon" />
+            ) : null}
           </Box>
-        ) : null}
-        <div style={{ flex: '1 0 0' }} />
-        {props.url ? (
-          <Button size="small" color="secondary" href={props.url} target="_blank" data-testid="data-result-url">
-            {t('label.learn-more')}
-          </Button>
-        ) : null}
-      </CardActions>
+          <Grid container direction="row" alignItems="center">
+            <Grid item>
+              <Box ml={1}>
+                <Typography variant="h5" color="textPrimary" gutterBottom data-testid="data-result-value">
+                  {props.value}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box ml={1.5}>
+                <Typography variant="h6" color="textSecondary" gutterBottom data-testid="data-result-kana">
+                  {props.kana}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+          <Typography variant="body1" color="textPrimary" gutterBottom data-testid="data-result-summary1">
+            {props.summary1}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" data-testid="data-result-summary2">
+            {props.summary2}
+          </Typography>
+        </CardContent>
+        {props.balloon && (
+          <CardActions>
+            <Box className={classes.balloon}>
+              <Box className={classes.balloonBefore} />
+              <Typography variant="subtitle2" color="textPrimary" gutterBottom data-testid="data-result-balloon">
+                {props.balloon}
+              </Typography>
+            </Box>
+          </CardActions>
+        )}
+      </CardActionArea>
     </Card>
   );
 });
