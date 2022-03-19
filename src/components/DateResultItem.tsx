@@ -66,8 +66,8 @@ const DateResultItem = memo(function _({ props }: { props: DateResultItemProps }
   const classes = useStyles();
   return (
     <Card className={classes.card}>
+      <CardMedia className={classes.image} component="img" src={props.image} data-testid="data-result-image" />
       <CardActionArea onClick={() => window.open(props.url, '_blank', 'noreferrer')}>
-        <CardMedia className={classes.image} component="img" src={props.image} data-testid="data-result-image" />
         <CardContent>
           <Box className={classes.titleBox}>
             <Typography variant="subtitle1" color="primary" gutterBottom data-testid="data-result-title">
