@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import DateResultItem, { DateResultItemProps } from './DateResultItem';
+import { DateResultItem, DateResultItemProps } from './DateResultItem';
 
 describe('DateResultItem', () => {
   test('コンポーネントの描画', () => {
