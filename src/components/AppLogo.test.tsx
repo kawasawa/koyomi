@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import AppLogo from './AppLogo';
+import { AppLogo } from './AppLogo';
 
 describe('AppLogo', () => {
   test('コンポーネントの描画', () => {

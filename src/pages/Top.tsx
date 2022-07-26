@@ -8,12 +8,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as util from 'util';
 
-import AppLogo from '../components/AppLogo';
-import Copyright from '../components/Copyright';
-import DateInput from '../components/DateInput';
-import DateResult from '../components/DateResult';
-import DrawerMenu from '../components/DrawerMenu';
-import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE, SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constant';
+import { AppLogo, Copyright, DateInput, DateResult, DrawerMenu } from '../components';
+import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE, SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constants';
 import { setDate } from '../stores/slices/viewSlice';
 import { formatDate } from '../utils/date';
 
@@ -43,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Top = () => {
+export const Top = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -89,5 +85,3 @@ const Top = () => {
     </Box>
   );
 };
-
-export default Top;

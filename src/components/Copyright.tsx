@@ -1,20 +1,18 @@
 import { Link, Typography } from '@material-ui/core';
-import React, { memo } from 'react';
+import React from 'react';
 
-import { APP_AUTHOR, URL_CREATORPAGE } from '../constant';
+import { APP_AUTHOR, URL_CREATORPAGE } from '../constants';
 
-const Copyright = memo(function _() {
+export const Copyright = () => {
   console.log('DEBUG: render Copyright');
 
   return (
     <Typography variant="body2" color="textSecondary" align="center" data-testid="copyright">
       {'© '}
-      <Link color="inherit" href={URL_CREATORPAGE} target="_blank" data-testid="crator-page-url">
+      <Link color="inherit" href={URL_CREATORPAGE} target="_blank" data-testid="creator-page-url">
         {APP_AUTHOR}
       </Link>
       {' All Rights Reserved.'}
     </Typography>
   );
-});
-
-export default Copyright;
+};

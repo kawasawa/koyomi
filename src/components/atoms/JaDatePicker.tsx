@@ -13,7 +13,7 @@ class JaDateFnsUtils extends DateFnsUtils {
   getCalendarHeaderText = (date: Date) => this.format(date, 'y年 M月');
 }
 
-const JaDatePicker = ({
+export const JaDatePicker = ({
   disableKeyboardInput,
   ...props
 }: {
@@ -29,5 +29,3 @@ const JaDatePicker = ({
     />
   </MuiPickersUtilsProvider>
 );
-
-export default JaDatePicker;

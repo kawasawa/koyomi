@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import React, { memo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() => ({
@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AppLogo = memo(function _({ className }: { className: string }) {
+export const AppLogo = ({ className }: { className: string }) => {
   console.log('DEBUG: render AppLog');
 
   const classes = useStyles();
@@ -30,6 +30,4 @@ const AppLogo = memo(function _({ className }: { className: string }) {
       </Typography>
     </Box>
   );
-});
-
-export default AppLogo;
+};
