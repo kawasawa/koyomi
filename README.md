@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# こよみ
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div>
+  <a href="https://kawasawa.github.io/koyomi/">
+    <img src="https://img.shields.io/badge/-GitHub Pages-2A579A.svg?logo=github" alt="Store">
+  </a>
+  <a href="https://github.com/kawasawa/koyomi/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/kawasawa/koyomi.svg" alt="License">
+  </a>
+  <a href="https://codecov.io/gh/kawasawa/koyomi">
+    <img src="https://codecov.io/gh/kawasawa/koyomi/branch/main/graph/badge.svg?token=Y8M4S5UMDL"/>
+  </a>
+</div>
 
-## Available Scripts
+## 概要
 
-In the project directory, you can run:
+暦の情報を一覧できるページです。旧暦や六曜のほか二十四節気、星座、干支、月相などの暦注を確認できます。
 
-### `yarn start`
+![koyomi](./.images/koyomi.jpg)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 日付の指定
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+表示可能な日付の範囲は 1868-01-01 から 2099-12-31 までとなります。  
+なお、1887 年以前を指定した場合、東京地方時を日本標準時へ置き換えて計算を行うため、厳密な値とは異なる可能性があります。
 
-### `yarn test`
+日付は URL で直接指定することもできます。  
+https://kawasawa.github.io/koyomi/2000-01-01
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 表示される情報
 
-### `yarn build`
+- 和暦
+  - 年齢
+- 旧暦
+- 六曜
+- 七曜
+- 四季
+- 二十四節気
+- 七十二候
+- 十二星座
+- 十三星座
+- 和風月名
+- 干支
+  - 月の干支
+  - 日の干支
+- 月相
+  - 月齢
+- 潮汐
+- 太陽黄経
+- ユリウス日
+  - 修正ユリウス日
+  - リリウス日
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 開発情報
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+本プログラムは以下を主な基盤として使用し、構築されています。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+|                      | 使用技術      |
+| -------------------- | ------------- |
+| プログラミング言語   | TypeScript    |
+| フレームワーク       | React         |
+| デザインテンプレート | Material-UI   |
+| ルーティング管理     | React Router  |
+| ステート管理         | React Redux   |
+| 多言語対応           | React i18next |
 
-### `yarn eject`
+## 謝辞
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+本プログラムの根幹をなす旧暦の導出は、長野様の旧暦計算スクリプト qreki.js を参考に作成されました。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+qreki.js: 旧暦計算サンプルプログラム rev. 1.1
+Coded by H.Takano (C)1993,1994
+Arranged for ECMAScript(ECMA-262) by Nagano Yutaka (C)1999
+http://kikuchisan.net/wsp/java/java59.html
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+また、月の満ち欠けを示すアイコンは、菊池様の下記サイトにて配布される画像を使用いたしました。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+今日のこよみ
+http://kikuchisan.net/
+```
