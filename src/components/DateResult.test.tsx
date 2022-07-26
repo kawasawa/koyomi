@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import * as ReactRedux from 'react-redux';
 
-import DateResult from './DateResult';
+import { DateResult } from './DateResult';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -9,11 +9,7 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('DateResult', () => {
-  let spyUseSelector: jest.SpyInstance;
-
-  beforeAll(() => {
-    spyUseSelector = jest.spyOn(ReactRedux, 'useSelector');
-  });
+  const spyUseSelector = jest.spyOn(ReactRedux, 'useSelector');
 
   afterEach(() => {
     spyUseSelector.mockClear();

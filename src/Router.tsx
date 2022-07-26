@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Top from './pages/Top';
+import { Top } from './pages';
 
 const Router = () => (
   <BrowserRouter basename={process.env.PUBLIC_URL}>

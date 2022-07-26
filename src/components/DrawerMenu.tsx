@@ -1,12 +1,12 @@
 import { Box, Divider, Drawer, IconButton, List, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import { AccountBox, GitHub, Menu } from '@material-ui/icons';
 import clsx from 'clsx';
-import React, { KeyboardEvent, memo, MouseEvent, useState } from 'react';
+import React, { KeyboardEvent, MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { URL_CREATORPAGE, URL_REPOSITORY } from '../constant';
-import AppLogo from './AppLogo';
-import ListItemLink from './atoms/ListItemLink';
+import { URL_CREATORPAGE, URL_REPOSITORY } from '../constants';
+import { AppLogo } from './AppLogo';
+import { ListItemLink } from './atoms';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-const DrawerMenu = memo(function _({ anchor }: { anchor: Anchor }) {
+export const DrawerMenu = ({ anchor }: { anchor: Anchor }) => {
   console.log('DEBUG: render DrawerMenu');
 
   const [anchorState, setAnchorState] = useState({ top: false, left: false, bottom: false, right: false });
@@ -79,6 +79,4 @@ const DrawerMenu = memo(function _({ anchor }: { anchor: Anchor }) {
       </Drawer>
     </>
   );
-});
-
-export default DrawerMenu;
+};

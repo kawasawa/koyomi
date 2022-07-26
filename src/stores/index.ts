@@ -8,12 +8,10 @@ const rootReducer = combineReducers({
   view: viewReducer,
 });
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
 });
-
-export default store;

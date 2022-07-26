@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import DrawerMenu from './DrawerMenu';
+import { DrawerMenu } from './DrawerMenu';
 
 describe('DrawerMenu', () => {
   test('コンポーネントの描画', () => {

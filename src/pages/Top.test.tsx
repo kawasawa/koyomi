@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import * as ReactRouterDom from 'react-router-dom';
 
-import Top from './Top';
-import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE } from '../constant';
+import { Top } from './Top';
+import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE } from '../constants';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -15,28 +15,18 @@ jest.mock('react-router-dom', () => ({
   useHistory: () => ({ push: jest.fn() }),
 }));
 
-jest.mock('../components/DateInput', () => {
-  return () => <div data-testid="date-input"></div>;
-});
-
-jest.mock('../components/DateResult', () => {
-  return () => <div data-testid="date-result"></div>;
-});
-
-jest.mock('../components/Copyright', () => {
-  return () => <div data-testid="copyright"></div>;
-});
+jest.mock('../components', () => ({
+  AppLogo: () => <div data-testid="app-logo"></div>,
+  Copyright: () => <div data-testid="copyright"></div>,
+  DateInput: () => <div data-testid="date-input"></div>,
+  DateResult: () => <div data-testid="date-result"></div>,
+  DrawerMenu: () => <div data-testid="drawer-menu"></div>,
+}));
 
 describe('Top', () => {
-  let spyUseParams: jest.SpyInstance;
-  let spyConsoleInfo: jest.SpyInstance;
-  let spyConsoleError: jest.SpyInstance;
-
-  beforeAll(() => {
-    spyUseParams = jest.spyOn(ReactRouterDom, 'useParams');
-    spyConsoleInfo = jest.spyOn(global.console, 'info').mockImplementation((_) => _);
-    spyConsoleError = jest.spyOn(global.console, 'error').mockImplementation((_) => _);
-  });
+  const spyUseParams = jest.spyOn(ReactRouterDom, 'useParams');
+  const spyConsoleInfo = jest.spyOn(global.console, 'info').mockImplementation((_) => _);
+  const spyConsoleError = jest.spyOn(global.console, 'error').mockImplementation((_) => _);
 
   afterEach(() => {
     spyUseParams.mockClear();

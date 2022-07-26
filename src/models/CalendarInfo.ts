@@ -20,13 +20,12 @@ export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
     etoYear: getEtoYear(calendar.date),
     etoMonth: getEtoMonth(calendar.date),
     etoDay: getEtoDay(calendar.date),
-    season: getSeaseon(calendar),
+    season: getSeason(calendar),
     sign: getSign(calendar.date),
     lunaPhase: getLunaPhase(calendar),
     tidePhase: getTidePhase(calendar),
   };
 };
-export default createCalendarInfo;
 
 /**
  * 太陽黄経を取得します。
@@ -166,7 +165,7 @@ export const getEtoDay = (date: Date) => {
  * @param calendar 旧暦インスタンス
  * @returns [四季, 二十四節気, 七十二候]
  */
-export const getSeaseon = (calendar: JapaneseLunisolarCalendar) => {
+export const getSeason = (calendar: JapaneseLunisolarCalendar) => {
   const julianDay = Math.floor(calendar.date.getJulianDay());
 
   const i_s72 = getEclipticCoordinate(julianDay + 1, eclipticCoordinateValues.season72) / 5;

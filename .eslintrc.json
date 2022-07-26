@@ -16,7 +16,12 @@
       "version": "detect"
     }
   },
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "simple-import-sort"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "simple-import-sort"
+  ],
   "extends": [
     // ESLint の JavaScript ルールセットで初期化
     "eslint:recommended",
@@ -30,19 +35,32 @@
     "prettier"
   ],
   "rules": {
-    // 循環的複雑度
-    "complexity": ["error", 10],
-    // import のソート
+    // import, export のソート
     "simple-import-sort/imports": "error",
-    // export のソート
     "simple-import-sort/exports": "error",
-    // var の禁止
+    // 循環的複雑度を制限
+    "complexity": ["error", 10],
+    // ネストの深度を制限
+    "max-depth": ["warn", 5],
+    // 厳密な等価比較を強制
+    "eqeqeq": "error",
+    // マルチスペースの使用を禁止
+    "no-multi-spaces": "error",
+    // undefined による初期化を禁止
+    "no-undef-init": "error",
+    // var を禁止
     "no-var": "error",
-    // const の推奨
+    // const を強制
     "prefer-const": "error",
-    // 関数の戻り値に型推論を許容
+    // テンプレートリテラルを推奨
+    "prefer-template": "warn",
+    // ドット表記を推奨
+    "dot-notation": "warn",
+    // 関数の戻り値にも型推論を適用
     "@typescript-eslint/explicit-module-boundary-types": "off",
     // props の検証を無効化
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    // メモ化を強制
+    "react-hooks/exhaustive-deps": "error"
   }
 }
