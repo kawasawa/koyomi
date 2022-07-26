@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/koyomi/static/css/main.4a4137e4.chunk.css",
-    "main.js": "/koyomi/static/js/main.76e27d2e.chunk.js",
-    "main.js.map": "/koyomi/static/js/main.76e27d2e.chunk.js.map",
+    "main.js": "/koyomi/static/js/main.ce52bacb.chunk.js",
+    "main.js.map": "/koyomi/static/js/main.ce52bacb.chunk.js.map",
     "runtime-main.js": "/koyomi/static/js/runtime-main.8c8a6a06.js",
     "runtime-main.js.map": "/koyomi/static/js/runtime-main.8c8a6a06.js.map",
     "static/css/2.dfa6656c.chunk.css": "/koyomi/static/css/2.dfa6656c.chunk.css",
@@ -55,6 +55,6 @@
     "static/css/2.dfa6656c.chunk.css",
     "static/js/2.34eb71b7.chunk.js",
     "static/css/main.4a4137e4.chunk.css",
-    "static/js/main.76e27d2e.chunk.js"
+    "static/js/main.ce52bacb.chunk.js"
   ]
 }
