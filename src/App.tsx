@@ -23,6 +23,11 @@ const AppTheme = createTheme({
     primary: { main: colors.teal[800] },
     secondary: { main: colors.grey[500] },
   },
+  typography: {
+    button: {
+      textTransform: 'none',
+    },
+  },
 });
 
 const App = () => (

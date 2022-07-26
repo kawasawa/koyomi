@@ -9,7 +9,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import React, { memo } from 'react';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -60,7 +60,7 @@ export type DateResultItemProps = {
   image: string;
 };
 
-const DateResultItem = memo(function _({ props }: { props: DateResultItemProps }) {
+export const DateResultItem = ({ props }: { props: DateResultItemProps }) => {
   console.log('DEBUG: render DataResultItem');
 
   const classes = useStyles();
@@ -113,6 +113,4 @@ const DateResultItem = memo(function _({ props }: { props: DateResultItemProps }
       </CardActionArea>
     </Card>
   );
-});
-
-export default DateResultItem;
+};
