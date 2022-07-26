@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import DateInput from './DateInput';
+import { DateInput } from './DateInput';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

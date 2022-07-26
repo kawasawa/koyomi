@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import store from './stores/root';
+import { store } from './stores';
 
 ReactDOM.render(
   <React.StrictMode>

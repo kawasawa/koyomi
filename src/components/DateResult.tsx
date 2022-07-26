@@ -1,6 +1,6 @@
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import React, { memo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as util from 'util';
@@ -52,11 +52,11 @@ import SighImage from '../assets/sign.jpg';
 import SignSnakeCharmerImage from '../assets/sign-snake-charmer.jpg';
 import SolarImage from '../assets/solar.jpg';
 import WeekImage from '../assets/week.jpg';
-import createCalendarInfo, { getEclipticCoordinate } from '../models/CalendarInfo';
+import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
-import { AppState } from '../stores/root';
+import { AppState } from '../stores';
 import { getAge } from '../utils/date';
-import DateResultItem, { DateResultItemProps } from './DateResultItem';
+import { DateResultItem, DateResultItemProps } from './DateResultItem';
 import { getSeasonImage, getZodiacImage } from './ImageGetter';
 
 const moonIcons = [
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DateResult = memo(function _() {
+export const DateResult = () => {
   console.log('DEBUG: render DataResult');
 
   const classes = useStyles();
@@ -284,6 +284,4 @@ const DateResult = memo(function _() {
       </Grid>
     </Box>
   );
-});
-
-export default DateResult;
+};
