@@ -12536,7 +12536,7 @@ workbox-core@6.5.1:
   resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-6.5.1.tgz#0dba3bccf883a46dfa61cc412eaa3cb09bb549e6"
   integrity sha512-qObXZ39aFJ2N8X7IUbGrJHKWguliCuU1jOXM/I4MTT84u9BiKD2rHMkIzgeRP1Ixu9+cXU4/XHJq3Cy0Qqc5hw==
 
-workbox-core@6.5.4:
+workbox-core@6.5.4, workbox-core@^6.5.3:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-6.5.4.tgz#df48bf44cd58bb1d1726c49b883fb1dffa24c9ba"
   integrity sha512-OXYb+m9wZm8GrORlV2vBbE5EC1FKu71GGp0H4rjmxmF4/HLbMCoTFws87M3dFwgpmg0v00K++PImpNQ6J5NQ6Q==
@@ -12545,11 +12545,6 @@ workbox-core@^5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.4.tgz#8bbfb2362ecdff30e25d123c82c79ac65d9264f4"
   integrity sha512-+4iRQan/1D8I81nR2L5vcbaaFskZC2CL17TLbvWVzQ4qiF/ytOGF6XeV54pVxAvKUtkLANhk8TyIUMtiMw2oDg==
-
-workbox-core@^6.5.3:
-  version "6.5.4"
-  resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-6.5.4.tgz#df48bf44cd58bb1d1726c49b883fb1dffa24c9ba"
-  integrity sha512-OXYb+m9wZm8GrORlV2vBbE5EC1FKu71GGp0H4rjmxmF4/HLbMCoTFws87M3dFwgpmg0v00K++PImpNQ6J5NQ6Q==
 
 workbox-expiration@^5.1.4:
   version "5.1.4"
@@ -12593,12 +12588,12 @@ workbox-navigation-preload@^5.1.4:
   dependencies:
     workbox-core "^5.1.4"
 
-workbox-navigation-preload@^6.5.1:
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/workbox-navigation-preload/-/workbox-navigation-preload-6.5.1.tgz#a244e3bdf99ce86da7210315ca1ba5aef3710825"
-  integrity sha512-aKrgAbn2IMgzTowTi/ZyKdQUcES2m++9aGtpxqsX7Gn9ovCY8zcssaMEAMMwrIeveij5HiWNBrmj6MWDHi+0rg==
+workbox-navigation-preload@^6.5.3:
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/workbox-navigation-preload/-/workbox-navigation-preload-6.5.4.tgz#ede56dd5f6fc9e860a7e45b2c1a8f87c1c793212"
+  integrity sha512-IIwf80eO3cr8h6XSQJF+Hxj26rg2RPFVUmJLUlM0+A2GzB4HFbQyKkrgD5y2d84g2IbJzP4B4j5dPBRzamHrng==
   dependencies:
-    workbox-core "6.5.1"
+    workbox-core "6.5.4"
 
 workbox-precaching@^5.1.4:
   version "5.1.4"
