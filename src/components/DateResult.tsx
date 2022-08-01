@@ -5,16 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as util from 'util';
 
-import CalendarImage from '../assets/calendar.jpg';
-import ClockImage from '../assets/clock.jpg';
-import JapanImage from '../assets/japan.jpg';
-import MoonImage from '../assets/moon.jpg';
 // ============================================================
 // 月の満ち欠けのイラストを下記からお借りしています。
 //
 // koyomi.js: 今日のこよみ
 // http://kikuchisan.net/
 // ============================================================
+import CalendarImage from '../assets/calendar.webp';
+import ClockImage from '../assets/clock.webp';
+import JapanImage from '../assets/japan.webp';
+import MoonImage from '../assets/moon.webp';
 import Moon0Icon from '../assets/moon/moon0.gif';
 import Moon1Icon from '../assets/moon/moon1.gif';
 import Moon2Icon from '../assets/moon/moon2.gif';
@@ -45,13 +45,13 @@ import Moon26Icon from '../assets/moon/moon26.gif';
 import Moon27Icon from '../assets/moon/moon27.gif';
 import Moon28Icon from '../assets/moon/moon28.gif';
 import Moon29Icon from '../assets/moon/moon29.gif';
-import MosesImage from '../assets/moses.jpg';
-import RokuyoImage from '../assets/rokuyo.jpg';
-import SeaImage from '../assets/sea.jpg';
-import SighImage from '../assets/sign.jpg';
-import SignSnakeCharmerImage from '../assets/sign-snake-charmer.jpg';
-import SolarImage from '../assets/solar.jpg';
-import WeekImage from '../assets/week.jpg';
+import MosesImage from '../assets/moses.webp';
+import RokuyoImage from '../assets/rokuyo.webp';
+import SeaImage from '../assets/sea.webp';
+import SighImage from '../assets/sign.webp';
+import SignSnakeCharmerImage from '../assets/sign-snake-charmer.webp';
+import SolarImage from '../assets/solar.webp';
+import WeekImage from '../assets/week.webp';
 import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 import { AppState } from '../stores';
