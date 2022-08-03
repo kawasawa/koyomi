@@ -3,14 +3,12 @@ import 'date-fns';
 import { AppBar, Box, Container, makeStyles, Toolbar } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as util from 'util';
 
 import { AppLogo, Copyright, DateInput, DateResult, DrawerMenu } from '../components';
 import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE, SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constants';
-import { setDate } from '../stores/slices/viewSlice';
 import { formatDate } from '../utils/date';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Top = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
   const [t] = useTranslation();
@@ -62,7 +59,6 @@ export const Top = () => {
     return null;
   }
   console.info(`Info: TargetDate = ${targetDate}`);
-  dispatch(setDate(targetDate));
 
   return (
     <Box className={classes.root}>
@@ -71,12 +67,12 @@ export const Top = () => {
           <DrawerMenu anchor="left" />
           <AppLogo className={classes.title} />
           <div style={{ flex: '1 0 0' }} />
-          <DateInput minDate={SYSTEM_MIN_DATE} maxDate={SYSTEM_MAX_DATE} />
+          <DateInput initialDate={targetDate} minDate={SYSTEM_MIN_DATE} maxDate={SYSTEM_MAX_DATE} />
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg">
         <Box className={classes.content}>
-          <DateResult />
+          <DateResult date={targetDate} />
         </Box>
       </Container>
       <Box className={classes.footer}>
