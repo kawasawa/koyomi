@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { URL_CREATORPAGE, URL_REPOSITORY } from '../constants';
 import { AppLogo } from './AppLogo';
-import { ListItemLink } from './atoms';
+import { ListItemLink } from './controls';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {

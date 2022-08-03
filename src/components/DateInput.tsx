@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { formatDate } from '../utils/date';
-import { JaDatePicker } from './atoms';
+import { JaDatePicker } from './controls';
 
 const useStyles = makeStyles(() => ({
   datePicker: {
