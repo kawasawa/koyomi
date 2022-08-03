@@ -12584,13 +12584,13 @@ workbox-streams@^5.1.4:
     workbox-core "^5.1.4"
     workbox-routing "^5.1.4"
 
-workbox-streams@^6.5.1:
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/workbox-streams/-/workbox-streams-6.5.1.tgz#12036817385fa4449a86a3ef77fce1cb00ecad9f"
-  integrity sha512-7jaTWm6HRGJ/ewECnhb+UgjTT50R42E0/uNCC4eTKQwnLO/NzNGjoXTdQgFjo4zteR+L/K6AtFAiYKH3ZJbAYw==
+workbox-streams@^6.5.3:
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/workbox-streams/-/workbox-streams-6.5.4.tgz#1cb3c168a6101df7b5269d0353c19e36668d7d69"
+  integrity sha512-FXKVh87d2RFXkliAIheBojBELIPnWbQdyDvsH3t74Cwhg0fDheL1T8BqSM86hZvC0ZESLsznSYWw+Va+KVbUzg==
   dependencies:
-    workbox-core "6.5.1"
-    workbox-routing "6.5.1"
+    workbox-core "6.5.4"
+    workbox-routing "6.5.4"
 
 workbox-sw@^5.1.4:
   version "5.1.4"
