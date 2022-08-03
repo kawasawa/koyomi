@@ -2,7 +2,6 @@ import { Box, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import * as util from 'util';
 
 // ============================================================
@@ -54,7 +53,6 @@ import SolarImage from '../assets/solar.webp';
 import WeekImage from '../assets/week.webp';
 import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
-import { AppState } from '../stores';
 import { getAge } from '../utils/date';
 import { DateResultItem, DateResultItemProps } from './DateResultItem';
 import { getSeasonImage, getZodiacImage } from './ImageGetter';
@@ -98,13 +96,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const DateResult = () => {
+type DateResultProps = {
+  date: Date;
+};
+
+export const DateResult = ({ date }: DateResultProps) => {
   console.log('DEBUG: render DataResult');
 
   const classes = useStyles();
   const [t] = useTranslation();
 
-  const { date } = useSelector((state: AppState) => state.view);
   const calendar = new JapaneseLunisolarCalendar(date);
   const calendarInfo = createCalendarInfo(calendar);
 
