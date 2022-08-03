@@ -1,12 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { AppState } from '../stores';
 import { formatDate } from '../utils/date';
-import { JaDatePicker } from './atoms';
+import { JaDatePicker } from './controls';
 
 const useStyles = makeStyles(() => ({
   datePicker: {
@@ -14,18 +12,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const DateInput = ({ minDate, maxDate }: { minDate?: Date; maxDate?: Date }) => {
+type DateInputProps = {
+  initialDate: Date;
+  minDate?: Date;
+  maxDate?: Date;
+};
+
+export const DateInput = ({ initialDate, minDate, maxDate }: DateInputProps) => {
   console.log('DEBUG: render DataInput');
 
   const history = useHistory();
   const classes = useStyles();
   const [t] = useTranslation();
-  const { date } = useSelector((state: AppState) => state.view);
 
   return (
     <JaDatePicker
       className={classes.datePicker}
-      value={date}
+      value={initialDate}
       name="date"
       label={t('label.date')}
       minDate={minDate}

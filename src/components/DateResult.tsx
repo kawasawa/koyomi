@@ -2,95 +2,48 @@ import { Box, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import * as util from 'util';
 
-// ============================================================
-// 月の満ち欠けのイラストを下記からお借りしています。
-//
-// koyomi.js: 今日のこよみ
-// http://kikuchisan.net/
-// ============================================================
-import CalendarImage from '../assets/calendar.webp';
-import ClockImage from '../assets/clock.webp';
-import JapanImage from '../assets/japan.webp';
-import MoonImage from '../assets/moon.webp';
-import Moon0Icon from '../assets/moon/moon0.gif';
-import Moon1Icon from '../assets/moon/moon1.gif';
-import Moon2Icon from '../assets/moon/moon2.gif';
-import Moon3Icon from '../assets/moon/moon3.gif';
-import Moon4Icon from '../assets/moon/moon4.gif';
-import Moon5Icon from '../assets/moon/moon5.gif';
-import Moon6Icon from '../assets/moon/moon6.gif';
-import Moon7Icon from '../assets/moon/moon7.gif';
-import Moon8Icon from '../assets/moon/moon8.gif';
-import Moon9Icon from '../assets/moon/moon9.gif';
-import Moon10Icon from '../assets/moon/moon10.gif';
-import Moon11Icon from '../assets/moon/moon11.gif';
-import Moon12Icon from '../assets/moon/moon12.gif';
-import Moon13Icon from '../assets/moon/moon13.gif';
-import Moon14Icon from '../assets/moon/moon14.gif';
-import Moon15Icon from '../assets/moon/moon15.gif';
-import Moon16Icon from '../assets/moon/moon16.gif';
-import Moon17Icon from '../assets/moon/moon17.gif';
-import Moon18Icon from '../assets/moon/moon18.gif';
-import Moon19Icon from '../assets/moon/moon19.gif';
-import Moon20Icon from '../assets/moon/moon20.gif';
-import Moon21Icon from '../assets/moon/moon21.gif';
-import Moon22Icon from '../assets/moon/moon22.gif';
-import Moon23Icon from '../assets/moon/moon23.gif';
-import Moon24Icon from '../assets/moon/moon24.gif';
-import Moon25Icon from '../assets/moon/moon25.gif';
-import Moon26Icon from '../assets/moon/moon26.gif';
-import Moon27Icon from '../assets/moon/moon27.gif';
-import Moon28Icon from '../assets/moon/moon28.gif';
-import Moon29Icon from '../assets/moon/moon29.gif';
-import MosesImage from '../assets/moses.webp';
-import RokuyoImage from '../assets/rokuyo.webp';
-import SeaImage from '../assets/sea.webp';
-import SighImage from '../assets/sign.webp';
-import SignSnakeCharmerImage from '../assets/sign-snake-charmer.webp';
-import SolarImage from '../assets/solar.webp';
-import WeekImage from '../assets/week.webp';
+import AutumnImage from '../assets/images/autumn.webp';
+import Autumn2Image from '../assets/images/autumn2.webp';
+import Autumn3Image from '../assets/images/autumn3.webp';
+import BoarImage from '../assets/images/boar.webp';
+import CalendarImage from '../assets/images/calendar.webp';
+import ChickenImage from '../assets/images/chicken.webp';
+import ClockImage from '../assets/images/clock.webp';
+import CowImage from '../assets/images/cow.webp';
+import DogImage from '../assets/images/dog.webp';
+import DragonImage from '../assets/images/dragon.webp';
+import HorseImage from '../assets/images/horse.webp';
+import JapanImage from '../assets/images/japan.webp';
+import MonkeyImage from '../assets/images/monkey.webp';
+import MoonImage from '../assets/images/moon.webp';
+import MosesImage from '../assets/images/moses.webp';
+import MouseImage from '../assets/images/mouse.webp';
+import RabbitImage from '../assets/images/rabbit.webp';
+import RokuyoImage from '../assets/images/rokuyo.webp';
+import SeaImage from '../assets/images/sea.webp';
+import SheepImage from '../assets/images/sheep.webp';
+import SighImage from '../assets/images/sign.webp';
+import SignSnakeCharmerImage from '../assets/images/sign-snake-charmer.webp';
+import SnakeImage from '../assets/images/snake.webp';
+import SolarImage from '../assets/images/solar.webp';
+import SpringImage from '../assets/images/spring.webp';
+import Spring2Image from '../assets/images/spring2.webp';
+import Spring3Image from '../assets/images/spring3.webp';
+import SummerImage from '../assets/images/summer.webp';
+import Summer2Image from '../assets/images/summer2.webp';
+import Summer3Image from '../assets/images/summer3.webp';
+import TigerImage from '../assets/images/tiger.webp';
+import WeekImage from '../assets/images/week.webp';
+import WinterImage from '../assets/images/winter.webp';
+import Winter2Image from '../assets/images/winter2.webp';
+import Winter3Image from '../assets/images/winter3.webp';
+import { moonIcons } from '../assets/moon';
 import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
-import { AppState } from '../stores';
 import { getAge } from '../utils/date';
 import { DateResultItem, DateResultItemProps } from './DateResultItem';
-import { getSeasonImage, getZodiacImage } from './ImageGetter';
-
-const moonIcons = [
-  Moon0Icon,
-  Moon1Icon,
-  Moon2Icon,
-  Moon3Icon,
-  Moon4Icon,
-  Moon5Icon,
-  Moon6Icon,
-  Moon7Icon,
-  Moon8Icon,
-  Moon9Icon,
-  Moon10Icon,
-  Moon11Icon,
-  Moon12Icon,
-  Moon13Icon,
-  Moon14Icon,
-  Moon15Icon,
-  Moon16Icon,
-  Moon17Icon,
-  Moon18Icon,
-  Moon19Icon,
-  Moon20Icon,
-  Moon21Icon,
-  Moon22Icon,
-  Moon23Icon,
-  Moon24Icon,
-  Moon25Icon,
-  Moon26Icon,
-  Moon27Icon,
-  Moon28Icon,
-  Moon29Icon,
-];
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -98,13 +51,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const DateResult = () => {
+type DateResultProps = {
+  date: Date;
+};
+
+export const DateResult = ({ date }: DateResultProps) => {
   console.log('DEBUG: render DataResult');
 
   const classes = useStyles();
   const [t] = useTranslation();
 
-  const { date } = useSelector((state: AppState) => state.view);
   const calendar = new JapaneseLunisolarCalendar(date);
   const calendarInfo = createCalendarInfo(calendar);
 
@@ -270,11 +226,11 @@ export const DateResult = () => {
 
   return (
     <Box>
-      {date.isTokyoLocalTime() ? (
+      {date.isTokyoLocalTime() && (
         <Alert className={classes.alert} variant="standard" severity="warning" data-testid="data-result-alert">
           {t('message.warning.old-year')}
         </Alert>
-      ) : null}
+      )}
       <Grid container spacing={2} data-testid="data-result-list">
         {cardInfo.map((props, i) => (
           <Grid key={i} item xs={12} sm={6} md={4}>
@@ -284,4 +240,77 @@ export const DateResult = () => {
       </Grid>
     </Box>
   );
+};
+
+const getSeasonImage = (season4?: string) => {
+  let season4Image: string, season24Image: string, season72Image: string;
+  switch (season4) {
+    case '春':
+      season4Image = SpringImage;
+      season24Image = Spring2Image;
+      season72Image = Spring3Image;
+      break;
+    case '夏':
+      season4Image = SummerImage;
+      season24Image = Summer2Image;
+      season72Image = Summer3Image;
+      break;
+    case '秋':
+      season4Image = AutumnImage;
+      season24Image = Autumn2Image;
+      season72Image = Autumn3Image;
+      break;
+    case '冬':
+    default:
+      season4Image = WinterImage;
+      season24Image = Winter2Image;
+      season72Image = Winter3Image;
+      break;
+  }
+  return { season4Image, season24Image, season72Image };
+};
+
+// eslint-disable-next-line complexity
+const getZodiacImage = (junishi?: string) => {
+  let zodiacImage: string;
+  switch (junishi) {
+    case '子':
+      zodiacImage = MouseImage;
+      break;
+    case '丑':
+      zodiacImage = CowImage;
+      break;
+    case '寅':
+      zodiacImage = TigerImage;
+      break;
+    case '卯':
+      zodiacImage = RabbitImage;
+      break;
+    case '辰':
+      zodiacImage = DragonImage;
+      break;
+    case '巳':
+      zodiacImage = SnakeImage;
+      break;
+    case '午':
+      zodiacImage = HorseImage;
+      break;
+    case '未':
+      zodiacImage = SheepImage;
+      break;
+    case '申':
+      zodiacImage = MonkeyImage;
+      break;
+    case '酉':
+      zodiacImage = ChickenImage;
+      break;
+    case '戌':
+      zodiacImage = DogImage;
+      break;
+    case '亥':
+    default:
+      zodiacImage = BoarImage;
+      break;
+  }
+  return zodiacImage;
 };
