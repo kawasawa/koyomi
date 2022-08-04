@@ -46,7 +46,7 @@ import { getAge } from '../utils/date';
 import { DateResultItem, DateResultItemProps } from './DateResultItem';
 
 const useStyles = makeStyles((theme) => ({
-  alert: {
+  dateAlert: {
     marginBottom: theme.spacing(2),
   },
 }));
@@ -58,7 +58,6 @@ type DateResultProps = {
 export const DateResult = ({ date }: DateResultProps) => {
   console.log('DEBUG: render DataResult');
 
-  const classes = useStyles();
   const [t] = useTranslation();
 
   const calendar = new JapaneseLunisolarCalendar(date);
@@ -73,7 +72,7 @@ export const DateResult = ({ date }: DateResultProps) => {
   const julianDayRevise = julianDay - 2400000.5;
   const lilianDay = julianDay - 2299159.5;
   const eclipticCoordinate = getEclipticCoordinate(julianDay + 1);
-  const { season4Image, season24Image, season72Image } = getSeasonImage(calendarInfo?.season.season4.value);
+  const seasonImage = getSeasonImage(calendarInfo?.season.season4.value);
   const zodiacImage = getZodiacImage(calendarInfo?.etoYear.junishi.value);
   const moonIcon = moonIcons[Math.floor(calendar.lunaAge)];
 
@@ -122,7 +121,7 @@ export const DateResult = ({ date }: DateResultProps) => {
       kana: calendarInfo?.season.season4.kana,
       summary2: t('text.season4'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B5A8C0E1.html',
-      image: season4Image,
+      image: seasonImage.season4Image,
     },
     {
       title: t('label.season24'),
@@ -138,7 +137,7 @@ export const DateResult = ({ date }: DateResultProps) => {
       summary1: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.summary : undefined,
       summary2: t('text.season24'),
       url: 'https://www.ndl.go.jp/koyomi/chapter3/s7.html',
-      image: season24Image,
+      image: seasonImage.season24Image,
     },
     {
       title: t('label.season72'),
@@ -147,7 +146,7 @@ export const DateResult = ({ date }: DateResultProps) => {
       summary1: calendarInfo?.season.season72.summary,
       summary2: t('text.season72'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B5A8C0E12FBCB7BDBDC6F3B8F5.html',
-      image: season72Image,
+      image: seasonImage.season72Image,
     },
     {
       title: t('label.sign12'),
@@ -224,16 +223,17 @@ export const DateResult = ({ date }: DateResultProps) => {
     },
   ];
 
+  const classes = useStyles();
   return (
     <Box>
       {date.isTokyoLocalTime() && (
-        <Alert className={classes.alert} variant="standard" severity="warning" data-testid="data-result-alert">
+        <Alert className={classes.dateAlert} variant="standard" severity="warning" data-testid="dataResult__alert">
           {t('message.warning.old-year')}
         </Alert>
       )}
-      <Grid container spacing={2} data-testid="data-result-list">
+      <Grid container spacing={2} data-testid="dataResult__items">
         {cardInfo.map((props, i) => (
-          <Grid key={i} item xs={12} sm={6} md={4}>
+          <Grid item key={`dataResult__item${i}`} xs={12} sm={6} md={4}>
             <DateResultItem props={props} />
           </Grid>
         ))}

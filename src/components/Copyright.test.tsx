@@ -5,7 +5,7 @@ import { Copyright } from './Copyright';
 describe('Copyright', () => {
   test('コンポーネントの描画', () => {
     render(<Copyright />);
-    expect(screen.getByTestId('copyright')).toBeVisible();
-    expect(screen.getByTestId('creator-page-url')).toBeVisible();
+    expect(screen.getByTestId('copyright__area')).toBeVisible();
+    expect(screen.getByTestId('copyright__url')).toBeVisible();
   });
 });

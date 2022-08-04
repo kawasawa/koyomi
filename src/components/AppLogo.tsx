@@ -22,10 +22,10 @@ export const AppLogo = ({ className }: { className: string }) => {
         src={`${process.env.PUBLIC_URL}/logo192.png`}
         alt="logo"
         loading="lazy"
-        data-testid="app-logo"
+        data-testid="applogo__image"
       />
       <div style={{ width: 20 }} />
-      <Typography variant="h6" noWrap data-testid="app-title">
+      <Typography variant="h6" noWrap data-testid="applogo__title">
         {t('label.app-title')}
       </Typography>
     </Box>

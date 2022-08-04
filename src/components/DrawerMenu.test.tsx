@@ -5,13 +5,13 @@ import { DrawerMenu } from './DrawerMenu';
 describe('DrawerMenu', () => {
   test('コンポーネントの描画', () => {
     render(<DrawerMenu anchor="left" />);
-    expect(screen.getByTestId('menu-button')).toBeVisible();
-    expect(screen.queryByTestId('menu-list')).toBeNull();
+    expect(screen.getByTestId('drawerMenu__button')).toBeVisible();
+    expect(screen.queryByTestId('drawerMenu__list')).toBeNull();
   });
 
   test('コンポーネントの描画(ドロワー展開)', () => {
     render(<DrawerMenu anchor="left" />);
-    screen.getByTestId('menu-button').click();
-    expect(screen.getByTestId('menu-list')).toBeVisible();
+    screen.getByTestId('drawerMenu__button').click();
+    expect(screen.getByTestId('drawerMenu__list')).toBeVisible();
   });
 });

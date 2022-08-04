@@ -11,11 +11,11 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../components', () => ({
-  AppLogo: () => <div data-testid="app-logo"></div>,
+  AppLogo: () => <div data-testid="applogo"></div>,
   Copyright: () => <div data-testid="copyright"></div>,
-  DateInput: () => <div data-testid="date-input"></div>,
-  DateResult: () => <div data-testid="date-result"></div>,
-  DrawerMenu: () => <div data-testid="drawer-menu"></div>,
+  DateInput: () => <div data-testid="dateInput"></div>,
+  DateResult: () => <div data-testid="dateResult"></div>,
+  DrawerMenu: () => <div data-testid="drawerMenu"></div>,
 }));
 
 describe('Top', () => {
@@ -34,8 +34,8 @@ describe('Top', () => {
     spyUseParams.mockReturnValue({ date });
     render(<Top />);
 
-    expect(screen.getByTestId('date-input')).toBeVisible();
-    expect(screen.getByTestId('date-result')).toBeVisible();
+    expect(screen.getByTestId('dateInput')).toBeVisible();
+    expect(screen.getByTestId('dateResult')).toBeVisible();
     expect(screen.getByTestId('copyright')).toBeVisible();
 
     expect(spyConsoleError).not.toBeCalled();
@@ -46,8 +46,8 @@ describe('Top', () => {
     spyUseParams.mockReturnValue({ date });
     render(<Top />);
 
-    expect(screen.getByTestId('date-input')).toBeVisible();
-    expect(screen.getByTestId('date-result')).toBeVisible();
+    expect(screen.getByTestId('dateInput')).toBeVisible();
+    expect(screen.getByTestId('dateResult')).toBeVisible();
     expect(screen.getByTestId('copyright')).toBeVisible();
 
     expect(spyConsoleError).not.toBeCalled();
