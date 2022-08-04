@@ -40,7 +40,7 @@ export const DateInput = ({ initialDate, minDate, maxDate }: DateInputProps) => 
       animateYearScrolling={true}
       disableKeyboardInput={true}
       onChange={(date) => {
-        if (date) history.push(`/${formatDate(date)}`);
+        if (date) history.push(`/${formatDate(date, '-')}`);
       }}
       data-testid="dateInput__picker"
     />

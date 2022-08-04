@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const AppLogo = ({ className }: { className: string }) => {
-  console.log('DEBUG: render AppLog');
+  console.log('DEBUG: render AppLogo');
 
   const classes = useStyles();
   const [t] = useTranslation();

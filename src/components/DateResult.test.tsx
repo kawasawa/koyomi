@@ -13,9 +13,9 @@ describe('DateResult', () => {
   });
 
   test('東京地方時の警告', () => {
-    const date = new Date('1887-12-31');
+    const date = new Date('1887/12/31');
     render(<DateResult date={date} />);
 
-    expect(screen.getByTestId('data-result-alert')).toBeVisible();
+    expect(screen.getByTestId('dataResult__alert')).toBeVisible();
   });
 });
