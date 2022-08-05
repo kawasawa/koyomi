@@ -54,7 +54,9 @@ export const Top = () => {
   }
   if (targetDate < SYSTEM_MIN_DATE || SYSTEM_MAX_DATE < targetDate) {
     console.error(`Error: ${LOG_E_OUT_OF_RANGE} ${targetDate}`);
-    toast.info(util.format(t('message.error.date-range'), formatDate(SYSTEM_MIN_DATE), formatDate(SYSTEM_MAX_DATE)));
+    toast.info(
+      util.format(t('message.error.date-range'), formatDate(SYSTEM_MIN_DATE, '-'), formatDate(SYSTEM_MAX_DATE, '-'))
+    );
     history.push(`/`);
     return null;
   }

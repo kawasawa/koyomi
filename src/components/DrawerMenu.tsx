@@ -46,7 +46,7 @@ export const DrawerMenu = ({ anchor }: { anchor: Anchor }) => {
         className={classes.menuButton}
         edge="start"
         onClick={toggleDrawer(anchor, true)}
-        data-testid="menu-button"
+        data-testid="drawerMenu__button"
       >
         <Menu />
       </IconButton>
@@ -61,7 +61,7 @@ export const DrawerMenu = ({ anchor }: { anchor: Anchor }) => {
         >
           <AppLogo className={classes.menuTopBox} />
           <Divider />
-          <List data-testid="menu-list">
+          <List data-testid="drawerMenu__list">
             <ListItemLink href={URL_REPOSITORY} target="_blank">
               <ListItemIcon>
                 <GitHub />

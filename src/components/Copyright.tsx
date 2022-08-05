@@ -7,9 +7,9 @@ export const Copyright = () => {
   console.log('DEBUG: render Copyright');
 
   return (
-    <Typography variant="body2" color="textSecondary" align="center" data-testid="copyright">
+    <Typography variant="body2" color="textSecondary" align="center" data-testid="copyright__area">
       {'© '}
-      <Link color="inherit" href={URL_CREATORPAGE} target="_blank" data-testid="creator-page-url">
+      <Link color="inherit" href={URL_CREATORPAGE} target="_blank" data-testid="copyright__url">
         {APP_AUTHOR}
       </Link>
       {' All Rights Reserved.'}

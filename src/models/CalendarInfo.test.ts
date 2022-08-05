@@ -35,8 +35,8 @@ const createLuna = (year: number, month: number, day: number) =>
   new JapaneseLunisolarCalendar(createDate(year, month, day));
 
 test('歴中の生成', () => {
-  expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021-01-99')))).toBeUndefined();
-  expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021-01-01')))).toBeDefined();
+  expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021/01/99')))).toBeUndefined();
+  expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021/01/01')))).toBeDefined();
 });
 
 test('元号の取得', () => {

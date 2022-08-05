@@ -1,30 +1,40 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 
 import { DateResultItem, DateResultItemProps } from './DateResultItem';
 
+const props: DateResultItemProps = {
+  title: 'test-title',
+  value: 'test-value',
+  kana: 'test-kana',
+  summary1: 'test-summary1',
+  summary2: 'test-summary2',
+  balloon: 'test-balloon',
+  url: 'test-url',
+  icon: 'test-icon',
+  image: 'test-image',
+};
+
 describe('DateResultItem', () => {
-  test('コンポーネントの描画', () => {
-    const props: DateResultItemProps = {
-      title: 'test-title-001',
-      value: 'test-value-001',
-      kana: 'test-kana-001',
-      summary1: 'test-summary1-001',
-      summary2: 'test-summary2-001',
-      balloon: 'test-balloon-001',
-      url: 'test-url-001',
-      icon: 'test-icon-001',
-      image: 'test-image-001',
-    };
+  test('コンポーネントの描画', async () => {
+    const mockOpen = jest.fn();
+    window.open = mockOpen;
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({ observe: () => jest.fn() }));
+
     render(<DateResultItem props={props} />);
 
-    expect(screen.getByTestId('data-result-title').textContent).toBe(props.title);
-    expect(screen.getByTestId('data-result-kana').textContent).toBe(props.kana);
-    expect(screen.getByTestId('data-result-value').textContent).toBe(props.value);
-    expect(screen.getByTestId('data-result-summary1').textContent).toBe(props.summary1);
-    expect(screen.getByTestId('data-result-summary2').textContent).toBe(props.summary2);
-    expect(screen.getByTestId('data-result-balloon').textContent).toBe(props.balloon);
-    //expect(screen.getByTestId('data-result-url').getAttribute('href')).toBe(props.url);
-    expect(screen.getByTestId('data-result-icon').getAttribute('src')).toBe(props.icon);
-    expect(screen.getByTestId('data-result-image').getAttribute('src')).toBe(props.image);
+    expect(screen.getByTestId('dateResultItem__title').textContent).toBe(props.title);
+    expect(screen.getByTestId('dateResultItem__kana').textContent).toBe(props.kana);
+    expect(screen.getByTestId('dateResultItem__value').textContent).toBe(props.value);
+    expect(screen.getByTestId('dateResultItem__summary1').textContent).toBe(props.summary1);
+    expect(screen.getByTestId('dateResultItem__summary2').textContent).toBe(props.summary2);
+    expect(screen.getByTestId('dateResultItem__balloon').textContent).toBe(props.balloon);
+    expect(screen.getByTestId('dateResultItem__icon').getAttribute('src')).toBe(props.icon);
+    expect(screen.getByTestId('dateResultItem__image').getAttribute('src')).toBe(props.image);
+
+    act(() => {
+      fireEvent.click(screen.getByTestId('dateResultItem__actionArea'));
+    });
+    await waitFor(() => expect(mockOpen).toBeCalledWith(props.url, '_blank'));
   });
 });
