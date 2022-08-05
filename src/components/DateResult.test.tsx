@@ -2,6 +2,10 @@ import { render, screen } from '@testing-library/react';
 
 import { DateResult } from './DateResult';
 
+jest.mock('./DateResultItem', () => ({
+  DateResultItem: () => <div data-testid="dataResultItem"></div>,
+}));
+
 describe('DateResult', () => {
   test('コンポーネントの描画', () => {
     const date = new Date('1888/01/01');

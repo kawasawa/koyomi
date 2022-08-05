@@ -17,7 +17,9 @@ const props: DateResultItemProps = {
 
 describe('DateResultItem', () => {
   test('コンポーネントの描画', async () => {
-    const mockOpen = jest.spyOn(window, 'open');
+    const mockOpen = jest.fn();
+    window.open = mockOpen;
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({ observe: () => jest.fn() }));
 
     render(<DateResultItem props={props} />);
 
