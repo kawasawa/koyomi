@@ -71,14 +71,16 @@ export const DateResultItem = ({ props }: { props: DateResultItemProps }) => {
   return (
     <Fade ref={ref} in={inView} timeout={1500}>
       <Card className={classes.card}>
+        {/* スマホでスクロールすることを考えると、反応しない範囲を設けた方が良いように思う */}
+        <CardMedia
+          className={classes.cardMedia}
+          component="img"
+          src={props.image}
+          alt="card-media"
+          data-testid="dateResultItem__image"
+        />
+
         <CardActionArea onClick={() => window.open(props.url, '_blank')} data-testid="dateResultItem__actionArea">
-          <CardMedia
-            className={classes.cardMedia}
-            component="img"
-            src={props.image}
-            alt="card-media"
-            data-testid="dateResultItem__image"
-          />
           <CardContent>
             <Box className={classes.cardTitle}>
               <Typography variant="subtitle1" color="primary" gutterBottom data-testid="dateResultItem__title">
