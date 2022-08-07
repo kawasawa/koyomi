@@ -1,25 +1,49 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 
-import { DateResult } from './DateResult';
+import { DateResult, DateResultProps } from './DateResult';
 
-jest.mock('./DateResultItem', () => ({
-  DateResultItem: () => <div data-testid="dataResultItem"></div>,
-}));
+const props: DateResultProps = {
+  title: 'test-title',
+  value: 'test-value',
+  kana: 'test-kana',
+  summary1: 'test-summary1',
+  summary2: 'test-summary2',
+  balloon: 'test-balloon',
+  url: 'test-url',
+  icon: 'test-icon',
+  image: 'test-image',
+};
 
 describe('DateResult', () => {
-  test('コンポーネントの描画', () => {
-    const date = new Date('1888/01/01');
-    render(<DateResult date={date} />);
+  const originalWindow = { ...window };
 
-    expect(screen.queryByTestId('dataResult__alert')).toBeNull();
-    expect(screen.getByTestId('dataResult__items')).toBeVisible();
-    expect(screen.getByTestId('dataResult__items').childNodes.length).toBe(15);
+  beforeEach(() => {
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({ observe: () => jest.fn() }));
   });
 
-  test('東京地方時の警告', () => {
-    const date = new Date('1887/12/31');
-    render(<DateResult date={date} />);
+  afterEach(() => {
+    window.IntersectionObserver = originalWindow.IntersectionObserver;
+  });
 
-    expect(screen.getByTestId('dataResult__alert')).toBeVisible();
+  test('コンポーネントの描画', async () => {
+    const mockOpen = jest.fn();
+    window.open = mockOpen;
+
+    render(<DateResult props={props} />);
+
+    expect(screen.getByTestId('dateResult__title').textContent).toBe(props.title);
+    expect(screen.getByTestId('dateResult__kana').textContent).toBe(props.kana);
+    expect(screen.getByTestId('dateResult__value').textContent).toBe(props.value);
+    expect(screen.getByTestId('dateResult__summary1').textContent).toBe(props.summary1);
+    expect(screen.getByTestId('dateResult__summary2').textContent).toBe(props.summary2);
+    expect(screen.getByTestId('dateResult__balloon').textContent).toBe(props.balloon);
+    expect(screen.getByTestId('dateResult__icon').getAttribute('src')).toBe(props.icon);
+    expect(screen.getByTestId('dateResult__image').getAttribute('src')).toBe(props.image);
+
+    act(() => {
+      fireEvent.click(screen.getByTestId('dateResult__actionArea'));
+    });
+    await waitFor(() => expect(mockOpen).toBeCalledWith(props.url, '_blank'));
   });
 });
