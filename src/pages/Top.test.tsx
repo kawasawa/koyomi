@@ -13,11 +13,10 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../components', () => ({
-  AppLogo: () => <div data-testid="mock__applogo"></div>,
-  Copyright: () => <div data-testid="mock__copyright"></div>,
+  Header: () => <div data-testid="mock__header"></div>,
+  Footer: () => <div data-testid="mock__footer"></div>,
   DateInput: () => <div data-testid="mock__dateInput"></div>,
   DateResult: () => <div data-testid="mock__dateResult"></div>,
-  DrawerMenu: () => <div data-testid="mock__drawerMenu"></div>,
 }));
 
 describe('Top', () => {
@@ -42,10 +41,8 @@ describe('Top', () => {
 
     render(<Top />);
 
-    expect(screen.getByTestId('mock__applogo')).toBeVisible();
-    expect(screen.getByTestId('mock__copyright')).toBeVisible();
-    expect(screen.getByTestId('mock__dateInput')).toBeVisible();
-    expect(screen.getByTestId('mock__drawerMenu')).toBeVisible();
+    expect(screen.getByTestId('mock__header')).toBeVisible();
+    expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top__dateResults')).toBeVisible();
     expect(screen.queryByTestId('top__alert')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
@@ -58,10 +55,8 @@ describe('Top', () => {
 
     render(<Top />);
 
-    expect(screen.getByTestId('mock__applogo')).toBeVisible();
-    expect(screen.getByTestId('mock__copyright')).toBeVisible();
-    expect(screen.getByTestId('mock__dateInput')).toBeVisible();
-    expect(screen.getByTestId('mock__drawerMenu')).toBeVisible();
+    expect(screen.getByTestId('mock__header')).toBeVisible();
+    expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top__dateResults')).toBeVisible();
     expect(screen.queryByTestId('top__alert')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
@@ -74,10 +69,8 @@ describe('Top', () => {
 
     render(<Top />);
 
-    expect(screen.getByTestId('mock__applogo')).toBeVisible();
-    expect(screen.getByTestId('mock__copyright')).toBeVisible();
-    expect(screen.getByTestId('mock__dateInput')).toBeVisible();
-    expect(screen.getByTestId('mock__drawerMenu')).toBeVisible();
+    expect(screen.getByTestId('mock__header')).toBeVisible();
+    expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top__dateResults')).toBeVisible();
     expect(screen.getByTestId('top__alert')).toBeVisible();
 

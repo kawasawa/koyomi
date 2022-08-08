@@ -65,7 +65,7 @@ export type DateResultProps = {
 export const DateResult = ({ props }: { props: DateResultProps }) => {
   console.log('DEBUG: render DataResult');
 
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({ rootMargin: '100px' });
 
   const classes = useStyles();
   return (
