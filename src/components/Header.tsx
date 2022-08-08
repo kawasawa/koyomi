@@ -1,6 +1,5 @@
 import { AppBar, makeStyles, Toolbar } from '@material-ui/core';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { AppLogo } from './AppLogo';
 import { DrawerMenu } from './DrawerMenu';
@@ -20,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = ({ children }: { children?: React.ReactNode }) => {
   console.log('DEBUG: render Header');
-  const [t] = useTranslation();
 
   const classes = useStyles();
   return (
