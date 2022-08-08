@@ -1,6 +1,6 @@
 import 'date-fns';
 
-import { AppBar, Box, Container, Grid, makeStyles, Toolbar } from '@material-ui/core';
+import { Container, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -44,8 +44,8 @@ import WinterImage from '../assets/images/winter.webp';
 import Winter2Image from '../assets/images/winter2.webp';
 import Winter3Image from '../assets/images/winter3.webp';
 import { moonIcons } from '../assets/moon';
-import { AppLogo, Copyright, DateInput, DrawerMenu } from '../components';
-import { DateResult, DateResultProps } from '../components/DateResult';
+import { DateInput, DateResult, Footer, Header } from '../components';
+import { DateResultProps } from '../components/DateResult';
 import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE, SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constants';
 import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
@@ -53,30 +53,11 @@ import { formatDate } from '../utils/date';
 import { getAge } from '../utils/date';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  header: {
-    flexGrow: 1,
-  },
-  title: {
-    flexGrow: 1,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-    },
+  content: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
   alert: {
-    marginBottom: theme.spacing(2),
-  },
-  content: {
-    flexGrow: 1,
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  footer: {
-    flexGrow: 1,
-    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
 }));
@@ -271,35 +252,26 @@ export const Top = () => {
   ];
 
   return (
-    <Box className={classes.root}>
-      <AppBar className={classes.header} position="sticky" color="default">
-        <Toolbar>
-          <DrawerMenu anchor="left" />
-          <AppLogo className={classes.title} />
-          <div style={{ flex: '1 0 0' }} />
-          <DateInput initialDate={date} minDate={SYSTEM_MIN_DATE} maxDate={SYSTEM_MAX_DATE} />
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth="lg">
-        <Box className={classes.content}>
-          {date.isTokyoLocalTime() && (
-            <Alert className={classes.alert} variant="standard" severity="warning" data-testid="top__alert">
-              {t('message.warning.old-year')}
-            </Alert>
-          )}
-          <Grid container spacing={2} data-testid="top__dateResults">
-            {cardInfo.map((props, i) => (
-              <Grid item key={`top__dateResults--item${i}`} xs={12} sm={6} md={4}>
-                <DateResult props={props} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+    <>
+      <Header>
+        <DateInput initialDate={date} minDate={SYSTEM_MIN_DATE} maxDate={SYSTEM_MAX_DATE} />
+      </Header>
+      <Container className={classes.content} maxWidth="lg">
+        {date.isTokyoLocalTime() && (
+          <Alert className={classes.alert} variant="standard" severity="warning" data-testid="top__alert">
+            {t('message.warning.old-year')}
+          </Alert>
+        )}
+        <Grid container spacing={2} data-testid="top__dateResults">
+          {cardInfo.map((props, i) => (
+            <Grid item key={`top__dateResults--item${i}`} xs={12} sm={6} md={4}>
+              <DateResult props={props} />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
-      <Box className={classes.footer}>
-        <Copyright />
-      </Box>
-    </Box>
+      <Footer />
+    </>
   );
 };
 
