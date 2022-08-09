@@ -12,14 +12,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Footer = () => {
-  console.log('DEBUG: render Copyright');
-
   const classes = useStyles();
   return (
     <AppBar className={classes.appbar} color="default">
       <Typography variant="body2" color="textSecondary" align="center" data-testid="footer__copyright">
         {'© '}
-        <Link color="inherit" href={URL_CREATORPAGE} target="_blank">
+        <Link href={URL_CREATORPAGE} color="inherit" underline="always" target="_blank">
           {APP_AUTHOR}
         </Link>
         {' All Rights Reserved.'}

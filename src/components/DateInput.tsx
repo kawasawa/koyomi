@@ -12,27 +12,24 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type DateInputProps = {
+export type DateInputProps = {
   initialDate: Date;
   minDate?: Date;
   maxDate?: Date;
 };
 
-export const DateInput = ({ initialDate, minDate, maxDate }: DateInputProps) => {
-  console.log('DEBUG: render DataInput');
-
+export const DateInput = ({ ...props }: DateInputProps) => {
+  const [t] = useTranslation();
   const history = useHistory();
   const classes = useStyles();
-  const [t] = useTranslation();
-
   return (
     <JaDatePicker
       className={classes.datePicker}
-      value={initialDate}
+      value={props.initialDate}
       name="date"
       label={t('label.date')}
-      minDate={minDate}
-      maxDate={maxDate}
+      minDate={props.minDate}
+      maxDate={props.maxDate}
       margin="normal"
       variant="inline"
       inputVariant="filled"

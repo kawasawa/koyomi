@@ -30,7 +30,7 @@ describe('DateResult', () => {
     const mockOpen = jest.fn();
     window.open = mockOpen;
 
-    render(<DateResult props={props} />);
+    render(<DateResult {...props} />);
 
     expect(screen.getByTestId('dateResult__title').textContent).toBe(props.title);
     expect(screen.getByTestId('dateResult__kana').textContent).toBe(props.kana);

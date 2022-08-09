@@ -62,11 +62,8 @@ export type DateResultProps = {
   image: string;
 };
 
-export const DateResult = ({ props }: { props: DateResultProps }) => {
-  console.log('DEBUG: render DataResult');
-
+export const DateResult = ({ ...props }: DateResultProps) => {
   const { ref, inView } = useInView({ rootMargin: '100px' });
-
   const classes = useStyles();
   return (
     <Fade ref={ref} in={inView} timeout={1000}>

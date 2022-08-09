@@ -46,7 +46,7 @@ import Winter3Image from '../assets/images/winter3.webp';
 import { moonIcons } from '../assets/moon';
 import { DateInput, DateResult, Footer, Header } from '../components';
 import { DateResultProps } from '../components/DateResult';
-import { LOG_E_INVALID_FORMAT, LOG_E_OUT_OF_RANGE, SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constants';
+import { SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constants';
 import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 import { formatDate } from '../utils/date';
@@ -69,28 +69,22 @@ export const Top = () => {
   const [t] = useTranslation();
 
   const params = useParams<{ date?: string }>();
-  console.info(`Info: params.date = ${params.date}`);
-
   const date = params.date ? new Date(params.date) : new Date();
   if (isNaN(date.getDate())) {
-    console.error(`Error: ${LOG_E_INVALID_FORMAT} ${params.date}`);
     toast.info(t('message.error.date-format'));
     history.push(`/`);
     return null;
   }
   if (date < SYSTEM_MIN_DATE || SYSTEM_MAX_DATE < date) {
-    console.error(`Error: ${LOG_E_OUT_OF_RANGE} ${date}`);
     toast.info(
       util.format(t('message.error.date-range'), formatDate(SYSTEM_MIN_DATE, '-'), formatDate(SYSTEM_MAX_DATE, '-'))
     );
     history.push(`/`);
     return null;
   }
-  console.info(`Info: TargetDate = ${date}`);
 
   const calendar = new JapaneseLunisolarCalendar(date);
   const calendarInfo = createCalendarInfo(calendar);
-
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -265,7 +259,7 @@ export const Top = () => {
         <Grid container spacing={2} data-testid="top__dateResults">
           {cardInfo.map((props, i) => (
             <Grid item key={`top__dateResults--item${i}`} xs={12} sm={6} md={4}>
-              <DateResult props={props} />
+              <DateResult {...props} />
             </Grid>
           ))}
         </Grid>
