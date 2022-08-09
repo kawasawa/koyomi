@@ -1,4 +1,3 @@
-export { DateInput } from './DateInput';
-export { DateResult } from './DateResult';
+export { DateCard } from './DateCard';
 export { Footer } from './Footer';
 export { Header } from './Header';

@@ -5,13 +5,9 @@ import { Header } from './Header';
 
 describe('Header', () => {
   test('コンポーネントの描画', async () => {
-    render(
-      <Header>
-        <div data-testid="header__children"></div>
-      </Header>
-    );
-    expect(screen.getByTestId('header__applogo--icon')).toBeDefined();
-    expect(screen.getByTestId('header__applogo--title')).toBeDefined();
-    expect(screen.getByTestId('header__children')).toBeVisible();
+    render(<Header date={new Date()} />);
+    expect(screen.getByTestId('header__appicon')).toBeDefined();
+    expect(screen.getByTestId('header__apptitle')).toBeDefined();
+    expect(screen.getByTestId('header__datepicker')).toBeVisible();
   });
 });

@@ -14,7 +14,7 @@ class JaDateFnsUtils extends DateFnsUtils {
 }
 
 export type JaDatePickerProps = {
-  disableKeyboardInput?: boolean;
+  disableKeyboardInput?: boolean | undefined;
 } & KeyboardDatePickerProps;
 
 export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerProps) => {

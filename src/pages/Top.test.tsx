@@ -15,8 +15,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../components', () => ({
   Header: () => <div data-testid="mock__header"></div>,
   Footer: () => <div data-testid="mock__footer"></div>,
-  DateInput: () => <div data-testid="mock__dateInput"></div>,
-  DateResult: () => <div data-testid="mock__dateResult"></div>,
+  DateCard: () => <div data-testid="mock__datecard"></div>,
 }));
 
 describe('Top', () => {
@@ -43,7 +42,7 @@ describe('Top', () => {
 
     expect(screen.getByTestId('mock__header')).toBeVisible();
     expect(screen.getByTestId('mock__footer')).toBeVisible();
-    expect(screen.getByTestId('top__dateResults')).toBeVisible();
+    expect(screen.getByTestId('top_contents')).toBeVisible();
     expect(screen.queryByTestId('top__alert')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
     expect(mockUseHistoryPush).not.toBeCalled();
@@ -57,7 +56,7 @@ describe('Top', () => {
 
     expect(screen.getByTestId('mock__header')).toBeVisible();
     expect(screen.getByTestId('mock__footer')).toBeVisible();
-    expect(screen.getByTestId('top__dateResults')).toBeVisible();
+    expect(screen.getByTestId('top_contents')).toBeVisible();
     expect(screen.queryByTestId('top__alert')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
     expect(mockUseHistoryPush).not.toBeCalled();
@@ -71,7 +70,7 @@ describe('Top', () => {
 
     expect(screen.getByTestId('mock__header')).toBeVisible();
     expect(screen.getByTestId('mock__footer')).toBeVisible();
-    expect(screen.getByTestId('top__dateResults')).toBeVisible();
+    expect(screen.getByTestId('top_contents')).toBeVisible();
     expect(screen.getByTestId('top__alert')).toBeVisible();
 
     expect(spyToastInfo).not.toBeCalled();

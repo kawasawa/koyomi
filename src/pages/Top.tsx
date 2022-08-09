@@ -8,6 +8,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as util from 'util';
 
+import BannerImage from '../assets/banner.webp';
 import AutumnImage from '../assets/images/autumn.webp';
 import Autumn2Image from '../assets/images/autumn2.webp';
 import Autumn3Image from '../assets/images/autumn3.webp';
@@ -44,16 +45,26 @@ import WinterImage from '../assets/images/winter.webp';
 import Winter2Image from '../assets/images/winter2.webp';
 import Winter3Image from '../assets/images/winter3.webp';
 import { moonIcons } from '../assets/moon';
-import { DateInput, DateResult, Footer, Header } from '../components';
-import { DateResultProps } from '../components/DateResult';
-import { SYSTEM_MAX_DATE, SYSTEM_MIN_DATE } from '../constants';
+import { DateCard, Footer, Header } from '../components';
+import { DateCardProps } from '../components/DateCard';
+import { constants } from '../constants';
 import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 import { formatDate } from '../utils/date';
 import { getAge } from '../utils/date';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'relative',
+    minHeight: '100vh',
+    backgroundImage: `url(${BannerImage})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center center',
+    backgroundAttachment: 'fixed',
+  },
   content: {
+    background: 'transparent',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
   },
@@ -75,9 +86,13 @@ export const Top = () => {
     history.push(`/`);
     return null;
   }
-  if (date < SYSTEM_MIN_DATE || SYSTEM_MAX_DATE < date) {
+  if (date < constants.system.minDate || constants.system.maxDate < date) {
     toast.info(
-      util.format(t('message.error.date-range'), formatDate(SYSTEM_MIN_DATE, '-'), formatDate(SYSTEM_MAX_DATE, '-'))
+      util.format(
+        t('message.error.date-range'),
+        formatDate(constants.system.minDate, '-'),
+        formatDate(constants.system.maxDate, '-')
+      )
     );
     history.push(`/`);
     return null;
@@ -98,25 +113,25 @@ export const Top = () => {
   const zodiacImage = getZodiacImage(calendarInfo?.etoYear.junishi.value);
   const moonIcon = moonIcons[Math.floor(calendar.lunaAge)];
 
-  const cardInfo: DateResultProps[] = [
+  const cardInfo: DateCardProps[] = [
     {
-      title: t('label.japanese-calendar'),
+      title: t('label.japaneseCalendar'),
       value: `${util.format(
-        t('label.ymd'),
+        t('format.ymd'),
         `${calendarInfo?.era.value} ${eraYear === 1 ? '元' : eraYear}`,
         month,
         day
       )} (${calendarInfo?.jpWeek.value})`,
       summary1: calendarInfo?.era.summary,
-      summary2: t('text.japanese-calendar'),
-      balloon: 1 <= age ? util.format(t('label.age'), age) : undefined,
+      summary2: t('text.japaneseCalendar'),
+      balloon: 1 <= age ? util.format(t('format.age'), age) : undefined,
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/CEF2BBCB2FB8B5B9E6.html',
       image: JapanImage,
     },
     {
-      title: t('label.lunisolar-calendar'),
-      value: util.format(t('label.ymd'), calendar.year, calendar.month, calendar.day),
-      summary2: t('text.lunisolar-calendar'),
+      title: t('label.lunisolarCalendar'),
+      value: util.format(t('format.ymd'), calendar.year, calendar.month, calendar.day),
+      summary2: t('text.lunisolarCalendar'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/C2C0B1A2C2C0CDDBCEF1.html',
       image: ClockImage,
     },
@@ -151,7 +166,7 @@ export const Top = () => {
         calendarInfo?.season.season24.startAt === 0
           ? calendarInfo?.season.season24.value
           : util.format(
-              t('label.until-day'),
+              t('format.season4__until'),
               calendarInfo?.season.season24.value,
               calendarInfo?.season.season24.startAt
             ),
@@ -187,85 +202,81 @@ export const Top = () => {
       image: SignSnakeCharmerImage,
     },
     {
-      title: t('label.japanese-month'),
+      title: t('label.japaneseMonth'),
       value: calendarInfo?.jpMonth.value,
       kana: calendarInfo?.jpMonth.kana,
       summary1: calendarInfo?.jpMonth.summary,
-      summary2: t('text.japanese-month'),
+      summary2: t('text.japaneseMonth'),
       url: 'https://www.ndl.go.jp/koyomi/chapter3/s8.html',
       image: CalendarImage,
     },
     {
-      title: t('label.japanese-zodiac'),
+      title: t('label.japaneseZodiac'),
       value: `${calendarInfo?.etoYear.jikkan.value}${calendarInfo?.etoYear.junishi.value}`,
       kana: `${calendarInfo?.etoYear.jikkan.kana} ${calendarInfo?.etoYear.junishi.kana}`,
-      summary1: `${t('label.japanese-zodiac-month')}: ${calendarInfo?.etoMonth.jikkan.value}${
+      summary1: `${t('label.japaneseZodiacMonth')}: ${calendarInfo?.etoMonth.jikkan.value}${
         calendarInfo?.etoMonth.junishi.value
-      } ／ ${t('label.japanese-zodiac-day')}: ${calendarInfo?.etoDay.jikkan.value}${
-        calendarInfo?.etoDay.junishi.value
-      }`,
-      summary2: t('text.japanese-zodiac'),
+      } ／ ${t('label.japaneseZodiacDay')}: ${calendarInfo?.etoDay.jikkan.value}${calendarInfo?.etoDay.junishi.value}`,
+      summary2: t('text.japaneseZodiac'),
       url: 'https://www.ndl.go.jp/koyomi/chapter3/s1.html',
       image: zodiacImage,
     },
     {
-      title: t('label.luna-phase'),
+      title: t('label.lunaPhase'),
       value: calendarInfo?.lunaPhase.value,
       kana: calendarInfo?.lunaPhase.kana,
-      summary1: `${t('label.luna-age')}: ${calendar?.lunaAge.toString()}`,
-      summary2: t('text.luna-phase'),
+      summary1: `${t('label.lunaAge')}: ${calendar?.lunaAge.toString()}`,
+      summary2: t('text.lunaPhase'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B7EEA4CECBFEA4C1B7E7A4B1.html',
       image: MoonImage,
       icon: moonIcon,
     },
     {
-      title: t('label.tide-phase'),
+      title: t('label.tidePhase'),
       value: calendarInfo?.tidePhase.value,
       kana: calendarInfo?.tidePhase.kana,
-      summary2: t('text.tide-phase'),
+      summary2: t('text.tidePhase'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/C4ACBCAE.html',
       image: SeaImage,
     },
     {
-      title: t('label.ecliptic-coordinate'),
+      title: t('label.eclipticCoordinate'),
       value: `${eclipticCoordinate.toString()}°`,
-      summary2: t('text.ecliptic-coordinate'),
+      summary2: t('text.eclipticCoordinate'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B2ABC6BBBAC2C9B8B7CF.html',
       image: SolarImage,
     },
     {
-      title: t('label.julian-day'),
+      title: t('label.julianDay'),
       value: julianDay.toString(),
-      summary1: `${t('label.julian-day-revise')}: ${julianDayRevise.toString()} ／ ${t(
-        'label.lilian-day'
+      summary1: `${t('label.julianDayRevise')}: ${julianDayRevise.toString()} ／ ${t(
+        'label.lilianDay'
       )}: ${lilianDay.toString()}`,
-      summary2: t('text.julian-day'),
+      summary2: t('text.julianDay'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/A5E6A5EAA5A6A5B9C6FC.html',
       image: MosesImage,
     },
   ];
 
   return (
-    <>
-      <Header>
-        <DateInput initialDate={date} minDate={SYSTEM_MIN_DATE} maxDate={SYSTEM_MAX_DATE} />
-      </Header>
+    <div className={classes.root}>
+      <Header date={date} />
       <Container className={classes.content} maxWidth="lg">
         {date.isTokyoLocalTime() && (
           <Alert className={classes.alert} variant="standard" severity="warning" data-testid="top__alert">
             {t('message.warning.old-year')}
           </Alert>
         )}
-        <Grid container spacing={2} data-testid="top__dateResults">
+        <Grid container spacing={2} data-testid="top_contents">
           {cardInfo.map((props, i) => (
             <Grid item key={`top__dateResults--item${i}`} xs={12} sm={6} md={4}>
-              <DateResult {...props} />
+              <DateCard {...props} />
             </Grid>
           ))}
         </Grid>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 };
 
