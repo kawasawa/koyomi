@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  colors,
   Fade,
   Grid,
   makeStyles,
@@ -16,6 +17,7 @@ import { useInView } from 'react-intersection-observer';
 const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: '275px',
+    background: colors.amber[50],
   },
   cardMedia: {
     height: '140px',
@@ -28,11 +30,35 @@ const useStyles = makeStyles((theme) => ({
     height: '24px',
     marginLeft: theme.spacing(2),
   },
+  dateTitle: {
+    color: colors.teal[500],
+    marginBottom: '5px',
+  },
+  dateValue: {
+    color: colors.brown[900],
+    marginBottom: '10px',
+    marginLeft: '10px',
+  },
+  dateKana: {
+    color: colors.brown[500],
+    marginBottom: '10px',
+    marginLeft: '15px',
+  },
+  dateSummary1: {
+    color: colors.brown[500],
+    marginBottom: '10px',
+  },
+  dateSummary2: {
+    color: colors.grey[500],
+  },
+  balloonText: {
+    color: colors.grey[700],
+  },
   balloonTip: {
     display: 'block',
     boxSizing: 'border-box',
-    margin: '-3px 0 0 5px',
-    padding: '0px 10px',
+    margin: '0px 0 0 5px',
+    padding: '0px 10px 5px 10px',
     background: '#fafafa',
     border: '1px solid #aaa',
     borderRadius: '3px',
@@ -50,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export type DateResultProps = {
+export type DateCardProps = {
   title: string;
   value?: string;
   kana?: string;
@@ -62,14 +88,11 @@ export type DateResultProps = {
   image: string;
 };
 
-export const DateResult = ({ props }: { props: DateResultProps }) => {
-  console.log('DEBUG: render DataResult');
-
+export const DateCard = ({ ...props }: DateCardProps) => {
   const { ref, inView } = useInView({ rootMargin: '100px' });
-
   const classes = useStyles();
   return (
-    <Fade ref={ref} in={inView} timeout={1000}>
+    <Fade ref={ref} in={inView} timeout={800}>
       <Card className={classes.card}>
         {/* スマホでスクロールすることを考えると、反応しない範囲を設けた方が良いように思う */}
         <CardMedia
@@ -83,7 +106,7 @@ export const DateResult = ({ props }: { props: DateResultProps }) => {
         <CardActionArea onClick={() => window.open(props.url, '_blank')} data-testid="dateResult__actionArea">
           <CardContent>
             <Box className={classes.cardTitle}>
-              <Typography variant="subtitle1" color="primary" gutterBottom data-testid="dateResult__title">
+              <Typography className={classes.dateTitle} variant="subtitle1" data-testid="dateResult__title">
                 {props.title}
               </Typography>
               {props.icon && (
@@ -98,32 +121,34 @@ export const DateResult = ({ props }: { props: DateResultProps }) => {
             </Box>
             <Grid container direction="row" alignItems="center">
               <Grid item>
-                <Box ml={1}>
-                  <Typography variant="h5" color="textPrimary" gutterBottom data-testid="dateResult__value">
-                    {props.value}
-                  </Typography>
-                </Box>
+                <Typography className={classes.dateValue} variant="h5" data-testid="dateResult__value">
+                  {props.value}
+                </Typography>
               </Grid>
-              <Grid item>
-                <Box ml={1.5}>
-                  <Typography variant="h6" color="textSecondary" gutterBottom data-testid="dateResult__kana">
+              {props.kana && (
+                <Grid item>
+                  <Typography className={classes.dateKana} variant="h6" data-testid="dateResult__kana">
                     {props.kana}
                   </Typography>
-                </Box>
-              </Grid>
+                </Grid>
+              )}
             </Grid>
-            <Typography variant="body1" color="textPrimary" gutterBottom data-testid="dateResult__summary1">
-              {props.summary1}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" data-testid="dateResult__summary2">
-              {props.summary2}
-            </Typography>
+            {props.summary1 && (
+              <Typography className={classes.dateSummary1} variant="body1" data-testid="dateResult__summary1">
+                {props.summary1}
+              </Typography>
+            )}
+            {props.summary2 && (
+              <Typography className={classes.dateSummary2} variant="body2" data-testid="dateResult__summary2">
+                {props.summary2}
+              </Typography>
+            )}
           </CardContent>
           {props.balloon && (
             <CardActions>
               <Box className={classes.balloonTip}>
                 <Box className={classes.balloonTipTriangle} />
-                <Typography variant="subtitle2" color="textPrimary" gutterBottom data-testid="dateResult__balloon">
+                <Typography className={classes.balloonText} variant="body2" data-testid="dateResult__balloon">
                   {props.balloon}
                 </Typography>
               </Box>

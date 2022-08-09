@@ -20,7 +20,7 @@ i18n.use(initReactI18next).init({
 
 const AppTheme = createTheme({
   palette: {
-    primary: { main: colors.teal[800] },
+    primary: { main: colors.brown[300] },
     secondary: { main: colors.grey[500] },
   },
   typography: {

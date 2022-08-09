@@ -1,9 +1,9 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
-import { DateResult, DateResultProps } from './DateResult';
+import { DateCard, DateCardProps } from './DateCard';
 
-const props: DateResultProps = {
+const props: DateCardProps = {
   title: 'test-title',
   value: 'test-value',
   kana: 'test-kana',
@@ -15,7 +15,7 @@ const props: DateResultProps = {
   image: 'test-image',
 };
 
-describe('DateResult', () => {
+describe('DateCard', () => {
   const originalWindow = { ...window };
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('DateResult', () => {
     const mockOpen = jest.fn();
     window.open = mockOpen;
 
-    render(<DateResult props={props} />);
+    render(<DateCard {...props} />);
 
     expect(screen.getByTestId('dateResult__title').textContent).toBe(props.title);
     expect(screen.getByTestId('dateResult__kana').textContent).toBe(props.kana);
