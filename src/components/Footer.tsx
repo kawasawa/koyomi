@@ -10,15 +10,22 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     background: colors.brown[50],
   },
+  copyright: {
+    color: colors.grey[500],
+    textAlign: 'center',
+  },
+  link: {
+    color: colors.grey[500],
+  },
 }));
 
 export const Footer = () => {
   const classes = useStyles();
   return (
-    <AppBar className={classes.appbar} color="default">
-      <Typography variant="body2" color="textSecondary" align="center" data-testid="footer__copyright">
+    <AppBar className={classes.appbar}>
+      <Typography className={classes.copyright} variant="body2" data-testid="footer__copyright">
         {'© '}
-        <Link href={constants.url.homepage} color="inherit" underline="always" target="_blank">
+        <Link href={constants.url.homepage} target="_blank" className={classes.link} underline="always">
           {constants.meta.author}
         </Link>
         {' All Rights Reserved.'}

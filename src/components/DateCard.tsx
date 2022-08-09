@@ -11,7 +11,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,8 +88,13 @@ export type DateCardProps = {
   image: string;
 };
 
-export const DateCard = ({ ...props }: DateCardProps) => {
+export const DateCard = (props: DateCardProps) => {
   const { ref, inView } = useInView({ rootMargin: '100px' });
+
+  const onClick = useCallback(() => {
+    window.open(props.url, '_blank');
+  }, [props]);
+
   const classes = useStyles();
   return (
     <Fade ref={ref} in={inView} timeout={800}>
@@ -100,13 +105,13 @@ export const DateCard = ({ ...props }: DateCardProps) => {
           component="img"
           src={props.image}
           alt="card-media"
-          data-testid="dateResult__image"
+          data-testid="dateCard__image"
         />
 
-        <CardActionArea onClick={() => window.open(props.url, '_blank')} data-testid="dateResult__actionArea">
+        <CardActionArea onClick={onClick} data-testid="dateCard__actionArea">
           <CardContent>
             <Box className={classes.cardTitle}>
-              <Typography className={classes.dateTitle} variant="subtitle1" data-testid="dateResult__title">
+              <Typography className={classes.dateTitle} variant="subtitle1" data-testid="dateCard__title">
                 {props.title}
               </Typography>
               {props.icon && (
@@ -115,31 +120,31 @@ export const DateCard = ({ ...props }: DateCardProps) => {
                   src={props.icon}
                   alt="card-title-icon"
                   loading="lazy"
-                  data-testid="dateResult__icon"
+                  data-testid="dateCard__icon"
                 />
               )}
             </Box>
             <Grid container direction="row" alignItems="center">
               <Grid item>
-                <Typography className={classes.dateValue} variant="h5" data-testid="dateResult__value">
+                <Typography className={classes.dateValue} variant="h5" data-testid="dateCard__value">
                   {props.value}
                 </Typography>
               </Grid>
               {props.kana && (
                 <Grid item>
-                  <Typography className={classes.dateKana} variant="h6" data-testid="dateResult__kana">
+                  <Typography className={classes.dateKana} variant="h6" data-testid="dateCard__kana">
                     {props.kana}
                   </Typography>
                 </Grid>
               )}
             </Grid>
             {props.summary1 && (
-              <Typography className={classes.dateSummary1} variant="body1" data-testid="dateResult__summary1">
+              <Typography className={classes.dateSummary1} variant="body1" data-testid="dateCard__summary1">
                 {props.summary1}
               </Typography>
             )}
             {props.summary2 && (
-              <Typography className={classes.dateSummary2} variant="body2" data-testid="dateResult__summary2">
+              <Typography className={classes.dateSummary2} variant="body2" data-testid="dateCard__summary2">
                 {props.summary2}
               </Typography>
             )}
@@ -148,7 +153,7 @@ export const DateCard = ({ ...props }: DateCardProps) => {
             <CardActions>
               <Box className={classes.balloonTip}>
                 <Box className={classes.balloonTipTriangle} />
-                <Typography className={classes.balloonText} variant="body2" data-testid="dateResult__balloon">
+                <Typography className={classes.balloonText} variant="body2" data-testid="dateCard__balloon">
                   {props.balloon}
                 </Typography>
               </Box>
