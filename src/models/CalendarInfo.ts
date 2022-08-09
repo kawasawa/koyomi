@@ -353,7 +353,7 @@ export const JP_MONTHS: Array<CalendarInfo> = [
   {
     value: '弥生',
     kana: 'やよい',
-    summary: '草木が生い茂る月',
+    summary: '木草弥生い茂る（草木が生い茂る）月',
   },
   {
     value: '卯月',
@@ -388,7 +388,7 @@ export const JP_MONTHS: Array<CalendarInfo> = [
   {
     value: '神無月',
     kana: 'かんなづき',
-    summary: '神々が出雲大社に集まり各地の神々が留守になる月',
+    summary: '神々が出雲大社に集まる月',
   },
   {
     value: '霜月',
