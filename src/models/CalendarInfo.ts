@@ -20,7 +20,7 @@ export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
     etoYear: getEtoYear(calendar.date),
     etoMonth: getEtoMonth(calendar.date),
     etoDay: getEtoDay(calendar.date),
-    season: getSeason(calendar),
+    season: getSeason(calendar.date),
     sign: getSign(calendar.date),
     lunaPhase: getLunaPhase(calendar),
     tidePhase: getTidePhase(calendar),
@@ -162,11 +162,11 @@ export const getEtoDay = (date: Date) => {
 
 /**
  * 気候を取得します。
- * @param calendar 旧暦インスタンス
+ * @param date Date インスタンス
  * @returns [四季, 二十四節気, 七十二候]
  */
-export const getSeason = (calendar: JapaneseLunisolarCalendar) => {
-  const julianDay = Math.floor(calendar.date.getJulianDay());
+export const getSeason = (date: Date) => {
+  const julianDay = Math.floor(date.getJulianDay());
 
   const i_s72 = getEclipticCoordinate(julianDay + 1, eclipticCoordinateValues.season72) / 5;
   const season72 = SEASON72[i_s72];
@@ -343,63 +343,62 @@ export const JP_MONTHS: Array<CalendarInfo> = [
   {
     value: '睦月',
     kana: 'むつき',
-    summary: '正月に親類一同が集まる、睦び（親しくする）の月。',
+    summary: '正月に親類一同が集まる睦びの月',
   },
   {
     value: '如月',
     kana: 'きさらぎ',
-    summary: '衣更着（きさらぎ）とも言う。まだ寒さが残っていて、衣を重ね着する（更に着る）月。',
+    summary: '寒さが残っていて衣を重ね着する（更に着る）月',
   },
   {
     value: '弥生',
     kana: 'やよい',
-    summary: '木草弥生い茂る（きくさいやおいしげる、草木が生い茂る）月。',
+    summary: '草木が生い茂る月',
   },
   {
     value: '卯月',
     kana: 'うづき',
-    summary: '卯の花の月。',
+    summary: '卯の花の月',
   },
   {
     value: '皐月',
     kana: 'さつき',
-    summary: '早月（さつき）とも言う。早苗（さなえ）を植える月。',
+    summary: '早苗（さなえ）を植える月',
   },
   {
     value: '水無月',
     kana: 'みなづき',
-    summary: '水の月（「無」は「の」を意味する）で、田に水を引く月の意と言われる。',
+    summary: '田に水を引く月',
   },
   {
     value: '文月',
     kana: 'ふみづき',
-    summary: '稲の穂が実る月（穂含月：ほふみづき）。',
+    summary: '稲の穂が実る月（ほふみづき）',
   },
   {
     value: '葉月',
     kana: 'はづき',
-    summary: '木々の葉落ち月（はおちづき）。',
+    summary: '木々の葉落ち月（はおちづき）',
   },
   {
     value: '長月',
     kana: 'ながつき',
-    summary: '夜長月（よながづき）。',
+    summary: '夜長月（よながづき）',
   },
   {
     value: '神無月',
     kana: 'かんなづき',
-    summary:
-      '神の月（「無」は「の」を意味する）の意味。全国の神々が出雲大社に集まり、各地の神々が留守になる月という説などもある。',
+    summary: '神々が出雲大社に集まり各地の神々が留守になる月',
   },
   {
     value: '霜月',
     kana: 'しもつき',
-    summary: '霜の降る月。',
+    summary: '霜の降る月',
   },
   {
     value: '師走',
     kana: 'しわす',
-    summary: '師匠といえども趨走（すうそう、走り回る）する月。',
+    summary: '師匠といえども趨走する月',
   },
 ];
 

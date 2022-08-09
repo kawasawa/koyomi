@@ -82,14 +82,14 @@ export const Top = () => {
   const params = useParams<{ date?: string }>();
   const date = params.date ? new Date(params.date) : new Date();
   if (isNaN(date.getDate())) {
-    toast.info(t('message.error.date-format'));
+    toast.info(t('message.error.date__inputFormat'));
     history.push(`/`);
     return null;
   }
   if (date < constants.system.minDate || constants.system.maxDate < date) {
     toast.info(
       util.format(
-        t('message.error.date-range'),
+        t('message.error.date__inputRange'),
         formatDate(constants.system.minDate, '-'),
         formatDate(constants.system.maxDate, '-')
       )
@@ -214,9 +214,9 @@ export const Top = () => {
       title: t('label.japaneseZodiac'),
       value: `${calendarInfo?.etoYear.jikkan.value}${calendarInfo?.etoYear.junishi.value}`,
       kana: `${calendarInfo?.etoYear.jikkan.kana} ${calendarInfo?.etoYear.junishi.kana}`,
-      summary1: `${t('label.japaneseZodiacMonth')}: ${calendarInfo?.etoMonth.jikkan.value}${
+      summary1: `（${t('label.japaneseZodiacMonth')}）${calendarInfo?.etoMonth.jikkan.value}${
         calendarInfo?.etoMonth.junishi.value
-      } ／ ${t('label.japaneseZodiacDay')}: ${calendarInfo?.etoDay.jikkan.value}${calendarInfo?.etoDay.junishi.value}`,
+      } （${t('label.japaneseZodiacDay')}）${calendarInfo?.etoDay.jikkan.value}${calendarInfo?.etoDay.junishi.value}`,
       summary2: t('text.japaneseZodiac'),
       url: 'https://www.ndl.go.jp/koyomi/chapter3/s1.html',
       image: zodiacImage,
@@ -225,7 +225,7 @@ export const Top = () => {
       title: t('label.lunaPhase'),
       value: calendarInfo?.lunaPhase.value,
       kana: calendarInfo?.lunaPhase.kana,
-      summary1: `${t('label.lunaAge')}: ${calendar?.lunaAge.toString()}`,
+      summary1: `${t('label.lunaAge')} ${calendar?.lunaAge.toString()}`,
       summary2: t('text.lunaPhase'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B7EEA4CECBFEA4C1B7E7A4B1.html',
       image: MoonImage,
@@ -249,9 +249,9 @@ export const Top = () => {
     {
       title: t('label.julianDay'),
       value: julianDay.toString(),
-      summary1: `${t('label.julianDayRevise')}: ${julianDayRevise.toString()} ／ ${t(
+      summary1: `（${t('label.julianDayRevise')}）${julianDayRevise.toString()} （${t(
         'label.lilianDay'
-      )}: ${lilianDay.toString()}`,
+      )}）${lilianDay.toString()}`,
       summary2: t('text.julianDay'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/A5E6A5EAA5A6A5B9C6FC.html',
       image: MosesImage,
@@ -264,7 +264,7 @@ export const Top = () => {
       <Container className={classes.content} maxWidth="lg">
         {date.isTokyoLocalTime() && (
           <Alert className={classes.alert} variant="standard" severity="warning" data-testid="top__alert">
-            {t('message.warning.old-year')}
+            {t('message.warning.date__tokyoLocalTime')}
           </Alert>
         )}
         <Grid container spacing={2} data-testid="top_contents">

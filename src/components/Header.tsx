@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'transparent',
   },
   appTitle: {
+    color: colors.grey[800],
     marginLeft: '10px',
     display: 'flex',
     [theme.breakpoints.down('xs')]: {
@@ -54,12 +55,12 @@ export type HeaderProps = {
   date: Date;
 };
 
-export const Header = ({ ...props }: HeaderProps) => {
+export const Header = (props: HeaderProps) => {
   const [t] = useTranslation();
   const history = useHistory();
   const classes = useStyles();
   return (
-    <AppBar className={classes.appbar} color="default">
+    <AppBar className={classes.appbar}>
       <Container className={classes.noMPifXS} maxWidth="xl">
         <Toolbar className={classes.noMPifXS}>
           <img
@@ -92,7 +93,6 @@ export const Header = ({ ...props }: HeaderProps) => {
             onChange={(date) => {
               if (date) history.push(`/${formatDate(date, '-')}`);
             }}
-            data-testid="header__datepicker"
           />
         </Toolbar>
       </Container>

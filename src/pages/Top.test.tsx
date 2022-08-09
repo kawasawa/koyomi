@@ -5,11 +5,18 @@ import * as ReactRouterDom from 'react-router-dom';
 import { Top } from './Top';
 
 const mockUseHistoryPush = jest.fn();
+const mockUseTranslationT = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: jest.fn(),
   useHistory: () => ({ push: mockUseHistoryPush }),
+}));
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useParams: jest.fn(),
+  useTranslation: () => [mockUseTranslationT],
 }));
 
 jest.mock('../components', () => ({

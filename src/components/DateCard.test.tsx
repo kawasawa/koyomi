@@ -19,7 +19,11 @@ describe('DateCard', () => {
   const originalWindow = { ...window };
 
   beforeEach(() => {
-    window.IntersectionObserver = jest.fn().mockImplementation(() => ({ observe: () => jest.fn() }));
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+      observe: () => jest.fn(),
+      unobserve: () => jest.fn(),
+      disconnect: () => jest.fn(),
+    }));
   });
 
   afterEach(() => {
@@ -32,17 +36,17 @@ describe('DateCard', () => {
 
     render(<DateCard {...props} />);
 
-    expect(screen.getByTestId('dateResult__title').textContent).toBe(props.title);
-    expect(screen.getByTestId('dateResult__kana').textContent).toBe(props.kana);
-    expect(screen.getByTestId('dateResult__value').textContent).toBe(props.value);
-    expect(screen.getByTestId('dateResult__summary1').textContent).toBe(props.summary1);
-    expect(screen.getByTestId('dateResult__summary2').textContent).toBe(props.summary2);
-    expect(screen.getByTestId('dateResult__balloon').textContent).toBe(props.balloon);
-    expect(screen.getByTestId('dateResult__icon').getAttribute('src')).toBe(props.icon);
-    expect(screen.getByTestId('dateResult__image').getAttribute('src')).toBe(props.image);
+    expect(screen.getByTestId('dateCard__title').textContent).toBe(props.title);
+    expect(screen.getByTestId('dateCard__kana').textContent).toBe(props.kana);
+    expect(screen.getByTestId('dateCard__value').textContent).toBe(props.value);
+    expect(screen.getByTestId('dateCard__summary1').textContent).toBe(props.summary1);
+    expect(screen.getByTestId('dateCard__summary2').textContent).toBe(props.summary2);
+    expect(screen.getByTestId('dateCard__balloon').textContent).toBe(props.balloon);
+    expect(screen.getByTestId('dateCard__icon').getAttribute('src')).toBe(props.icon);
+    expect(screen.getByTestId('dateCard__image').getAttribute('src')).toBe(props.image);
 
     act(() => {
-      fireEvent.click(screen.getByTestId('dateResult__actionArea'));
+      fireEvent.click(screen.getByTestId('dateCard__actionArea'));
     });
     await waitFor(() => expect(mockOpen).toBeCalledWith(props.url, '_blank'));
   });
