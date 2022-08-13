@@ -17,7 +17,7 @@ import { useInView } from 'react-intersection-observer';
 const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: '275px',
-    background: colors.amber[50],
+    background: colors.grey[100],
   },
   cardMedia: {
     height: '140px',

@@ -106,8 +106,8 @@ export const Top = () => {
   const eraYear = year - Math.floor((calendarInfo?.era.startAt ?? NaN) / 10000) + 1;
   const age = getAge(date);
   const julianDay = date.getJulianDay();
-  const julianDayRevise = julianDay - 2400000.5;
-  const lilianDay = julianDay - 2299159.5;
+  const julianDayRevise = julianDay - constants.system.julianDayReviseBasis;
+  const lilianDay = julianDay - constants.system.lilianDayBasis;
   const eclipticCoordinate = getEclipticCoordinate(julianDay + 1);
   const seasonImage = getSeasonImage(calendarInfo?.season.season4.value);
   const zodiacImage = getZodiacImage(calendarInfo?.etoYear.junishi.value);
