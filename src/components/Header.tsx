@@ -1,5 +1,6 @@
 import { AppBar, colors, Container, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import React from 'react';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
@@ -58,6 +59,14 @@ export type HeaderProps = {
 export const Header = (props: HeaderProps) => {
   const [t] = useTranslation();
   const history = useHistory();
+
+  const onChange = useCallback(
+    (date: MaterialUiPickersDate) => {
+      if (date) history.push(`/${formatDate(date, '-')}`);
+    },
+    [history]
+  );
+
   const classes = useStyles();
   return (
     <AppBar className={classes.appbar}>
@@ -90,9 +99,7 @@ export const Header = (props: HeaderProps) => {
             PopoverProps={{
               transformOrigin: { horizontal: 'left', vertical: 'top' },
             }}
-            onChange={(date) => {
-              if (date) history.push(`/${formatDate(date, '-')}`);
-            }}
+            onChange={onChange}
           />
         </Toolbar>
       </Container>
