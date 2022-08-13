@@ -1,7 +1,6 @@
 import { AppBar, colors, Container, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { constants } from '../constants';
@@ -57,7 +56,6 @@ export type HeaderProps = {
 };
 
 export const Header = (props: HeaderProps) => {
-  const [t] = useTranslation();
   const history = useHistory();
 
   const onChange = useCallback(
@@ -87,7 +85,6 @@ export const Header = (props: HeaderProps) => {
             className={classes.datePicker}
             value={props.date}
             name="date"
-            label={t('label.date')}
             minDate={constants.system.minDate}
             maxDate={constants.system.maxDate}
             margin="normal"
