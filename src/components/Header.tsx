@@ -49,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  datePickerTitle: {
+    color: colors.brown[900],
+    fontSize: '18px',
+  },
 }));
 
 export type HeaderProps = {
@@ -102,6 +106,9 @@ export const Header = (props: HeaderProps) => {
             //
             // どうしても消せないので createTheme で override した
             //
+            InputLabelProps={{
+              className: classes.datePickerTitle,
+            }}
             PopoverProps={{
               transformOrigin: { horizontal: 'left', vertical: 'top' },
             }}
