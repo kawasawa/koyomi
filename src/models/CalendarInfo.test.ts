@@ -35,31 +35,6 @@ test('歴中の生成', () => {
   expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021/01/01')))).toBeDefined();
 });
 
-test('和風月名の取得', () => {
-  expect(getJpMonth(createDate(2021, 1, 1))).toBe(JP_MONTHS[0]);
-  expect(getJpMonth(createDate(2021, 2, 1))).toBe(JP_MONTHS[1]);
-  expect(getJpMonth(createDate(2021, 3, 1))).toBe(JP_MONTHS[2]);
-  expect(getJpMonth(createDate(2021, 4, 1))).toBe(JP_MONTHS[3]);
-  expect(getJpMonth(createDate(2021, 5, 1))).toBe(JP_MONTHS[4]);
-  expect(getJpMonth(createDate(2021, 6, 1))).toBe(JP_MONTHS[5]);
-  expect(getJpMonth(createDate(2021, 7, 1))).toBe(JP_MONTHS[6]);
-  expect(getJpMonth(createDate(2021, 8, 1))).toBe(JP_MONTHS[7]);
-  expect(getJpMonth(createDate(2021, 9, 1))).toBe(JP_MONTHS[8]);
-  expect(getJpMonth(createDate(2021, 10, 1))).toBe(JP_MONTHS[9]);
-  expect(getJpMonth(createDate(2021, 11, 1))).toBe(JP_MONTHS[10]);
-  expect(getJpMonth(createDate(2021, 12, 1))).toBe(JP_MONTHS[11]);
-});
-
-test('曜日の取得', () => {
-  expect(getJpWeek(createDate(2021, 1, 1))).toBe(JP_WEEKS[5]);
-  expect(getJpWeek(createDate(2021, 1, 2))).toBe(JP_WEEKS[6]);
-  expect(getJpWeek(createDate(2021, 1, 3))).toBe(JP_WEEKS[0]);
-  expect(getJpWeek(createDate(2021, 1, 4))).toBe(JP_WEEKS[1]);
-  expect(getJpWeek(createDate(2021, 1, 5))).toBe(JP_WEEKS[2]);
-  expect(getJpWeek(createDate(2021, 1, 6))).toBe(JP_WEEKS[3]);
-  expect(getJpWeek(createDate(2021, 1, 7))).toBe(JP_WEEKS[4]);
-});
-
 test('六曜の取得', () => {
   expect(getRokuyo(createLuna(2021, 1, 1))).toBe(ROKUYO[3]);
   expect(getRokuyo(createLuna(2021, 1, 2))).toBe(ROKUYO[4]);

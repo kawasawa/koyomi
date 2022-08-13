@@ -12,9 +12,7 @@ import BannerImage from '../assets/banner.webp';
 import AstrologyImage from '../assets/images/astrology.webp';
 import AutumnImage from '../assets/images/autumn.webp';
 import Autumn2Image from '../assets/images/autumn2.webp';
-import Autumn3Image from '../assets/images/autumn3.webp';
 import BoarImage from '../assets/images/boar.webp';
-import CalendarImage from '../assets/images/calendar.webp';
 import ChickenImage from '../assets/images/chicken.webp';
 import CowImage from '../assets/images/cow.webp';
 import DogImage from '../assets/images/dog.webp';
@@ -35,14 +33,11 @@ import SnakeImage from '../assets/images/snake.webp';
 import SolarImage from '../assets/images/solar.webp';
 import SpringImage from '../assets/images/spring.webp';
 import Spring2Image from '../assets/images/spring2.webp';
-import Spring3Image from '../assets/images/spring3.webp';
 import SummerImage from '../assets/images/summer.webp';
 import Summer2Image from '../assets/images/summer2.webp';
-import Summer3Image from '../assets/images/summer3.webp';
 import TigerImage from '../assets/images/tiger.webp';
 import WinterImage from '../assets/images/winter.webp';
 import Winter2Image from '../assets/images/winter2.webp';
-import Winter3Image from '../assets/images/winter3.webp';
 import { moonIcons } from '../assets/moon';
 import { DateCard, Footer, Header } from '../components';
 import { DateCardProps } from '../components/DateCard';
@@ -136,25 +131,20 @@ export const Top = () => {
       image: AstrologyImage,
     },
     {
-      title: t('label.season4'),
-      value: calendarInfo?.season.season4.value,
-      kana: calendarInfo?.season.season4.kana,
-      summary2: t('text.season4'),
-      url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B5A8C0E1.html',
-      image: seasonImage.season4Image,
-    },
-    {
       title: t('label.season24'),
       value:
         calendarInfo?.season.season24.startAt === 0
           ? calendarInfo?.season.season24.value
           : util.format(
-              t('format.season4__until'),
+              t('format.season24__until'),
               calendarInfo?.season.season24.value,
               calendarInfo?.season.season24.startAt
             ),
       kana: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.kana : undefined,
-      summary1: calendarInfo?.season.season24.startAt === 0 ? calendarInfo?.season.season24.summary : undefined,
+      summary1:
+        calendarInfo?.season.season24.startAt === 0
+          ? calendarInfo?.season.season24.summary
+          : util.format(t('format.season4'), calendarInfo?.season.season4.value),
       summary2: t('text.season24'),
       url: 'https://www.ndl.go.jp/koyomi/chapter3/s7.html',
       image: seasonImage.season24Image,
@@ -183,15 +173,6 @@ export const Top = () => {
       summary2: t('text.sign13'),
       url: 'https://ja.wikipedia.org/wiki/13星座占い',
       image: SignSnakeCharmerImage,
-    },
-    {
-      title: t('label.japaneseMonth'),
-      value: calendarInfo?.jpMonth.value,
-      kana: calendarInfo?.jpMonth.kana,
-      summary1: calendarInfo?.jpMonth.summary,
-      summary2: t('text.japaneseMonth'),
-      url: 'https://www.ndl.go.jp/koyomi/chapter3/s8.html',
-      image: CalendarImage,
     },
     {
       title: t('label.japaneseZodiac'),
@@ -264,31 +245,27 @@ export const Top = () => {
 };
 
 const getSeasonImage = (season4?: string) => {
-  let season4Image: string, season24Image: string, season72Image: string;
+  let season24Image: string, season72Image: string;
   switch (season4) {
     case '春':
-      season4Image = SpringImage;
-      season24Image = Spring2Image;
-      season72Image = Spring3Image;
+      season24Image = SpringImage;
+      season72Image = Spring2Image;
       break;
     case '夏':
-      season4Image = SummerImage;
-      season24Image = Summer2Image;
-      season72Image = Summer3Image;
+      season24Image = SummerImage;
+      season72Image = Summer2Image;
       break;
     case '秋':
-      season4Image = AutumnImage;
-      season24Image = Autumn2Image;
-      season72Image = Autumn3Image;
+      season24Image = AutumnImage;
+      season72Image = Autumn2Image;
       break;
     case '冬':
     default:
-      season4Image = WinterImage;
-      season24Image = Winter2Image;
-      season72Image = Winter3Image;
+      season24Image = WinterImage;
+      season72Image = Winter2Image;
       break;
   }
-  return { season4Image, season24Image, season72Image };
+  return { season24Image, season72Image };
 };
 
 // eslint-disable-next-line complexity

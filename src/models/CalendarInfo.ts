@@ -12,8 +12,6 @@ import JapaneseLunisolarCalendar, { calcJulianCenturyNumber, calcSunLongitude } 
 export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
   if (isNaN(calendar.date.getTime())) return undefined;
   return {
-    jpMonth: getJpMonth(calendar.date),
-    jpWeek: getJpWeek(calendar.date),
     rokuyo: getRokuyo(calendar),
     nijuhashuku: getNijuhashuku(calendar.date),
     etoYear: getEtoYear(calendar.date),
@@ -50,20 +48,6 @@ export const getEclipticCoordinate = (
 };
 
 /**
- * 和風月名を取得します。
- * @param date Date インスタンス
- * @returns 和風月名
- */
-export const getJpMonth = (date: Date) => JP_MONTHS[date.getMonth()];
-
-/**
- * 曜日を取得します。
- * @param date Date インスタンス
- * @returns 曜日
- */
-export const getJpWeek = (date: Date) => JP_WEEKS[date.getDay()];
-
-/**
  * 六曜を取得します。
  * @param calendar 旧暦インスタンス
  * @returns 六曜
@@ -75,10 +59,7 @@ export const getRokuyo = (calendar: JapaneseLunisolarCalendar) => ROKUYO[(calend
  * @param date Date インスタンス
  * @returns 二十八宿
  */
-export const getNijuhashuku = (date: Date) => {
-  console.log(Math.floor(date.getJulianDay()));
-  return ASTROLOGY28[(Math.floor(date.getJulianDay()) + 12) % ASTROLOGY28.length];
-};
+export const getNijuhashuku = (date: Date) => ASTROLOGY28[(Math.floor(date.getJulianDay()) + 12) % ASTROLOGY28.length];
 
 /**
  * 年の干支を取得します
@@ -240,16 +221,6 @@ export const eclipticCoordinateValues = {
 } as const;
 export type eclipticCoordinateFlag = typeof eclipticCoordinateValues[keyof typeof eclipticCoordinateValues];
 
-export const JP_WEEKS: Array<CalendarInfo> = [
-  { value: '日', kana: 'にち' },
-  { value: '月', kana: 'げつ' },
-  { value: '火', kana: 'か' },
-  { value: '水', kana: 'すい' },
-  { value: '木', kana: 'もく' },
-  { value: '金', kana: 'きん' },
-  { value: '土', kana: 'ど' },
-];
-
 export const ROKUYO: Array<CalendarInfo> = [
   {
     value: '先勝',
@@ -312,69 +283,6 @@ export const ASTROLOGY28: Array<CalendarInfo> = [
   { value: '張宿', kana: 'ちょうしゅく', summary: '就職・見合い・神仏祈願・祝い事は吉。' },
   { value: '翼宿', kana: 'よくしゅく', summary: '耕作始め・植え替え・種蒔きは吉。高所作業と結婚は凶。' },
   { value: '軫宿', kana: 'しんしゅく', summary: '地鎮祭・落成式・祭祀・祝い事は吉。衣類仕立ては凶。' },
-];
-
-export const JP_MONTHS: Array<CalendarInfo> = [
-  {
-    value: '睦月',
-    kana: 'むつき',
-    summary: '正月に親類一同が集まる睦びの月',
-  },
-  {
-    value: '如月',
-    kana: 'きさらぎ',
-    summary: '寒さが残っていて衣を重ね着する（更に着る）月',
-  },
-  {
-    value: '弥生',
-    kana: 'やよい',
-    summary: '木草弥生い茂る（草木が生い茂る）月',
-  },
-  {
-    value: '卯月',
-    kana: 'うづき',
-    summary: '卯の花の月',
-  },
-  {
-    value: '皐月',
-    kana: 'さつき',
-    summary: '早苗（さなえ）を植える月',
-  },
-  {
-    value: '水無月',
-    kana: 'みなづき',
-    summary: '田に水を引く月',
-  },
-  {
-    value: '文月',
-    kana: 'ふみづき',
-    summary: '稲の穂が実る月（ほふみづき）',
-  },
-  {
-    value: '葉月',
-    kana: 'はづき',
-    summary: '木々の葉落ち月（はおちづき）',
-  },
-  {
-    value: '長月',
-    kana: 'ながつき',
-    summary: '夜長月（よながづき）',
-  },
-  {
-    value: '神無月',
-    kana: 'かんなづき',
-    summary: '神々が出雲大社に集まる月',
-  },
-  {
-    value: '霜月',
-    kana: 'しもつき',
-    summary: '霜の降る月',
-  },
-  {
-    value: '師走',
-    kana: 'しわす',
-    summary: '師匠といえども趨走する月',
-  },
 ];
 
 export const JIKKAN: Array<CalendarInfo> = [
