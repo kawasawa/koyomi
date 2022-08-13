@@ -96,6 +96,15 @@ export const Header = (props: HeaderProps) => {
             disableToolbar={false}
             animateYearScrolling={true}
             disableKeyboardInput={true}
+            // KeyboardDatePicker の下線を非表示にできない
+            // https://github.com/mui/material-ui-pickers/issues/1039
+            //
+            // InputProps={{
+            //   disableUnderline: true,
+            // }}
+            //
+            // どうしても消せないので createTheme で override した
+            //
             PopoverProps={{
               transformOrigin: { horizontal: 'left', vertical: 'top' },
             }}

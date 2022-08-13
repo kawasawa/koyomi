@@ -28,6 +28,19 @@ const AppTheme = createTheme({
       textTransform: 'none',
     },
   },
+  overrides: {
+    MuiFilledInput: {
+      // TextField の下線表示を変更する
+      underline: {
+        '&:before': {
+          borderBottom: 'none',
+        },
+        '&:after': {
+          borderBottom: 'none',
+        },
+      },
+    },
+  },
 });
 
 const App = () => (
