@@ -28,11 +28,10 @@ https://kawasawa.github.io/koyomi/2000-01-01
 
 ### 表示される情報
 
-- 和暦
-  - 年齢
 - 旧暦
+  - 年齢
 - 六曜
-- 七曜
+- 二十八宿
 - 四季
 - 二十四節気
 - 七十二候
@@ -60,7 +59,6 @@ https://kawasawa.github.io/koyomi/2000-01-01
 | フレームワーク       | React         |
 | デザインテンプレート | Material-UI   |
 | ルーティング管理     | React Router  |
-| ステート管理         | React Redux   |
 | 多言語対応           | React i18next |
 
 ## 謝辞

@@ -9,13 +9,13 @@ import { toast } from 'react-toastify';
 import * as util from 'util';
 
 import BannerImage from '../assets/banner.webp';
+import AstrologyImage from '../assets/images/astrology.webp';
 import AutumnImage from '../assets/images/autumn.webp';
 import Autumn2Image from '../assets/images/autumn2.webp';
 import Autumn3Image from '../assets/images/autumn3.webp';
 import BoarImage from '../assets/images/boar.webp';
 import CalendarImage from '../assets/images/calendar.webp';
 import ChickenImage from '../assets/images/chicken.webp';
-import ClockImage from '../assets/images/clock.webp';
 import CowImage from '../assets/images/cow.webp';
 import DogImage from '../assets/images/dog.webp';
 import DragonImage from '../assets/images/dragon.webp';
@@ -40,7 +40,6 @@ import SummerImage from '../assets/images/summer.webp';
 import Summer2Image from '../assets/images/summer2.webp';
 import Summer3Image from '../assets/images/summer3.webp';
 import TigerImage from '../assets/images/tiger.webp';
-import WeekImage from '../assets/images/week.webp';
 import WinterImage from '../assets/images/winter.webp';
 import Winter2Image from '../assets/images/winter2.webp';
 import Winter3Image from '../assets/images/winter3.webp';
@@ -100,10 +99,6 @@ export const Top = () => {
 
   const calendar = new JapaneseLunisolarCalendar(date);
   const calendarInfo = createCalendarInfo(calendar);
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const eraYear = year - Math.floor((calendarInfo?.era.startAt ?? NaN) / 10000) + 1;
   const age = getAge(date);
   const julianDay = date.getJulianDay();
   const julianDayRevise = julianDay - constants.system.julianDayReviseBasis;
@@ -115,25 +110,12 @@ export const Top = () => {
 
   const cardInfo: DateCardProps[] = [
     {
-      title: t('label.japaneseCalendar'),
-      value: `${util.format(
-        t('format.ymd'),
-        `${calendarInfo?.era.value} ${eraYear === 1 ? '元' : eraYear}`,
-        month,
-        day
-      )} (${calendarInfo?.jpWeek.value})`,
-      summary1: calendarInfo?.era.summary,
-      summary2: t('text.japaneseCalendar'),
-      balloon: 1 <= age ? util.format(t('format.age'), age) : undefined,
-      url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/CEF2BBCB2FB8B5B9E6.html',
-      image: JapanImage,
-    },
-    {
       title: t('label.lunisolarCalendar'),
       value: util.format(t('format.ymd'), calendar.year, calendar.month, calendar.day),
       summary2: t('text.lunisolarCalendar'),
+      balloon: 1 <= age ? util.format(t('format.age'), age) : undefined,
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/C2C0B1A2C2C0CDDBCEF1.html',
-      image: ClockImage,
+      image: JapanImage,
     },
     {
       title: t('label.rokuyo'),
@@ -145,12 +127,13 @@ export const Top = () => {
       image: RokuyoImage,
     },
     {
-      title: t('label.shichiyo'),
-      value: calendarInfo?.shichiyo.value,
-      kana: calendarInfo?.shichiyo.kana,
-      summary2: t('text.shichiyo'),
-      url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/CDD7C1C72F1BDB5B4D6A4C8A4CFA1A92FCDCBC6FCA4CECCBEC1B0.html',
-      image: WeekImage,
+      title: t('label.nijuhashuku'),
+      value: calendarInfo?.nijuhashuku.value,
+      kana: calendarInfo?.nijuhashuku.kana,
+      summary1: calendarInfo?.nijuhashuku.summary,
+      summary2: t('text.nijuhashuku'),
+      url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/C6F3BDBDC8ACBDC9.html',
+      image: AstrologyImage,
     },
     {
       title: t('label.season4'),

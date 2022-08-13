@@ -12,11 +12,10 @@ import JapaneseLunisolarCalendar, { calcJulianCenturyNumber, calcSunLongitude } 
 export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
   if (isNaN(calendar.date.getTime())) return undefined;
   return {
-    era: getEra(calendar.date),
     jpMonth: getJpMonth(calendar.date),
     jpWeek: getJpWeek(calendar.date),
     rokuyo: getRokuyo(calendar),
-    shichiyo: getShichiyo(calendar.date),
+    nijuhashuku: getNijuhashuku(calendar.date),
     etoYear: getEtoYear(calendar.date),
     etoMonth: getEtoMonth(calendar.date),
     etoDay: getEtoDay(calendar.date),
@@ -51,21 +50,6 @@ export const getEclipticCoordinate = (
 };
 
 /**
- * 元号を取得します。
- * @param date Date インスタンス
- * @returns 元号
- */
-export const getEra = (date: Date) => {
-  const year_month_date = date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
-  for (let i = ERAS.length - 1; 0 <= i; i--) {
-    if ((ERAS[i].startAt ?? NaN) <= year_month_date) {
-      return ERAS[i];
-    }
-  }
-  throw new RangeError();
-};
-
-/**
  * 和風月名を取得します。
  * @param date Date インスタンス
  * @returns 和風月名
@@ -87,11 +71,14 @@ export const getJpWeek = (date: Date) => JP_WEEKS[date.getDay()];
 export const getRokuyo = (calendar: JapaneseLunisolarCalendar) => ROKUYO[(calendar.month + calendar.day - 2) % 6];
 
 /**
- * 七曜を取得します。
+ * 二十八宿を取得します。
  * @param date Date インスタンス
- * @returns 七曜
+ * @returns 二十八宿
  */
-export const getShichiyo = (date: Date) => SHICHIYO[date.getDay()];
+export const getNijuhashuku = (date: Date) => {
+  console.log(Math.floor(date.getJulianDay()));
+  return ASTROLOGY28[(Math.floor(date.getJulianDay()) + 12) % ASTROLOGY28.length];
+};
 
 /**
  * 年の干支を取得します
@@ -296,47 +283,35 @@ export const ROKUYO: Array<CalendarInfo> = [
   },
 ];
 
-export const SHICHIYO: Array<CalendarInfo> = [
-  { value: '太陽', kana: 'たいよう' },
-  { value: '月', kana: 'つき' },
-  { value: '火星', kana: 'かせい' },
-  { value: '水星', kana: 'すいせい' },
-  { value: '木星', kana: 'もくせい' },
-  { value: '金星', kana: 'きんせい' },
-  { value: '土星', kana: 'どせい' },
-];
-
-export const ERAS: Array<CalendarInfo> = [
-  {
-    value: '慶応',
-    kana: 'けいおう',
-    startAt: 18650408,
-  },
-  {
-    value: '明治',
-    kana: 'めいじ',
-    startAt: 18680908,
-  },
-  {
-    value: '大正',
-    kana: 'たいしょう',
-    startAt: 19120730,
-  },
-  {
-    value: '昭和',
-    kana: 'しょうわ',
-    startAt: 19261225,
-  },
-  {
-    value: '平成',
-    kana: 'へいせい',
-    startAt: 19890108,
-  },
-  {
-    value: '令和',
-    kana: 'れいわ',
-    startAt: 20190501,
-  },
+export const ASTROLOGY28: Array<CalendarInfo> = [
+  { value: '角宿', kana: 'かくしゅく', summary: '着始め・柱立て・普請造作・結婚は吉。葬式は凶。' },
+  { value: '亢宿', kana: 'こうしゅく', summary: '衣類仕立て・物品購入・種蒔きは吉。造作は凶。' },
+  { value: '氐宿', kana: 'ていしゅく', summary: '結婚・開店・結納・酒造りは吉。着始めは凶。' },
+  { value: '房宿', kana: 'ぼうしゅく', summary: '髪切り・結婚・旅行・移転・開店・祭祀は吉。' },
+  { value: '心宿', kana: 'しんしゅく', summary: '祭祀・移転・旅行・新規事は吉。造作と結婚は凶。' },
+  { value: '尾宿', kana: 'びしゅく', summary: '結婚・開店・移転・造作・新規事は吉。着始めと仕立ては凶。' },
+  { value: '箕宿', kana: 'きしゅく', summary: '動土・池掘り・仕入れ・集金・改築は吉。結婚と葬式は凶。' },
+  { value: '斗宿', kana: 'としゅく', summary: '土掘り・開店・造作は吉。' },
+  { value: '牛宿', kana: 'ぎゅうしゅく', summary: '移転・旅行・金談など全てが吉。' },
+  { value: '女宿', kana: 'じょしゅく', summary: '稽古始めとお披露目は吉。訴訟・結婚・葬式は凶。' },
+  { value: '虚宿', kana: 'きょしゅく', summary: '着始めと学問始めは吉。相談・造作・積極的な行動は凶。' },
+  { value: '危宿', kana: 'きしゅく', summary: '壁塗り・船普請・酒作りは吉。衣類仕立てと高所作業は凶。' },
+  { value: '室宿', kana: 'しっしゅく', summary: '祈願始め・結婚・祝い事・祭祀・井戸掘りは吉。' },
+  { value: '壁宿', kana: 'へきしゅく', summary: '開店・旅行・結婚・衣類仕立て・新規事開始は吉。' },
+  { value: '奎宿', kana: 'けいしゅく', summary: '開店・文芸開始・樹木植替えは吉。' },
+  { value: '婁宿', kana: 'ろうしゅく', summary: '動土・造作・縁談・契約・造園・衣類仕立ては吉。' },
+  { value: '胃宿', kana: 'いしゅく', summary: '開店・移転・求職は吉。' },
+  { value: '昴宿', kana: 'ぼうしゅく', summary: '神仏詣・祝い事・開店は吉。' },
+  { value: '畢宿', kana: 'ひっしゅく', summary: '稽古始めと運搬始めは吉。造作と衣類着始めは凶。' },
+  { value: '觜宿', kana: 'ししゅく', summary: '稽古始めと運搬始めは吉。造作と衣類着始めは凶。' },
+  { value: '参宿', kana: 'さんしゅく', summary: '仕入れ・納入・取引開始・祝い事・縁談は吉。' },
+  { value: '井宿', kana: 'せいしゅく', summary: '神仏詣・種蒔き・動土・普請は吉。衣類仕立ては凶。' },
+  { value: '鬼宿', kana: 'きしゅく', summary: '婚礼のみ凶。他の事は全て吉。' },
+  { value: '柳宿', kana: 'りゅうしゅく', summary: '物事を断るのは吉。結婚・開店・葬式は凶。' },
+  { value: '星宿', kana: 'せいしゅく', summary: '乗馬始めと便所改造は吉。祝い事と種蒔きは凶。' },
+  { value: '張宿', kana: 'ちょうしゅく', summary: '就職・見合い・神仏祈願・祝い事は吉。' },
+  { value: '翼宿', kana: 'よくしゅく', summary: '耕作始め・植え替え・種蒔きは吉。高所作業と結婚は凶。' },
+  { value: '軫宿', kana: 'しんしゅく', summary: '地鎮祭・落成式・祭祀・祝い事は吉。衣類仕立ては凶。' },
 ];
 
 export const JP_MONTHS: Array<CalendarInfo> = [
