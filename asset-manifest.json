@@ -1,19 +1,20 @@
 {
   "files": {
     "main.css": "/koyomi/static/css/main.6eded38a.chunk.css",
-    "main.js": "/koyomi/static/js/main.27a8a15b.chunk.js",
-    "main.js.map": "/koyomi/static/js/main.27a8a15b.chunk.js.map",
+    "main.js": "/koyomi/static/js/main.5fbb88c7.chunk.js",
+    "main.js.map": "/koyomi/static/js/main.5fbb88c7.chunk.js.map",
     "runtime-main.js": "/koyomi/static/js/runtime-main.8c8a6a06.js",
     "runtime-main.js.map": "/koyomi/static/js/runtime-main.8c8a6a06.js.map",
     "static/css/2.58a45539.chunk.css": "/koyomi/static/css/2.58a45539.chunk.css",
-    "static/js/2.2ae1db7c.chunk.js": "/koyomi/static/js/2.2ae1db7c.chunk.js",
-    "static/js/2.2ae1db7c.chunk.js.map": "/koyomi/static/js/2.2ae1db7c.chunk.js.map",
+    "static/js/2.768ab508.chunk.js": "/koyomi/static/js/2.768ab508.chunk.js",
+    "static/js/2.768ab508.chunk.js.map": "/koyomi/static/js/2.768ab508.chunk.js.map",
     "index.html": "/koyomi/index.html",
     "service-worker.js": "/koyomi/service-worker.js",
     "service-worker.js.map": "/koyomi/service-worker.js.map",
     "static/css/2.58a45539.chunk.css.map": "/koyomi/static/css/2.58a45539.chunk.css.map",
     "static/css/main.6eded38a.chunk.css.map": "/koyomi/static/css/main.6eded38a.chunk.css.map",
-    "static/js/2.2ae1db7c.chunk.js.LICENSE.txt": "/koyomi/static/js/2.2ae1db7c.chunk.js.LICENSE.txt",
+    "static/js/2.768ab508.chunk.js.LICENSE.txt": "/koyomi/static/js/2.768ab508.chunk.js.LICENSE.txt",
+    "static/media/astrology.e788c40f.webp": "/koyomi/static/media/astrology.e788c40f.webp",
     "static/media/autumn.e6792228.webp": "/koyomi/static/media/autumn.e6792228.webp",
     "static/media/autumn2.0f4ccbe6.webp": "/koyomi/static/media/autumn2.0f4ccbe6.webp",
     "static/media/autumn3.07b90b28.webp": "/koyomi/static/media/autumn3.07b90b28.webp",
@@ -21,7 +22,6 @@
     "static/media/boar.58d6be9f.webp": "/koyomi/static/media/boar.58d6be9f.webp",
     "static/media/calendar.90b7d5f7.webp": "/koyomi/static/media/calendar.90b7d5f7.webp",
     "static/media/chicken.b9b5c4d9.webp": "/koyomi/static/media/chicken.b9b5c4d9.webp",
-    "static/media/clock.e91cf61c.webp": "/koyomi/static/media/clock.e91cf61c.webp",
     "static/media/cow.cdf2b0d5.webp": "/koyomi/static/media/cow.cdf2b0d5.webp",
     "static/media/dog.196908e7.webp": "/koyomi/static/media/dog.196908e7.webp",
     "static/media/dragon.e438310d.webp": "/koyomi/static/media/dragon.e438310d.webp",
@@ -46,7 +46,6 @@
     "static/media/summer2.1fa58d3b.webp": "/koyomi/static/media/summer2.1fa58d3b.webp",
     "static/media/summer3.e51423ef.webp": "/koyomi/static/media/summer3.e51423ef.webp",
     "static/media/tiger.40ed77fe.webp": "/koyomi/static/media/tiger.40ed77fe.webp",
-    "static/media/week.79ac4f77.webp": "/koyomi/static/media/week.79ac4f77.webp",
     "static/media/winter.8ff2c986.webp": "/koyomi/static/media/winter.8ff2c986.webp",
     "static/media/winter2.1058edc0.webp": "/koyomi/static/media/winter2.1058edc0.webp",
     "static/media/winter3.612fb15c.webp": "/koyomi/static/media/winter3.612fb15c.webp"
@@ -54,8 +53,8 @@
   "entrypoints": [
     "static/js/runtime-main.8c8a6a06.js",
     "static/css/2.58a45539.chunk.css",
-    "static/js/2.2ae1db7c.chunk.js",
+    "static/js/2.768ab508.chunk.js",
     "static/css/main.6eded38a.chunk.css",
-    "static/js/main.27a8a15b.chunk.js"
+    "static/js/main.5fbb88c7.chunk.js"
   ]
 }
