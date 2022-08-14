@@ -1,2 +1,2 @@
+/* istanbul ignore file */
 export { JaDatePicker } from './JaDatePicker';
-export { ListItemLink } from './ListItemLink';

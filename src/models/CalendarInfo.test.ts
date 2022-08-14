@@ -1,8 +1,6 @@
 import JapaneseLunisolarCalendar from './JapaneseLunisolarCalendar';
 import {
   createCalendarInfo,
-  getJpMonth,
-  getJpWeek,
   getRokuyo,
   getEtoYear,
   getEtoMonth,
@@ -11,8 +9,6 @@ import {
   getSign,
   getLunaPhase,
   getTidePhase,
-  JP_MONTHS,
-  JP_WEEKS,
   JIKKAN,
   JUNISHI,
   ROKUYO,
@@ -23,6 +19,8 @@ import {
   SIGN13,
   LUNA_PHASES,
   TIDE_PHASES,
+  getNijuhashuku,
+  ASTROLOGY28,
 } from './CalendarInfo';
 
 const createDate = (year: number, month: number, day: number) => new Date(year, month - 1, day);
@@ -30,7 +28,7 @@ const createDate = (year: number, month: number, day: number) => new Date(year, 
 const createLuna = (year: number, month: number, day: number) =>
   new JapaneseLunisolarCalendar(createDate(year, month, day));
 
-test('歴中の生成', () => {
+test('暦注の生成', () => {
   expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021/01/99')))).toBeUndefined();
   expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021/01/01')))).toBeDefined();
 });
@@ -42,6 +40,37 @@ test('六曜の取得', () => {
   expect(getRokuyo(createLuna(2021, 1, 4))).toBe(ROKUYO[0]);
   expect(getRokuyo(createLuna(2021, 1, 5))).toBe(ROKUYO[1]);
   expect(getRokuyo(createLuna(2021, 1, 6))).toBe(ROKUYO[2]);
+});
+
+test('二十八宿の取得', () => {
+  expect(getNijuhashuku(createDate(2021, 1, 1))).toBe(ASTROLOGY28[15]);
+  expect(getNijuhashuku(createDate(2021, 1, 2))).toBe(ASTROLOGY28[16]);
+  expect(getNijuhashuku(createDate(2021, 1, 3))).toBe(ASTROLOGY28[17]);
+  expect(getNijuhashuku(createDate(2021, 1, 4))).toBe(ASTROLOGY28[18]);
+  expect(getNijuhashuku(createDate(2021, 1, 5))).toBe(ASTROLOGY28[19]);
+  expect(getNijuhashuku(createDate(2021, 1, 6))).toBe(ASTROLOGY28[20]);
+  expect(getNijuhashuku(createDate(2021, 1, 7))).toBe(ASTROLOGY28[21]);
+  expect(getNijuhashuku(createDate(2021, 1, 8))).toBe(ASTROLOGY28[22]);
+  expect(getNijuhashuku(createDate(2021, 1, 9))).toBe(ASTROLOGY28[23]);
+  expect(getNijuhashuku(createDate(2021, 1, 10))).toBe(ASTROLOGY28[24]);
+  expect(getNijuhashuku(createDate(2021, 1, 11))).toBe(ASTROLOGY28[25]);
+  expect(getNijuhashuku(createDate(2021, 1, 12))).toBe(ASTROLOGY28[26]);
+  expect(getNijuhashuku(createDate(2021, 1, 13))).toBe(ASTROLOGY28[27]);
+  expect(getNijuhashuku(createDate(2021, 1, 14))).toBe(ASTROLOGY28[0]);
+  expect(getNijuhashuku(createDate(2021, 1, 15))).toBe(ASTROLOGY28[1]);
+  expect(getNijuhashuku(createDate(2021, 1, 16))).toBe(ASTROLOGY28[2]);
+  expect(getNijuhashuku(createDate(2021, 1, 17))).toBe(ASTROLOGY28[3]);
+  expect(getNijuhashuku(createDate(2021, 1, 18))).toBe(ASTROLOGY28[4]);
+  expect(getNijuhashuku(createDate(2021, 1, 19))).toBe(ASTROLOGY28[5]);
+  expect(getNijuhashuku(createDate(2021, 1, 20))).toBe(ASTROLOGY28[6]);
+  expect(getNijuhashuku(createDate(2021, 1, 21))).toBe(ASTROLOGY28[7]);
+  expect(getNijuhashuku(createDate(2021, 1, 22))).toBe(ASTROLOGY28[8]);
+  expect(getNijuhashuku(createDate(2021, 1, 23))).toBe(ASTROLOGY28[9]);
+  expect(getNijuhashuku(createDate(2021, 1, 24))).toBe(ASTROLOGY28[10]);
+  expect(getNijuhashuku(createDate(2021, 1, 25))).toBe(ASTROLOGY28[11]);
+  expect(getNijuhashuku(createDate(2021, 1, 26))).toBe(ASTROLOGY28[12]);
+  expect(getNijuhashuku(createDate(2021, 1, 27))).toBe(ASTROLOGY28[13]);
+  expect(getNijuhashuku(createDate(2021, 1, 28))).toBe(ASTROLOGY28[14]);
 });
 
 test('年（十干）の取得', () => {

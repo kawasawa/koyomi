@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   datePickerTitle: {
     color: colors.brown[900],
-    fontSize: '18px',
+    fontSize: '19px',
   },
 }));
 

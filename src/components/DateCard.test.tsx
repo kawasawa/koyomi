@@ -9,7 +9,7 @@ const props: DateCardProps = {
   kana: 'test-kana',
   summary1: 'test-summary1',
   summary2: 'test-summary2',
-  balloon: 'test-balloon',
+  // balloon: 'test-balloon',
   url: 'test-url',
   icon: 'test-icon',
   image: 'test-image',
@@ -41,7 +41,7 @@ describe('DateCard', () => {
     expect(screen.getByTestId('dateCard__value').textContent).toBe(props.value);
     expect(screen.getByTestId('dateCard__summary1').textContent).toBe(props.summary1);
     expect(screen.getByTestId('dateCard__summary2').textContent).toBe(props.summary2);
-    expect(screen.getByTestId('dateCard__balloon').textContent).toBe(props.balloon);
+    // expect(screen.getByTestId('dateCard__balloon').textContent).toBe(props.balloon);
     expect(screen.getByTestId('dateCard__icon').getAttribute('src')).toBe(props.icon);
     expect(screen.getByTestId('dateCard__image').getAttribute('src')).toBe(props.image);
 

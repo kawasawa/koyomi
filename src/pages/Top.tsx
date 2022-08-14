@@ -108,7 +108,6 @@ export const Top = () => {
       title: t('label.lunisolarCalendar'),
       value: util.format(t('format.ymd'), calendar.year, calendar.month, calendar.day),
       summary2: t('text.lunisolarCalendar'),
-      balloon: 1 <= age ? util.format(t('format.age'), age) : undefined,
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/C2C0B1A2C2C0CDDBCEF1.html',
       image: JapanImage,
     },
@@ -227,8 +226,13 @@ export const Top = () => {
       <Header date={date} />
       <Container className={classes.content} maxWidth="lg">
         {date.isTokyoLocalTime() && (
-          <Alert className={classes.alert} variant="standard" severity="warning" data-testid="top__alert">
+          <Alert className={classes.alert} variant="standard" severity="error" data-testid="top__alert--tokyoLocalTime">
             {t('message.warning.date__tokyoLocalTime')}
+          </Alert>
+        )}
+        {1 <= age && (
+          <Alert className={classes.alert} variant="standard" severity="success" data-testid="top__alert--age">
+            {util.format(t('message.info.date__age'), age)}
           </Alert>
         )}
         <Grid container spacing={2} data-testid="top_contents">

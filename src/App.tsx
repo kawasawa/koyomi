@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import 'react-toastify/dist/ReactToastify.css';
 
 import { colors, createTheme } from '@material-ui/core';
