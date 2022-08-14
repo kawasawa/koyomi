@@ -394,7 +394,6 @@ export const SEASON24: Array<CalendarInfo> = [
   {
     value: '霜降',
     kana: 'そうこう',
-
     summary: '霜が降りるころ',
   },
   {

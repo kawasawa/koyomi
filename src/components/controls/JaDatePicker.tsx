@@ -13,18 +13,19 @@ export type JaDatePickerProps = {
 export class JaDateFnsUtils extends DateFnsUtils {
   // ポップアップヘッダーの年
   getYearText = (date: Date) => {
-    const era = getEra(date);
-    return era ? `${era} (${date.getFullYear()}) 年` : 'y年';
+    const era = getEraYear(date);
+    return `${era}年 (${date.getFullYear()})`;
   };
   // ポップアップヘッダーの月日
   getDatePickerHeaderText = (date: Date) => {
-    return `${this.format(date, 'M月 d日')} (${getJpWeek(date)})`;
+    const jpWeek = getJpWeek(date);
+    return `${this.format(date, 'M月 d日')} (${jpWeek})`;
   };
   // ポップアップカレンダーの年月
   getCalendarHeaderText = (date: Date) => {
-    const era = getEra(date);
+    const era = getEraYear(date);
     const jpMonth = getJpMonth(date);
-    return era ? `${era} 年 ${date.getMonth() + 1}月 (${jpMonth})` : `y年 M月 (${jpMonth})`;
+    return `${era}年 ${date.getMonth() + 1}月 - ${jpMonth} -`;
   };
 }
 
@@ -43,8 +44,7 @@ export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerPro
   }, [setOpen]);
   const onChange = useCallback(
     (date: MaterialUiPickersDate) => {
-      if (!date) return;
-      setDate(new Date(date.toString()));
+      if (date) setDate(new Date(date.toString()));
     },
     [setDate]
   );
@@ -53,7 +53,7 @@ export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerPro
     <MuiPickersUtilsProvider utils={JaDateFnsUtils} locale={jaLocale}>
       <KeyboardDatePicker
         {...props}
-        label={`${date ? `${getEra(date)}年 ${getJpMonth(date)}` : undefined}`}
+        label={`${date ? `${getEraYear(date)}年 ${getJpMonth(date)}` : undefined}`}
         format="yyyy年 MM月 dd日"
         okLabel={props.okLabel ?? 'OK'}
         cancelLabel={props.cancelLabel ?? 'キャンセル'}
@@ -71,22 +71,22 @@ export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerPro
   );
 };
 
-const getEra = (date: Date) => {
+export const getEraYear = (date: Date) => {
   const yyyyMMdd = date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
   for (let i = ERAS.length - 1; 0 <= i; i--) {
     if ((ERAS[i].date ?? NaN) <= yyyyMMdd) {
-      const eraYear = date.getFullYear() - Math.floor(ERAS[i].date / 10000) + 1;
-      return `${ERAS[i].name}${eraYear}`;
+      const year = date.getFullYear() - Math.floor(ERAS[i].date / 10000) + 1;
+      return `${ERAS[i].name}${year === 1 ? '元' : year}`;
     }
   }
-  return undefined;
+  throw new RangeError();
 };
 
 export const getJpWeek = (date: Date) => JP_WEEKS[date.getDay()];
 
 export const getJpMonth = (date: Date) => JP_MONTHS[date.getMonth()];
 
-const ERAS = [
+export const ERAS = [
   { name: '慶応', date: 18650408 },
   { name: '明治', date: 18680908 },
   { name: '大正', date: 19120730 },
