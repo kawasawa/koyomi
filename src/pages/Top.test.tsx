@@ -50,7 +50,8 @@ describe('Top', () => {
     expect(screen.getByTestId('mock__header')).toBeVisible();
     expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top_contents')).toBeVisible();
-    expect(screen.queryByTestId('top__alert')).toBeNull();
+    expect(screen.queryByTestId('top__alert--age')).toBeNull();
+    expect(screen.queryByTestId('top__alert--tokyoLocalTime')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
     expect(mockUseHistoryPush).not.toBeCalled();
   });
@@ -64,7 +65,8 @@ describe('Top', () => {
     expect(screen.getByTestId('mock__header')).toBeVisible();
     expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top_contents')).toBeVisible();
-    expect(screen.queryByTestId('top__alert')).toBeNull();
+    expect(screen.getByTestId('top__alert--age')).toBeVisible();
+    expect(screen.queryByTestId('top__alert--tokyoLocalTime')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
     expect(mockUseHistoryPush).not.toBeCalled();
   });
@@ -78,7 +80,8 @@ describe('Top', () => {
     expect(screen.getByTestId('mock__header')).toBeVisible();
     expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top_contents')).toBeVisible();
-    expect(screen.getByTestId('top__alert')).toBeVisible();
+    expect(screen.getByTestId('top__alert--age')).toBeVisible();
+    expect(screen.getByTestId('top__alert--tokyoLocalTime')).toBeVisible();
 
     expect(spyToastInfo).not.toBeCalled();
     expect(mockUseHistoryPush).not.toBeCalled();

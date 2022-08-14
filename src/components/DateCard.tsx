@@ -2,7 +2,6 @@ import {
   Box,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   colors,
@@ -51,29 +50,29 @@ const useStyles = makeStyles((theme) => ({
   dateSummary2: {
     color: colors.grey[500],
   },
-  balloonText: {
-    color: colors.grey[700],
-  },
-  balloonTip: {
-    display: 'block',
-    boxSizing: 'border-box',
-    margin: '0px 0 0 5px',
-    padding: '0px 10px 5px 10px',
-    background: '#fafafa',
-    border: '1px solid #aaa',
-    borderRadius: '3px',
-  },
-  balloonTipTriangle: {
-    display: 'block',
-    width: '10px',
-    height: '10px',
-    margin: '-6px 0 0 10px',
-    background: '#fafafa',
-    borderLeft: '1px solid #aaa',
-    borderBottom: '1px solid #aaa',
-    transform: 'rotate(135deg)',
-    WebkitTransform: 'rotate(135deg)',
-  },
+  // balloonText: {
+  //   color: colors.grey[700],
+  // },
+  // balloonTip: {
+  //   display: 'block',
+  //   boxSizing: 'border-box',
+  //   margin: '0px 0 0 5px',
+  //   padding: '0px 10px 5px 10px',
+  //   background: '#fafafa',
+  //   border: '1px solid #aaa',
+  //   borderRadius: '3px',
+  // },
+  // balloonTipTriangle: {
+  //   display: 'block',
+  //   width: '10px',
+  //   height: '10px',
+  //   margin: '-6px 0 0 10px',
+  //   background: '#fafafa',
+  //   borderLeft: '1px solid #aaa',
+  //   borderBottom: '1px solid #aaa',
+  //   transform: 'rotate(135deg)',
+  //   WebkitTransform: 'rotate(135deg)',
+  // },
 }));
 
 export type DateCardProps = {
@@ -82,7 +81,7 @@ export type DateCardProps = {
   kana?: string;
   summary1?: string;
   summary2?: string;
-  balloon?: string;
+  // balloon?: string;
   url?: string;
   icon?: string;
   image: string;
@@ -149,7 +148,7 @@ export const DateCard = (props: DateCardProps) => {
               </Typography>
             )}
           </CardContent>
-          {props.balloon && (
+          {/* {props.balloon && (
             <CardActions>
               <Box className={classes.balloonTip}>
                 <Box className={classes.balloonTipTriangle} />
@@ -158,7 +157,7 @@ export const DateCard = (props: DateCardProps) => {
                 </Typography>
               </Box>
             </CardActions>
-          )}
+          )} */}
         </CardActionArea>
       </Card>
     </Fade>

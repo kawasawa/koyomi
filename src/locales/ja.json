@@ -19,13 +19,13 @@
   "label.eclipticCoordinate": "太陽黄経",
 
   "format.ymd": "%s年 %s月 %s日",
-  "format.age": "この日生まれは今日で %d 歳",
   "format.season4": "暦の上では %s",
   "format.season24__until": "%s まで %s 日",
 
   "message.error.date__inputFormat": "日付は yyyy-MM-dd の形式で指定してください。",
   "message.error.date__inputRange": "日付は %s から %s までの範囲で指定してください。",
   "message.warning.date__tokyoLocalTime": "1887 年以前は日本標準時採用前のため、これらの暦注は厳密には異なります。",
+  "message.info.date__age": "この日に生まれていれば %d 歳になります。",
 
   "text.lunisolarCalendar": "1873年、明治改暦によって日本の暦は太陰太陽暦から太陽暦に改められました。この改暦前の暦を「旧暦」と言います。太陰太陽暦は月の満ち欠けの周期（朔望月・さくぼうげつ）に閏月を加えた暦法です。",
   "text.rokuyo": "六曜は中国から伝えられた暦注の一つです。明治改暦の際に一時は廃止される動きがありましたが、旧暦とともに存続し続け、現在は冠婚葬祭などの儀式と結びつきが強い重要な暦注となりました。",
