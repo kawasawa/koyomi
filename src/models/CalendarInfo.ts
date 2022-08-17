@@ -11,17 +11,57 @@ import JapaneseLunisolarCalendar, { calcJulianCenturyNumber, calcSunLongitude } 
  */
 export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
   if (isNaN(calendar.date.getTime())) return undefined;
+  const season = getSeason(calendar.date);
+  const setsuMonth = getSetsuMonth(season.season24);
   return {
     rokuyo: getRokuyo(calendar),
+    junichoku: getJunichoku(calendar.date, setsuMonth),
     nijuhashuku: getNijuhashuku(calendar.date),
     etoYear: getEtoYear(calendar.date),
     etoMonth: getEtoMonth(calendar.date),
     etoDay: getEtoDay(calendar.date),
-    season: getSeason(calendar.date),
+    season: season,
     sign: getSign(calendar.date),
     lunaPhase: getLunaPhase(calendar),
     tidePhase: getTidePhase(calendar),
   };
+};
+
+/**
+ * 節月を取得します。
+ * @param season24 二十四節気居
+ * @returns 節月
+ */
+export const getSetsuMonth = (season24: CalendarInfo) => {
+  const season24Names = [
+    '立春',
+    '雨水',
+    '啓蟄',
+    '春分',
+    '清明',
+    '穀雨',
+    '立夏',
+    '小満',
+    '芒種',
+    '夏至',
+    '小暑',
+    '大暑',
+    '立秋',
+    '処暑',
+    '白露',
+    '秋分',
+    '寒露',
+    '霜降',
+    '立冬',
+    '小雪',
+    '大雪',
+    '冬至',
+    '小寒',
+    '大寒',
+  ];
+  let i = season24Names.findIndex((x) => x === season24.value);
+  if (season24.startAt !== 0) i = 0 < i ? i - 1 : season24Names.length - 1;
+  return Math.floor(i / 2) + 1;
 };
 
 /**
@@ -53,6 +93,15 @@ export const getEclipticCoordinate = (
  * @returns 六曜
  */
 export const getRokuyo = (calendar: JapaneseLunisolarCalendar) => ROKUYO[(calendar.month + calendar.day - 2) % 6];
+
+/**
+ * 十二直を取得します。
+ * @param date Date インスタンス
+ * @param setsuMonth 節月
+ * @returns 十二直
+ */
+export const getJunichoku = (date: Date, setsuMonth: number) =>
+  JUNICHOKU[(Math.ceil(date.getJulianDay()) - setsuMonth) % JUNICHOKU.length];
 
 /**
  * 二十八宿を取得します。
@@ -152,7 +201,7 @@ export const getSeason = (date: Date) => {
         value: SEASON24[i_s24].value,
         kana: SEASON24[i_s24].kana,
         summary: SEASON24[i_s24].summary,
-        startAt: i,
+        startAt: i, // 対象の二十四節気は何日後であるか
       };
       break;
     }
@@ -252,6 +301,21 @@ export const ROKUYO: Array<CalendarInfo> = [
     kana: 'しゃっこう',
     summary: '凶日。特に祝事は大凶。火の元、刃物に要注意。正午は吉、朝夕は凶。',
   },
+];
+
+export const JUNICHOKU: Array<CalendarInfo> = [
+  { value: '建', kana: 'たつ', summary: 'よろず大吉の日。動土と蔵開きは凶。' },
+  { value: '除', kana: 'のぞく', summary: '井戸掘り・治療開始・祭祀は吉。結婚と動土は凶。' },
+  { value: '満', kana: 'みつ', summary: '新規事・移転・結婚は吉。動土と服薬は凶。' },
+  { value: '平', kana: 'たいら', summary: '旅行・結婚・道路修理は吉。穴掘りと種蒔きは凶。' },
+  { value: '定', kana: 'さだん', summary: '開店・結婚・移転・種蒔きは吉。旅行と訴訟は凶。' },
+  { value: '執', kana: 'とる', summary: '祭祀・祝い事・造作・種蒔きは吉。金銭の出入りは凶。' },
+  { value: '破', kana: 'やぶる', summary: '訴訟・出陣・漁猟・服薬は吉。祝い事と契約事は凶。' },
+  { value: '危', kana: 'あやぶ', summary: '万事控えめに。' },
+  { value: '成', kana: 'なる', summary: '新規事・建築・開店は吉。訴訟と談判は凶。' },
+  { value: '納', kana: 'おさん', summary: '収穫と商品購入は吉。結婚と見合いは凶。' },
+  { value: '開', kana: 'ひらく', summary: '	建築・移転・結婚は吉。葬式は凶。' },
+  { value: '閉', kana: 'とづ', summary: '金銭出納と建墓は吉。棟上げ・結婚・開店は凶。' },
 ];
 
 export const ASTROLOGY28: Array<CalendarInfo> = [
