@@ -12,6 +12,7 @@ import BannerImage from '../assets/banner.webp';
 import AstrologyImage from '../assets/images/astrology.webp';
 import AutumnImage from '../assets/images/autumn.webp';
 import Autumn2Image from '../assets/images/autumn2.webp';
+import BigDipperImage from '../assets/images/big-dipper.webp';
 import BoarImage from '../assets/images/boar.webp';
 import ChickenImage from '../assets/images/chicken.webp';
 import CowImage from '../assets/images/cow.webp';
@@ -28,7 +29,6 @@ import RokuyoImage from '../assets/images/rokuyo.webp';
 import SeaImage from '../assets/images/sea.webp';
 import SheepImage from '../assets/images/sheep.webp';
 import SighImage from '../assets/images/sign.webp';
-import SignSnakeCharmerImage from '../assets/images/sign-snake-charmer.webp';
 import SnakeImage from '../assets/images/snake.webp';
 import SolarImage from '../assets/images/solar.webp';
 import SpringImage from '../assets/images/spring.webp';
@@ -121,6 +121,15 @@ export const Top = () => {
       image: RokuyoImage,
     },
     {
+      title: t('label.junichoku'),
+      value: calendarInfo?.junichoku.value,
+      kana: calendarInfo?.junichoku.kana,
+      summary1: calendarInfo?.junichoku.summary,
+      summary2: t('text.junichoku'),
+      url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/BDBDC6F3C4BE.html',
+      image: BigDipperImage,
+    },
+    {
       title: t('label.nijuhashuku'),
       value: calendarInfo?.nijuhashuku.value,
       kana: calendarInfo?.nijuhashuku.kana,
@@ -161,17 +170,10 @@ export const Top = () => {
       title: t('label.sign12'),
       value: calendarInfo?.sign.sign12.value,
       kana: calendarInfo?.sign.sign12.kana,
+      summary1: `（${t('label.sign13')}）${calendarInfo?.sign.sign13.value}`,
       summary2: t('text.sign12'),
       url: 'https://ja.wikipedia.org/wiki/黄道十二星座',
       image: SighImage,
-    },
-    {
-      title: t('label.sign13'),
-      value: calendarInfo?.sign.sign13.value,
-      kana: calendarInfo?.sign.sign13.kana,
-      summary2: t('text.sign13'),
-      url: 'https://ja.wikipedia.org/wiki/13星座占い',
-      image: SignSnakeCharmerImage,
     },
     {
       title: t('label.japaneseZodiac'),
@@ -188,7 +190,7 @@ export const Top = () => {
       title: t('label.lunaPhase'),
       value: calendarInfo?.lunaPhase.value,
       kana: calendarInfo?.lunaPhase.kana,
-      summary1: `${t('label.lunaAge')} ${calendar?.lunaAge.toString()}`,
+      summary1: `（${t('label.lunaAge')}）${calendar?.lunaAge.toString()}`,
       summary2: t('text.lunaPhase'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B7EEA4CECBFEA4C1B7E7A4B1.html',
       image: MoonImage,

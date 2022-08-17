@@ -21,6 +21,9 @@ import {
   TIDE_PHASES,
   getNijuhashuku,
   ASTROLOGY28,
+  getJunichoku,
+  JUNICHOKU,
+  getSetsuMonth,
 } from './CalendarInfo';
 
 const createDate = (year: number, month: number, day: number) => new Date(year, month - 1, day);
@@ -33,6 +36,33 @@ test('暦注の生成', () => {
   expect(createCalendarInfo(new JapaneseLunisolarCalendar(new Date('2021/01/01')))).toBeDefined();
 });
 
+test('節月の取得', () => {
+  expect(getSetsuMonth({ value: '立春', startAt: 1 })).toBe(12);
+  expect(getSetsuMonth({ value: '立春', startAt: 0 })).toBe(1);
+  expect(getSetsuMonth({ value: '啓蟄', startAt: 1 })).toBe(1);
+  expect(getSetsuMonth({ value: '啓蟄', startAt: 0 })).toBe(2);
+  expect(getSetsuMonth({ value: '清明', startAt: 1 })).toBe(2);
+  expect(getSetsuMonth({ value: '清明', startAt: 0 })).toBe(3);
+  expect(getSetsuMonth({ value: '立夏', startAt: 1 })).toBe(3);
+  expect(getSetsuMonth({ value: '立夏', startAt: 0 })).toBe(4);
+  expect(getSetsuMonth({ value: '芒種', startAt: 1 })).toBe(4);
+  expect(getSetsuMonth({ value: '芒種', startAt: 0 })).toBe(5);
+  expect(getSetsuMonth({ value: '小暑', startAt: 1 })).toBe(5);
+  expect(getSetsuMonth({ value: '小暑', startAt: 0 })).toBe(6);
+  expect(getSetsuMonth({ value: '立秋', startAt: 1 })).toBe(6);
+  expect(getSetsuMonth({ value: '立秋', startAt: 0 })).toBe(7);
+  expect(getSetsuMonth({ value: '白露', startAt: 1 })).toBe(7);
+  expect(getSetsuMonth({ value: '白露', startAt: 0 })).toBe(8);
+  expect(getSetsuMonth({ value: '寒露', startAt: 1 })).toBe(8);
+  expect(getSetsuMonth({ value: '寒露', startAt: 0 })).toBe(9);
+  expect(getSetsuMonth({ value: '立冬', startAt: 1 })).toBe(9);
+  expect(getSetsuMonth({ value: '立冬', startAt: 0 })).toBe(10);
+  expect(getSetsuMonth({ value: '大雪', startAt: 1 })).toBe(10);
+  expect(getSetsuMonth({ value: '大雪', startAt: 0 })).toBe(11);
+  expect(getSetsuMonth({ value: '小寒', startAt: 1 })).toBe(11);
+  expect(getSetsuMonth({ value: '小寒', startAt: 0 })).toBe(12);
+});
+
 test('六曜の取得', () => {
   expect(getRokuyo(createLuna(2021, 1, 1))).toBe(ROKUYO[3]);
   expect(getRokuyo(createLuna(2021, 1, 2))).toBe(ROKUYO[4]);
@@ -40,6 +70,22 @@ test('六曜の取得', () => {
   expect(getRokuyo(createLuna(2021, 1, 4))).toBe(ROKUYO[0]);
   expect(getRokuyo(createLuna(2021, 1, 5))).toBe(ROKUYO[1]);
   expect(getRokuyo(createLuna(2021, 1, 6))).toBe(ROKUYO[2]);
+});
+
+test('十二直の取得', () => {
+  expect(getJunichoku(createDate(2021, 2, 1), 12)).toBe(JUNICHOKU[3]);
+  expect(getJunichoku(createDate(2021, 2, 2), 12)).toBe(JUNICHOKU[4]);
+  expect(getJunichoku(createDate(2021, 2, 3), 1)).toBe(JUNICHOKU[4]);
+  expect(getJunichoku(createDate(2021, 2, 4), 1)).toBe(JUNICHOKU[5]);
+  expect(getJunichoku(createDate(2021, 2, 5), 1)).toBe(JUNICHOKU[6]);
+  expect(getJunichoku(createDate(2021, 2, 6), 1)).toBe(JUNICHOKU[7]);
+  expect(getJunichoku(createDate(2021, 2, 7), 1)).toBe(JUNICHOKU[8]);
+  expect(getJunichoku(createDate(2021, 2, 8), 1)).toBe(JUNICHOKU[9]);
+  expect(getJunichoku(createDate(2021, 2, 9), 1)).toBe(JUNICHOKU[10]);
+  expect(getJunichoku(createDate(2021, 2, 10), 1)).toBe(JUNICHOKU[11]);
+  expect(getJunichoku(createDate(2021, 2, 11), 1)).toBe(JUNICHOKU[0]);
+  expect(getJunichoku(createDate(2021, 2, 12), 1)).toBe(JUNICHOKU[1]);
+  expect(getJunichoku(createDate(2021, 2, 13), 1)).toBe(JUNICHOKU[2]);
 });
 
 test('二十八宿の取得', () => {
@@ -71,140 +117,6 @@ test('二十八宿の取得', () => {
   expect(getNijuhashuku(createDate(2021, 1, 26))).toBe(ASTROLOGY28[12]);
   expect(getNijuhashuku(createDate(2021, 1, 27))).toBe(ASTROLOGY28[13]);
   expect(getNijuhashuku(createDate(2021, 1, 28))).toBe(ASTROLOGY28[14]);
-});
-
-test('年（十干）の取得', () => {
-  expect(getEtoYear(createDate(2000, 1, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoYear(createDate(2001, 1, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoYear(createDate(2002, 1, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoYear(createDate(2003, 1, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoYear(createDate(2004, 1, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoYear(createDate(2005, 1, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoYear(createDate(2006, 1, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoYear(createDate(2007, 1, 1)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoYear(createDate(2008, 1, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoYear(createDate(2009, 1, 1)).jikkan).toBe(JIKKAN[5]);
-});
-
-test('年（十二支）の取得', () => {
-  expect(getEtoYear(createDate(2000, 1, 1)).junishi).toBe(JUNISHI[4]);
-  expect(getEtoYear(createDate(2001, 1, 1)).junishi).toBe(JUNISHI[5]);
-  expect(getEtoYear(createDate(2002, 1, 1)).junishi).toBe(JUNISHI[6]);
-  expect(getEtoYear(createDate(2003, 1, 1)).junishi).toBe(JUNISHI[7]);
-  expect(getEtoYear(createDate(2004, 1, 1)).junishi).toBe(JUNISHI[8]);
-  expect(getEtoYear(createDate(2005, 1, 1)).junishi).toBe(JUNISHI[9]);
-  expect(getEtoYear(createDate(2006, 1, 1)).junishi).toBe(JUNISHI[10]);
-  expect(getEtoYear(createDate(2007, 1, 1)).junishi).toBe(JUNISHI[11]);
-  expect(getEtoYear(createDate(2008, 1, 1)).junishi).toBe(JUNISHI[0]);
-  expect(getEtoYear(createDate(2009, 1, 1)).junishi).toBe(JUNISHI[1]);
-  expect(getEtoYear(createDate(2010, 1, 1)).junishi).toBe(JUNISHI[2]);
-  expect(getEtoYear(createDate(2011, 1, 1)).junishi).toBe(JUNISHI[3]);
-});
-
-test('月（十干）の取得', () => {
-  expect(getEtoMonth(createDate(2000, 1, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoMonth(createDate(2000, 2, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoMonth(createDate(2000, 3, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoMonth(createDate(2000, 4, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoMonth(createDate(2000, 5, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoMonth(createDate(2000, 6, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoMonth(createDate(2000, 7, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoMonth(createDate(2000, 8, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoMonth(createDate(2000, 9, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoMonth(createDate(2000, 10, 1)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoMonth(createDate(2000, 11, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoMonth(createDate(2000, 12, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoMonth(createDate(2001, 1, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoMonth(createDate(2001, 2, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoMonth(createDate(2001, 3, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoMonth(createDate(2001, 4, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoMonth(createDate(2001, 5, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoMonth(createDate(2001, 6, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoMonth(createDate(2001, 7, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoMonth(createDate(2001, 8, 1)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoMonth(createDate(2001, 9, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoMonth(createDate(2001, 10, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoMonth(createDate(2001, 11, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoMonth(createDate(2001, 12, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoMonth(createDate(2002, 1, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoMonth(createDate(2002, 2, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoMonth(createDate(2002, 3, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoMonth(createDate(2002, 4, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoMonth(createDate(2002, 5, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoMonth(createDate(2002, 6, 1)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoMonth(createDate(2002, 7, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoMonth(createDate(2002, 8, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoMonth(createDate(2002, 9, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoMonth(createDate(2002, 10, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoMonth(createDate(2002, 11, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoMonth(createDate(2002, 12, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoMonth(createDate(2003, 1, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoMonth(createDate(2003, 2, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoMonth(createDate(2003, 3, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoMonth(createDate(2003, 4, 1)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoMonth(createDate(2003, 5, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoMonth(createDate(2003, 6, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoMonth(createDate(2003, 7, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoMonth(createDate(2003, 8, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoMonth(createDate(2003, 9, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoMonth(createDate(2003, 10, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoMonth(createDate(2003, 11, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoMonth(createDate(2003, 12, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoMonth(createDate(2004, 1, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoMonth(createDate(2004, 2, 1)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoMonth(createDate(2004, 3, 1)).jikkan).toBe(JIKKAN[4]);
-  expect(getEtoMonth(createDate(2004, 4, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoMonth(createDate(2004, 5, 1)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoMonth(createDate(2004, 6, 1)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoMonth(createDate(2004, 7, 1)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoMonth(createDate(2004, 8, 1)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoMonth(createDate(2004, 9, 1)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoMonth(createDate(2004, 10, 1)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoMonth(createDate(2004, 11, 1)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoMonth(createDate(2004, 12, 1)).jikkan).toBe(JIKKAN[3]);
-});
-
-test('月（十二支）の取得', () => {
-  expect(getEtoMonth(createDate(2021, 1, 1)).junishi).toBe(JUNISHI[2]);
-  expect(getEtoMonth(createDate(2021, 2, 1)).junishi).toBe(JUNISHI[3]);
-  expect(getEtoMonth(createDate(2021, 3, 1)).junishi).toBe(JUNISHI[4]);
-  expect(getEtoMonth(createDate(2021, 4, 1)).junishi).toBe(JUNISHI[5]);
-  expect(getEtoMonth(createDate(2021, 5, 1)).junishi).toBe(JUNISHI[6]);
-  expect(getEtoMonth(createDate(2021, 6, 1)).junishi).toBe(JUNISHI[7]);
-  expect(getEtoMonth(createDate(2021, 7, 1)).junishi).toBe(JUNISHI[8]);
-  expect(getEtoMonth(createDate(2021, 8, 1)).junishi).toBe(JUNISHI[9]);
-  expect(getEtoMonth(createDate(2021, 9, 1)).junishi).toBe(JUNISHI[10]);
-  expect(getEtoMonth(createDate(2021, 10, 1)).junishi).toBe(JUNISHI[11]);
-  expect(getEtoMonth(createDate(2021, 11, 1)).junishi).toBe(JUNISHI[0]);
-  expect(getEtoMonth(createDate(2021, 12, 1)).junishi).toBe(JUNISHI[1]);
-});
-
-test('日（十干）の取得', () => {
-  expect(getEtoDay(createDate(2021, 1, 1)).jikkan).toBe(JIKKAN[5]);
-  expect(getEtoDay(createDate(2021, 1, 2)).jikkan).toBe(JIKKAN[6]);
-  expect(getEtoDay(createDate(2021, 1, 3)).jikkan).toBe(JIKKAN[7]);
-  expect(getEtoDay(createDate(2021, 1, 4)).jikkan).toBe(JIKKAN[8]);
-  expect(getEtoDay(createDate(2021, 1, 5)).jikkan).toBe(JIKKAN[9]);
-  expect(getEtoDay(createDate(2021, 1, 6)).jikkan).toBe(JIKKAN[0]);
-  expect(getEtoDay(createDate(2021, 1, 7)).jikkan).toBe(JIKKAN[1]);
-  expect(getEtoDay(createDate(2021, 1, 8)).jikkan).toBe(JIKKAN[2]);
-  expect(getEtoDay(createDate(2021, 1, 9)).jikkan).toBe(JIKKAN[3]);
-  expect(getEtoDay(createDate(2021, 1, 10)).jikkan).toBe(JIKKAN[4]);
-});
-
-test('日（十二支）の取得', () => {
-  expect(getEtoDay(createDate(2021, 1, 1)).junishi).toBe(JUNISHI[9]);
-  expect(getEtoDay(createDate(2021, 1, 2)).junishi).toBe(JUNISHI[10]);
-  expect(getEtoDay(createDate(2021, 1, 3)).junishi).toBe(JUNISHI[11]);
-  expect(getEtoDay(createDate(2021, 1, 4)).junishi).toBe(JUNISHI[0]);
-  expect(getEtoDay(createDate(2021, 1, 5)).junishi).toBe(JUNISHI[1]);
-  expect(getEtoDay(createDate(2021, 1, 6)).junishi).toBe(JUNISHI[2]);
-  expect(getEtoDay(createDate(2021, 1, 7)).junishi).toBe(JUNISHI[3]);
-  expect(getEtoDay(createDate(2021, 1, 8)).junishi).toBe(JUNISHI[4]);
-  expect(getEtoDay(createDate(2021, 1, 9)).junishi).toBe(JUNISHI[5]);
-  expect(getEtoDay(createDate(2021, 1, 10)).junishi).toBe(JUNISHI[6]);
-  expect(getEtoDay(createDate(2021, 1, 11)).junishi).toBe(JUNISHI[7]);
-  expect(getEtoDay(createDate(2021, 1, 12)).junishi).toBe(JUNISHI[8]);
 });
 
 test('四季の取得', () => {
@@ -455,6 +367,140 @@ test('十三星座の取得', () => {
   expect(getSign(createDate(2021, 11, 30)).sign13).toBe(SIGN13[11]);
   expect(getSign(createDate(2021, 12, 17)).sign13).toBe(SIGN13[11]);
   expect(getSign(createDate(2021, 12, 18)).sign13).toBe(SIGN13[12]);
+});
+
+test('年（十干）の取得', () => {
+  expect(getEtoYear(createDate(2000, 1, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoYear(createDate(2001, 1, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoYear(createDate(2002, 1, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoYear(createDate(2003, 1, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoYear(createDate(2004, 1, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoYear(createDate(2005, 1, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoYear(createDate(2006, 1, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoYear(createDate(2007, 1, 1)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoYear(createDate(2008, 1, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoYear(createDate(2009, 1, 1)).jikkan).toBe(JIKKAN[5]);
+});
+
+test('年（十二支）の取得', () => {
+  expect(getEtoYear(createDate(2000, 1, 1)).junishi).toBe(JUNISHI[4]);
+  expect(getEtoYear(createDate(2001, 1, 1)).junishi).toBe(JUNISHI[5]);
+  expect(getEtoYear(createDate(2002, 1, 1)).junishi).toBe(JUNISHI[6]);
+  expect(getEtoYear(createDate(2003, 1, 1)).junishi).toBe(JUNISHI[7]);
+  expect(getEtoYear(createDate(2004, 1, 1)).junishi).toBe(JUNISHI[8]);
+  expect(getEtoYear(createDate(2005, 1, 1)).junishi).toBe(JUNISHI[9]);
+  expect(getEtoYear(createDate(2006, 1, 1)).junishi).toBe(JUNISHI[10]);
+  expect(getEtoYear(createDate(2007, 1, 1)).junishi).toBe(JUNISHI[11]);
+  expect(getEtoYear(createDate(2008, 1, 1)).junishi).toBe(JUNISHI[0]);
+  expect(getEtoYear(createDate(2009, 1, 1)).junishi).toBe(JUNISHI[1]);
+  expect(getEtoYear(createDate(2010, 1, 1)).junishi).toBe(JUNISHI[2]);
+  expect(getEtoYear(createDate(2011, 1, 1)).junishi).toBe(JUNISHI[3]);
+});
+
+test('月（十干）の取得', () => {
+  expect(getEtoMonth(createDate(2000, 1, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoMonth(createDate(2000, 2, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoMonth(createDate(2000, 3, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoMonth(createDate(2000, 4, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoMonth(createDate(2000, 5, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoMonth(createDate(2000, 6, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoMonth(createDate(2000, 7, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoMonth(createDate(2000, 8, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoMonth(createDate(2000, 9, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoMonth(createDate(2000, 10, 1)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoMonth(createDate(2000, 11, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoMonth(createDate(2000, 12, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoMonth(createDate(2001, 1, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoMonth(createDate(2001, 2, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoMonth(createDate(2001, 3, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoMonth(createDate(2001, 4, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoMonth(createDate(2001, 5, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoMonth(createDate(2001, 6, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoMonth(createDate(2001, 7, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoMonth(createDate(2001, 8, 1)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoMonth(createDate(2001, 9, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoMonth(createDate(2001, 10, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoMonth(createDate(2001, 11, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoMonth(createDate(2001, 12, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoMonth(createDate(2002, 1, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoMonth(createDate(2002, 2, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoMonth(createDate(2002, 3, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoMonth(createDate(2002, 4, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoMonth(createDate(2002, 5, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoMonth(createDate(2002, 6, 1)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoMonth(createDate(2002, 7, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoMonth(createDate(2002, 8, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoMonth(createDate(2002, 9, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoMonth(createDate(2002, 10, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoMonth(createDate(2002, 11, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoMonth(createDate(2002, 12, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoMonth(createDate(2003, 1, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoMonth(createDate(2003, 2, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoMonth(createDate(2003, 3, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoMonth(createDate(2003, 4, 1)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoMonth(createDate(2003, 5, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoMonth(createDate(2003, 6, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoMonth(createDate(2003, 7, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoMonth(createDate(2003, 8, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoMonth(createDate(2003, 9, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoMonth(createDate(2003, 10, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoMonth(createDate(2003, 11, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoMonth(createDate(2003, 12, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoMonth(createDate(2004, 1, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoMonth(createDate(2004, 2, 1)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoMonth(createDate(2004, 3, 1)).jikkan).toBe(JIKKAN[4]);
+  expect(getEtoMonth(createDate(2004, 4, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoMonth(createDate(2004, 5, 1)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoMonth(createDate(2004, 6, 1)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoMonth(createDate(2004, 7, 1)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoMonth(createDate(2004, 8, 1)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoMonth(createDate(2004, 9, 1)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoMonth(createDate(2004, 10, 1)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoMonth(createDate(2004, 11, 1)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoMonth(createDate(2004, 12, 1)).jikkan).toBe(JIKKAN[3]);
+});
+
+test('月（十二支）の取得', () => {
+  expect(getEtoMonth(createDate(2021, 1, 1)).junishi).toBe(JUNISHI[2]);
+  expect(getEtoMonth(createDate(2021, 2, 1)).junishi).toBe(JUNISHI[3]);
+  expect(getEtoMonth(createDate(2021, 3, 1)).junishi).toBe(JUNISHI[4]);
+  expect(getEtoMonth(createDate(2021, 4, 1)).junishi).toBe(JUNISHI[5]);
+  expect(getEtoMonth(createDate(2021, 5, 1)).junishi).toBe(JUNISHI[6]);
+  expect(getEtoMonth(createDate(2021, 6, 1)).junishi).toBe(JUNISHI[7]);
+  expect(getEtoMonth(createDate(2021, 7, 1)).junishi).toBe(JUNISHI[8]);
+  expect(getEtoMonth(createDate(2021, 8, 1)).junishi).toBe(JUNISHI[9]);
+  expect(getEtoMonth(createDate(2021, 9, 1)).junishi).toBe(JUNISHI[10]);
+  expect(getEtoMonth(createDate(2021, 10, 1)).junishi).toBe(JUNISHI[11]);
+  expect(getEtoMonth(createDate(2021, 11, 1)).junishi).toBe(JUNISHI[0]);
+  expect(getEtoMonth(createDate(2021, 12, 1)).junishi).toBe(JUNISHI[1]);
+});
+
+test('日（十干）の取得', () => {
+  expect(getEtoDay(createDate(2021, 1, 1)).jikkan).toBe(JIKKAN[5]);
+  expect(getEtoDay(createDate(2021, 1, 2)).jikkan).toBe(JIKKAN[6]);
+  expect(getEtoDay(createDate(2021, 1, 3)).jikkan).toBe(JIKKAN[7]);
+  expect(getEtoDay(createDate(2021, 1, 4)).jikkan).toBe(JIKKAN[8]);
+  expect(getEtoDay(createDate(2021, 1, 5)).jikkan).toBe(JIKKAN[9]);
+  expect(getEtoDay(createDate(2021, 1, 6)).jikkan).toBe(JIKKAN[0]);
+  expect(getEtoDay(createDate(2021, 1, 7)).jikkan).toBe(JIKKAN[1]);
+  expect(getEtoDay(createDate(2021, 1, 8)).jikkan).toBe(JIKKAN[2]);
+  expect(getEtoDay(createDate(2021, 1, 9)).jikkan).toBe(JIKKAN[3]);
+  expect(getEtoDay(createDate(2021, 1, 10)).jikkan).toBe(JIKKAN[4]);
+});
+
+test('日（十二支）の取得', () => {
+  expect(getEtoDay(createDate(2021, 1, 1)).junishi).toBe(JUNISHI[9]);
+  expect(getEtoDay(createDate(2021, 1, 2)).junishi).toBe(JUNISHI[10]);
+  expect(getEtoDay(createDate(2021, 1, 3)).junishi).toBe(JUNISHI[11]);
+  expect(getEtoDay(createDate(2021, 1, 4)).junishi).toBe(JUNISHI[0]);
+  expect(getEtoDay(createDate(2021, 1, 5)).junishi).toBe(JUNISHI[1]);
+  expect(getEtoDay(createDate(2021, 1, 6)).junishi).toBe(JUNISHI[2]);
+  expect(getEtoDay(createDate(2021, 1, 7)).junishi).toBe(JUNISHI[3]);
+  expect(getEtoDay(createDate(2021, 1, 8)).junishi).toBe(JUNISHI[4]);
+  expect(getEtoDay(createDate(2021, 1, 9)).junishi).toBe(JUNISHI[5]);
+  expect(getEtoDay(createDate(2021, 1, 10)).junishi).toBe(JUNISHI[6]);
+  expect(getEtoDay(createDate(2021, 1, 11)).junishi).toBe(JUNISHI[7]);
+  expect(getEtoDay(createDate(2021, 1, 12)).junishi).toBe(JUNISHI[8]);
 });
 
 test('月相の取得', () => {
