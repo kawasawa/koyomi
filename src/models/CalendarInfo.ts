@@ -5,25 +5,33 @@ import JapaneseLunisolarCalendar, { calcJulianCenturyNumber, calcSunLongitude } 
 // ============================================================
 
 /**
- * 歴中を取得します。
+ * 暦注を取得します。
  * @param calendar 旧暦インスタンス
- * @returns 歴中
+ * @returns 暦注
  */
 export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
   if (isNaN(calendar.date.getTime())) return undefined;
-  const season = getSeason(calendar.date);
+
+  const julianDay = calendar.date.getJulianDay();
+  const season = getSeason(julianDay);
   const setsuMonth = getSetsuMonth(season.season24);
   return {
     rokuyo: getRokuyo(calendar),
-    junichoku: getJunichoku(calendar.date, setsuMonth),
-    nijuhashuku: getNijuhashuku(calendar.date),
-    etoYear: getEtoYear(calendar.date),
-    etoMonth: getEtoMonth(calendar.date),
-    etoDay: getEtoDay(calendar.date),
+    junichoku: getJunichoku(julianDay, setsuMonth),
+    nijuhashuku: getNijuhashuku(julianDay),
     season: season,
+    zodiac: {
+      year: getZodiacYear(calendar.date),
+      month: getZodiacMonth(calendar.date),
+      day: getZodiacDay(calendar.date),
+    },
     sign: getSign(calendar.date),
-    lunaPhase: getLunaPhase(calendar),
-    tidePhase: getTidePhase(calendar),
+    lunaPhase: getLunaPhase(calendar.lunaAge),
+    tidePhase: getTidePhase(calendar.lunaAge),
+    eclipticCoordinate: getEclipticCoordinate(julianDay + 1),
+    julianDay: julianDay,
+    julianDayRevise: getJulianDayRevise(julianDay),
+    lilianDay: getLilianDay(julianDay),
   };
 };
 
@@ -33,33 +41,13 @@ export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
  * @returns 節月
  */
 export const getSetsuMonth = (season24: CalendarInfo) => {
-  const season24Names = [
-    '立春',
-    '雨水',
-    '啓蟄',
-    '春分',
-    '清明',
-    '穀雨',
-    '立夏',
-    '小満',
-    '芒種',
-    '夏至',
-    '小暑',
-    '大暑',
-    '立秋',
-    '処暑',
-    '白露',
-    '秋分',
-    '寒露',
-    '霜降',
-    '立冬',
-    '小雪',
-    '大雪',
-    '冬至',
-    '小寒',
-    '大寒',
-  ];
-  let i = season24Names.findIndex((x) => x === season24.value);
+  // 立春を起点に二十四節気を列挙する
+  const season24Names = SEASON24.map((x) => x.value);
+  const temp = season24Names.splice(season24Names.findIndex((x) => x === '立春'));
+  season24Names.splice(0, 0, ...temp);
+
+  // 未来における直近の二十四節気から節月を推定する
+  let i = season24Names.findIndex((value) => value === season24.value);
   if (season24.startAt !== 0) i = 0 < i ? i - 1 : season24Names.length - 1;
   return Math.floor(i / 2) + 1;
 };
@@ -70,20 +58,17 @@ export const getSetsuMonth = (season24: CalendarInfo) => {
  * @param flag 取得の基準となる気候
  * @returns 太陽黄経
  */
-export const getEclipticCoordinate = (
-  julianDay: number,
-  flag: eclipticCoordinateFlag = eclipticCoordinateValues.none
-) => {
+export const getEclipticCoordinate = (julianDay: number, flag?: 'season24' | 'season72') => {
   const jd1 = Math.floor(julianDay);
   const jd2 = julianDay - jd1 - 9.0 / 24.0;
   const t = calcJulianCenturyNumber(jd1 + jd2);
   switch (flag) {
-    case eclipticCoordinateValues.none:
-      return Math.floor(calcSunLongitude(t) * 100.0) / 100.0;
-    case eclipticCoordinateValues.season24:
+    case 'season24':
       return Math.floor(calcSunLongitude(t) / 15.0) * 15.0;
-    case eclipticCoordinateValues.season72:
+    case 'season72':
       return Math.floor(calcSunLongitude(t) / 5.0) * 5.0;
+    default:
+      return Math.floor(calcSunLongitude(t) * 100.0) / 100.0;
   }
 };
 
@@ -92,32 +77,64 @@ export const getEclipticCoordinate = (
  * @param calendar 旧暦インスタンス
  * @returns 六曜
  */
-export const getRokuyo = (calendar: JapaneseLunisolarCalendar) => ROKUYO[(calendar.month + calendar.day - 2) % 6];
+export const getRokuyo = (calendar: JapaneseLunisolarCalendar) =>
+  ROKUYO[(calendar.month + calendar.day - 2) % ROKUYO.length];
 
 /**
  * 十二直を取得します。
- * @param date Date インスタンス
+ * @param julianDay ユリウス日
  * @param setsuMonth 節月
  * @returns 十二直
  */
-export const getJunichoku = (date: Date, setsuMonth: number) =>
-  JUNICHOKU[(Math.ceil(date.getJulianDay()) - setsuMonth) % JUNICHOKU.length];
+export const getJunichoku = (julianDay: number, setsuMonth: number) =>
+  JUNICHOKU[(Math.ceil(julianDay) - setsuMonth) % JUNICHOKU.length];
 
 /**
  * 二十八宿を取得します。
- * @param date Date インスタンス
+ * @param julianDay ユリウス日
  * @returns 二十八宿
  */
-export const getNijuhashuku = (date: Date) => ASTROLOGY28[(Math.floor(date.getJulianDay()) + 12) % ASTROLOGY28.length];
+export const getNijuhashuku = (julianDay: number) => ASTROLOGY28[(Math.floor(julianDay) + 12) % ASTROLOGY28.length];
+
+/**
+ * 気候を取得します。
+ * @param julianDay ユリウス日
+ * @returns [四季, 二十四節気, 七十二候]
+ */
+export const getSeason = (julianDay: number) => {
+  const i_s72 = getEclipticCoordinate(Math.floor(julianDay) + 1, 'season72') / 5;
+  const season72 = SEASON72[i_s72];
+
+  const i_s4 = Math.floor(((i_s72 + 9) % 72) / 18); // 東風解凍（立春）が基準となるように調整
+  const season4 = SEASON4[i_s4];
+
+  let season24: CalendarInfo;
+  const currentCoordinate = getEclipticCoordinate(Math.floor(julianDay), 'season24');
+  for (let i = 0; ; i++) {
+    const nextCoordinate = getEclipticCoordinate(Math.floor(julianDay) + 1 + i, 'season24');
+    if (currentCoordinate === nextCoordinate) continue;
+
+    const i_s24 = nextCoordinate / 15;
+    season24 = {
+      value: SEASON24[i_s24].value,
+      kana: SEASON24[i_s24].kana,
+      summary: SEASON24[i_s24].summary,
+      startAt: i, // 対象の二十四節気は何日後であるか
+    };
+    break;
+  }
+
+  return { season4, season24, season72 };
+};
 
 /**
  * 年の干支を取得します
  * @param date Date インスタンス
  * @returns [十干, 十二支]
  */
-export const getEtoYear = (date: Date) => ({
-  jikkan: JIKKAN[(date.getFullYear() + 6) % 10],
-  junishi: JUNISHI[(date.getFullYear() + 8) % 12],
+export const getZodiacYear = (date: Date) => ({
+  jikkan: JIKKAN[(date.getFullYear() + 6) % JIKKAN.length],
+  junishi: JUNISHI[(date.getFullYear() + 8) % JUNISHI.length],
 });
 
 /**
@@ -139,7 +156,7 @@ export const getEtoYear = (date: Date) => ({
  * 暦月 | １ | ２ | ３ | ４ | ５ | ６ | ７ | ８ | ９ | 10 | 11 | 12 |
  * 地支 | 寅 | 卯 | 辰 | 巳 | 午 | 未 | 申 | 酉 | 戌 | 亥 | 子 | 丑 |
  */
-export const getEtoMonth = (date: Date) => ({
+export const getZodiacMonth = (date: Date) => ({
   jikkan: JIKKAN[(date.getMonth() + (((date.getFullYear() % 5) * 2 + 4) % 10)) % JIKKAN.length],
   junishi: JUNISHI[(date.getMonth() + 2) % JUNISHI.length],
 });
@@ -162,7 +179,7 @@ export const getEtoMonth = (date: Date) => ({
  * Ｍ     | ０ | １ | ２ | ３ | ４ | ５ | ６ | ７ | ８ | ９ | 10 | 11 |
  * 十二支 | 子 | 丑 | 寅 | 卯 | 辰 | 巳 | 午 | 未 | 申 | 酉 | 戌 | 亥 |
  */
-export const getEtoDay = (date: Date) => {
+export const getZodiacDay = (date: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
@@ -178,49 +195,17 @@ export const getEtoDay = (date: Date) => {
 };
 
 /**
- * 気候を取得します。
- * @param date Date インスタンス
- * @returns [四季, 二十四節気, 七十二候]
- */
-export const getSeason = (date: Date) => {
-  const julianDay = Math.floor(date.getJulianDay());
-
-  const i_s72 = getEclipticCoordinate(julianDay + 1, eclipticCoordinateValues.season72) / 5;
-  const season72 = SEASON72[i_s72];
-
-  const i_s4 = Math.floor(((i_s72 + 9) % 72) / 18); // 東風解凍（立春）が基準となるように調整
-  const season4 = SEASON4[i_s4];
-
-  let season24: CalendarInfo;
-  const offset24 = getEclipticCoordinate(julianDay, eclipticCoordinateValues.season24);
-  for (let i = 0; ; i++) {
-    const next24 = getEclipticCoordinate(julianDay + 1 + i, eclipticCoordinateValues.season24);
-    if (offset24 !== next24) {
-      const i_s24 = next24 / 15;
-      season24 = {
-        value: SEASON24[i_s24].value,
-        kana: SEASON24[i_s24].kana,
-        summary: SEASON24[i_s24].summary,
-        startAt: i, // 対象の二十四節気は何日後であるか
-      };
-      break;
-    }
-  }
-
-  return { season4, season24, season72 };
-};
-
-/**
  * 星座を取得します。
  * @param date Date インスタンス
  * @returns [十二星座, 十三星座]
  */
 export const getSign = (date: Date) => {
-  const month_date = (date.getMonth() + 1) * 100 + date.getDate();
+  const MMdd = (date.getMonth() + 1) * 100 + date.getDate();
 
   let sign12 = SIGN12[SIGN12.length - 1];
   for (let i = SIGN12.length - 1; 0 <= i; i--) {
-    if ((SIGN12[i].startAt ?? NaN) <= month_date) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (SIGN12[i].startAt! <= MMdd) {
       sign12 = SIGN12[i];
       break;
     }
@@ -228,7 +213,8 @@ export const getSign = (date: Date) => {
 
   let sign13 = SIGN13[SIGN13.length - 1];
   for (let i = SIGN13.length - 1; 0 <= i; i--) {
-    if ((SIGN13[i].startAt ?? NaN) <= month_date) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (SIGN13[i].startAt! <= MMdd) {
       sign13 = SIGN13[i];
       break;
     }
@@ -238,18 +224,32 @@ export const getSign = (date: Date) => {
 };
 
 /**
- * 月相
- * @param calendar 旧暦インスタンス
+ * 月相を取得します。
+ * @param lunaAge 月齢
  * @returns 月相
  */
-export const getLunaPhase = (calendar: JapaneseLunisolarCalendar) => LUNA_PHASES[Math.floor(calendar.lunaAge)];
+export const getLunaPhase = (lunaAge: number) => LUNA_PHASES[Math.floor(lunaAge) % LUNA_PHASES.length];
 
 /**
  * 潮汐を取得します。
- * @param calendar 旧暦インスタンス
+ * @param lunaAge 月齢
  * @returns 潮汐
  */
-export const getTidePhase = (calendar: JapaneseLunisolarCalendar) => TIDE_PHASES[Math.floor(calendar.lunaAge) % 30];
+export const getTidePhase = (lunaAge: number) => TIDE_PHASES[Math.floor(lunaAge) % TIDE_PHASES.length];
+
+/**
+ * 修正ユリウス日を取得します。
+ * @param julianDay ユリウス日
+ * @returns 修正ユリウス日
+ */
+export const getJulianDayRevise = (julianDay: number) => julianDay - 2400000.5;
+
+/**
+ * リリウス日を取得します。
+ * @param julianDay ユリウス日
+ * @returns リリウス日
+ */
+export const getLilianDay = (julianDay: number) => julianDay - 2299159.5;
 
 // ============================================================
 // 定数
@@ -259,16 +259,8 @@ export type CalendarInfo = Readonly<{
   value: string;
   kana?: string;
   summary?: string;
-  url?: string;
   startAt?: number;
 }>;
-
-export const eclipticCoordinateValues = {
-  none: 'none',
-  season24: 'season24',
-  season72: 'season72',
-} as const;
-export type eclipticCoordinateFlag = typeof eclipticCoordinateValues[keyof typeof eclipticCoordinateValues];
 
 export const ROKUYO: Array<CalendarInfo> = [
   {
@@ -347,34 +339,6 @@ export const ASTROLOGY28: Array<CalendarInfo> = [
   { value: '張宿', kana: 'ちょうしゅく', summary: '就職・見合い・神仏祈願・祝い事は吉。' },
   { value: '翼宿', kana: 'よくしゅく', summary: '耕作始め・植え替え・種蒔きは吉。高所作業と結婚は凶。' },
   { value: '軫宿', kana: 'しんしゅく', summary: '地鎮祭・落成式・祭祀・祝い事は吉。衣類仕立ては凶。' },
-];
-
-export const JIKKAN: Array<CalendarInfo> = [
-  { value: '甲', kana: 'きのえ' },
-  { value: '乙', kana: 'きのと' },
-  { value: '丙', kana: 'ひのえ' },
-  { value: '丁', kana: 'ひのと' },
-  { value: '戊', kana: 'つちのえ' },
-  { value: '己', kana: 'つちのと' },
-  { value: '庚', kana: 'かのえ' },
-  { value: '辛', kana: 'かのと' },
-  { value: '壬', kana: 'みずのえ' },
-  { value: '癸', kana: 'みずのと' },
-];
-
-export const JUNISHI: Array<CalendarInfo> = [
-  { value: '子', kana: 'ね' },
-  { value: '丑', kana: 'うし' },
-  { value: '寅', kana: 'とら' },
-  { value: '卯', kana: 'う' },
-  { value: '辰', kana: 'たつ' },
-  { value: '巳', kana: 'み' },
-  { value: '午', kana: 'うま' },
-  { value: '未', kana: 'ひつじ' },
-  { value: '申', kana: 'さる' },
-  { value: '酉', kana: 'とり' },
-  { value: '戌', kana: 'いぬ' },
-  { value: '亥', kana: 'い' },
 ];
 
 export const SEASON4: Array<CalendarInfo> = [
@@ -463,7 +427,6 @@ export const SEASON24: Array<CalendarInfo> = [
   {
     value: '立冬',
     kana: 'りっとう',
-
     summary: '冬の気配が感じられる',
   },
   {
@@ -902,19 +865,47 @@ export const SIGN13: Array<CalendarInfo> = [
   { value: '射手座', kana: 'いて', startAt: 1218 },
 ];
 
+export const JIKKAN: Array<CalendarInfo> = [
+  { value: '甲', kana: 'きのえ' },
+  { value: '乙', kana: 'きのと' },
+  { value: '丙', kana: 'ひのえ' },
+  { value: '丁', kana: 'ひのと' },
+  { value: '戊', kana: 'つちのえ' },
+  { value: '己', kana: 'つちのと' },
+  { value: '庚', kana: 'かのえ' },
+  { value: '辛', kana: 'かのと' },
+  { value: '壬', kana: 'みずのえ' },
+  { value: '癸', kana: 'みずのと' },
+];
+
+export const JUNISHI: Array<CalendarInfo> = [
+  { value: '子', kana: 'ね' },
+  { value: '丑', kana: 'うし' },
+  { value: '寅', kana: 'とら' },
+  { value: '卯', kana: 'う' },
+  { value: '辰', kana: 'たつ' },
+  { value: '巳', kana: 'み' },
+  { value: '午', kana: 'うま' },
+  { value: '未', kana: 'ひつじ' },
+  { value: '申', kana: 'さる' },
+  { value: '酉', kana: 'とり' },
+  { value: '戌', kana: 'いぬ' },
+  { value: '亥', kana: 'い' },
+];
+
 export const LUNA_PHASES: Array<CalendarInfo> = [
   { value: '新月', kana: 'しんげつ' },
   { value: '繊月', kana: 'せんげつ' },
   { value: '三日月', kana: 'みかづき' },
   { value: '黄昏月', kana: 'たそがれづき' },
-  { value: '五日月' },
-  { value: '六日月' },
-  { value: '七日月' },
+  { value: '五日月', kana: '' },
+  { value: '六日月', kana: '' },
+  { value: '七日月', kana: '' },
   { value: '上弦月', kana: 'じょうげんのつき' },
-  { value: '九日月' },
+  { value: '九日月', kana: '' },
   { value: '十日夜月', kana: 'とおかんやのつき' },
   { value: '十日余月', kana: 'とおかあまりのつき' },
-  { value: '十二日月' },
+  { value: '十二日月', kana: '' },
   { value: '十三夜月', kana: 'じゅうさんやづき' },
   { value: '待宵月', kana: 'まちよいづき' },
   { value: '十五夜月', kana: 'じゅうごやづき' },
@@ -924,14 +915,14 @@ export const LUNA_PHASES: Array<CalendarInfo> = [
   { value: '寝待月', kana: 'ねまちづき' },
   { value: '更待月', kana: 'ふけまちづき' },
   { value: '二十日余月', kana: 'はつかあまりのつき' },
-  { value: '二十二日月' },
+  { value: '二十二日月', kana: '' },
   { value: '下弦月', kana: 'かげんのつき' },
   { value: '真夜中月', kana: 'まよなかのつき' },
-  { value: '二十五日月' },
+  { value: '二十五日月', kana: '' },
   { value: '暁月', kana: 'ぎょうげつ' },
-  { value: '二十七日月' },
-  { value: '二十八日月' },
-  { value: '二十九日月' },
+  { value: '二十七日月', kana: '' },
+  { value: '二十八日月', kana: '' },
+  { value: '二十九日月', kana: '' },
   { value: '月隠', kana: 'つごもり' },
 ];
 

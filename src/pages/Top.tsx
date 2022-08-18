@@ -42,7 +42,7 @@ import { moonIcons } from '../assets/moon';
 import { DateCard, Footer, Header } from '../components';
 import { DateCardProps } from '../components/DateCard';
 import { constants } from '../constants';
-import { createCalendarInfo, getEclipticCoordinate } from '../models/CalendarInfo';
+import { createCalendarInfo } from '../models/CalendarInfo';
 import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 import { formatDate } from '../utils/date';
 import { getAge } from '../utils/date';
@@ -67,13 +67,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// eslint-disable-next-line complexity
 export const Top = () => {
+  const params = useParams<{ date?: string }>();
   const history = useHistory();
   const classes = useStyles();
   const [t] = useTranslation();
 
-  const params = useParams<{ date?: string }>();
   const date = params.date ? new Date(params.date) : new Date();
   if (isNaN(date.getDate())) {
     toast.info(t('message.error.date__inputFormat'));
@@ -95,13 +94,9 @@ export const Top = () => {
   const calendar = new JapaneseLunisolarCalendar(date);
   const calendarInfo = createCalendarInfo(calendar);
   const age = getAge(date);
-  const julianDay = date.getJulianDay();
-  const julianDayRevise = julianDay - constants.system.julianDayReviseBasis;
-  const lilianDay = julianDay - constants.system.lilianDayBasis;
-  const eclipticCoordinate = getEclipticCoordinate(julianDay + 1);
   const seasonImage = getSeasonImage(calendarInfo?.season.season4.value);
-  const zodiacImage = getZodiacImage(calendarInfo?.etoYear.junishi.value);
-  const moonIcon = moonIcons[Math.floor(calendar.lunaAge)];
+  const zodiacImage = getZodiacImage(calendarInfo?.zodiac.year.junishi.value);
+  const moonIcon = getMoonIcon(calendar.lunaAge);
 
   const cardInfo: DateCardProps[] = [
     {
@@ -167,24 +162,24 @@ export const Top = () => {
       image: seasonImage.season72Image,
     },
     {
-      title: t('label.sign12'),
+      title: t('label.zodiac'),
+      value: `${calendarInfo?.zodiac.year.jikkan.value}${calendarInfo?.zodiac.year.junishi.value}`,
+      kana: `${calendarInfo?.zodiac.year.jikkan.kana} ${calendarInfo?.zodiac.year.junishi.kana}`,
+      summary1: `（${t('label.zodiacMonth')}）${calendarInfo?.zodiac.month.jikkan.value}${
+        calendarInfo?.zodiac.month.junishi.value
+      } （${t('label.zodiacDay')}）${calendarInfo?.zodiac.day.jikkan.value}${calendarInfo?.zodiac.day.junishi.value}`,
+      summary2: t('text.zodiac'),
+      url: 'https://www.ndl.go.jp/koyomi/chapter3/s1.html',
+      image: zodiacImage,
+    },
+    {
+      title: t('label.sign'),
       value: calendarInfo?.sign.sign12.value,
       kana: calendarInfo?.sign.sign12.kana,
       summary1: `（${t('label.sign13')}）${calendarInfo?.sign.sign13.value}`,
-      summary2: t('text.sign12'),
+      summary2: t('text.sign'),
       url: 'https://ja.wikipedia.org/wiki/黄道十二星座',
       image: SighImage,
-    },
-    {
-      title: t('label.japaneseZodiac'),
-      value: `${calendarInfo?.etoYear.jikkan.value}${calendarInfo?.etoYear.junishi.value}`,
-      kana: `${calendarInfo?.etoYear.jikkan.kana} ${calendarInfo?.etoYear.junishi.kana}`,
-      summary1: `（${t('label.japaneseZodiacMonth')}）${calendarInfo?.etoMonth.jikkan.value}${
-        calendarInfo?.etoMonth.junishi.value
-      } （${t('label.japaneseZodiacDay')}）${calendarInfo?.etoDay.jikkan.value}${calendarInfo?.etoDay.junishi.value}`,
-      summary2: t('text.japaneseZodiac'),
-      url: 'https://www.ndl.go.jp/koyomi/chapter3/s1.html',
-      image: zodiacImage,
     },
     {
       title: t('label.lunaPhase'),
@@ -206,17 +201,17 @@ export const Top = () => {
     },
     {
       title: t('label.eclipticCoordinate'),
-      value: `${eclipticCoordinate.toString()}°`,
+      value: `${calendarInfo?.eclipticCoordinate.toString()}°`,
       summary2: t('text.eclipticCoordinate'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/B2ABC6BBBAC2C9B8B7CF.html',
       image: SolarImage,
     },
     {
       title: t('label.julianDay'),
-      value: julianDay.toString(),
-      summary1: `（${t('label.julianDayRevise')}）${julianDayRevise.toString()} （${t(
+      value: calendarInfo?.julianDay.toString(),
+      summary1: `（${t('label.julianDayRevise')}）${calendarInfo?.julianDayRevise.toString()} （${t(
         'label.lilianDay'
-      )}）${lilianDay.toString()}`,
+      )}）${calendarInfo?.lilianDay.toString()}`,
       summary2: t('text.julianDay'),
       url: 'https://eco.mtk.nao.ac.jp/koyomi/wiki/A5E6A5EAA5A6A5B9C6FC.html',
       image: MosesImage,
@@ -250,7 +245,7 @@ export const Top = () => {
   );
 };
 
-const getSeasonImage = (season4?: string) => {
+export const getSeasonImage = (season4?: string) => {
   let season24Image: string, season72Image: string;
   switch (season4) {
     case '春':
@@ -266,16 +261,17 @@ const getSeasonImage = (season4?: string) => {
       season72Image = Autumn2Image;
       break;
     case '冬':
-    default:
       season24Image = WinterImage;
       season72Image = Winter2Image;
       break;
+    default:
+      throw new RangeError();
   }
   return { season24Image, season72Image };
 };
 
 // eslint-disable-next-line complexity
-const getZodiacImage = (junishi?: string) => {
+export const getZodiacImage = (junishi?: string) => {
   let zodiacImage: string;
   switch (junishi) {
     case '子':
@@ -312,9 +308,12 @@ const getZodiacImage = (junishi?: string) => {
       zodiacImage = DogImage;
       break;
     case '亥':
-    default:
       zodiacImage = BoarImage;
       break;
+    default:
+      throw new RangeError();
   }
   return zodiacImage;
 };
+
+export const getMoonIcon = (lunaAge: number) => moonIcons[Math.floor(lunaAge) % moonIcons.length];
