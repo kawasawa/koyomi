@@ -1,7 +1,9 @@
 import { formatDate, getAge } from './date';
 
 test('formatDate', () => {
-  expect(formatDate(new Date(2021, 0, 1, 11, 22, 33, 44), '/')).toBe('2021/01/01');
+  const date = new Date(2021, 0, 1, 11, 22, 33, 44);
+  expect(formatDate(date, '/')).toBe('2021/01/01');
+  expect(formatDate(date, '-')).toBe('2021-01-01');
 });
 
 test('getAge', () => {

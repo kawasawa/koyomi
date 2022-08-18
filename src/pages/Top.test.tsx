@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react';
 import * as ReactToastify from 'react-toastify';
 import * as ReactRouterDom from 'react-router-dom';
 
-import { Top } from './Top';
+import { getMoonIcon, getSeasonImage, getZodiacImage, Top } from './Top';
+import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 
 const mockUseHistoryPush = jest.fn();
 const mockUseTranslationT = jest.fn();
@@ -51,6 +52,21 @@ describe('Top', () => {
     expect(screen.getByTestId('mock__footer')).toBeVisible();
     expect(screen.getByTestId('top_contents')).toBeVisible();
     expect(screen.queryByTestId('top__alert--age')).toBeNull();
+    expect(screen.queryByTestId('top__alert--tokyoLocalTime')).toBeNull();
+    expect(spyToastInfo).not.toBeCalled();
+    expect(mockUseHistoryPush).not.toBeCalled();
+  });
+
+  test('二十四節気に該当する場合、正常にコンポーネントが表示されること', () => {
+    const date = '2021-02-03';
+    spyUseParams.mockReturnValue({ date });
+
+    render(<Top />);
+
+    expect(screen.getByTestId('mock__header')).toBeVisible();
+    expect(screen.getByTestId('mock__footer')).toBeVisible();
+    expect(screen.getByTestId('top_contents')).toBeVisible();
+    //    expect(screen.queryByTestId('top__alert--age')).toBeNull();
     expect(screen.queryByTestId('top__alert--tokyoLocalTime')).toBeNull();
     expect(spyToastInfo).not.toBeCalled();
     expect(mockUseHistoryPush).not.toBeCalled();
@@ -115,5 +131,40 @@ describe('Top', () => {
 
     expect(spyToastInfo).toBeCalled();
     expect(mockUseHistoryPush).toBeCalled();
+  });
+});
+
+describe('Methods', () => {
+  const createDate = (year: number, month: number, day: number) => new Date(year, month - 1, day);
+
+  const createLuna = (year: number, month: number, day: number) =>
+    new JapaneseLunisolarCalendar(createDate(year, month, day));
+
+  test('四季のイメージを取得', () => {
+    expect(getSeasonImage('春')).toBeDefined();
+    expect(getSeasonImage('夏')).toBeDefined();
+    expect(getSeasonImage('秋')).toBeDefined();
+    expect(getSeasonImage('冬')).toBeDefined();
+    expect(() => getSeasonImage('')).toThrow(RangeError);
+  });
+
+  test('干支のイメージを取得', () => {
+    expect(getZodiacImage('子')).toBeDefined();
+    expect(getZodiacImage('丑')).toBeDefined();
+    expect(getZodiacImage('寅')).toBeDefined();
+    expect(getZodiacImage('卯')).toBeDefined();
+    expect(getZodiacImage('辰')).toBeDefined();
+    expect(getZodiacImage('巳')).toBeDefined();
+    expect(getZodiacImage('午')).toBeDefined();
+    expect(getZodiacImage('未')).toBeDefined();
+    expect(getZodiacImage('申')).toBeDefined();
+    expect(getZodiacImage('酉')).toBeDefined();
+    expect(getZodiacImage('戌')).toBeDefined();
+    expect(getZodiacImage('亥')).toBeDefined();
+    expect(() => getZodiacImage('')).toThrow(RangeError);
+  });
+
+  test('月のアイコンを取得', () => {
+    expect(getMoonIcon(createLuna(2021, 1, 1).lunaAge)).toBeDefined();
   });
 });
