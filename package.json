@@ -57,10 +57,11 @@
     "build": "react-scripts build && cp -f build/index.html build/404.html",
     "build:win": "react-scripts build && copy /y build\\index.html build\\404.html",
     "lint": "eslint . --ext js,jsx,ts,tsx --max-warnings 0",
-    "test": "react-scripts test --watchAll=false --passWithNoTests",
+    "test": "react-scripts test --watchAll=false --passWithNoTests --noStackTrace",
     "test:cov": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject",
-    "deploy:local": "yarn build:win && gh-pages -d build"
+    "deploy:local": "yarn build && gh-pages -d build",
+    "deploy:local:win": "yarn build:win && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
