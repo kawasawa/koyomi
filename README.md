@@ -16,7 +16,7 @@
 
 暦の情報を一覧できるページです。旧暦や六曜のほか二十四節気、星座、干支、月相などの暦注を確認できます。
 
-![koyomi](./.images/koyomi.jpg)
+![koyomi](./.images/koyomi-device.png)
 
 ### 日付の指定
 
