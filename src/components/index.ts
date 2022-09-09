@@ -1,4 +1,4 @@
 /* istanbul ignore file */
-export { DateCard } from './DateCard';
-export { Footer } from './Footer';
-export { Header } from './Header';
+export * from './DateCard';
+export * from './Footer';
+export * from './Header';

@@ -1,2 +1,2 @@
 /* istanbul ignore file */
-export { Top } from './Top';
+export * from './Top';
