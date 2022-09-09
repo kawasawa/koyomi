@@ -26,7 +26,8 @@ export const createCalendarInfo = (calendar: JapaneseLunisolarCalendar) => {
       day: getZodiacDay(calendar.date),
     },
     sign: getSign(calendar.date),
-    lunaPhase: getLunaPhase(calendar.lunaAge),
+    lunaPhase: getLunaPhase(calendar.day),
+    // lunaPhase: getLunaPhase(calendar.lunaAge),
     tidePhase: getTidePhase(calendar.lunaAge),
     eclipticCoordinate: getEclipticCoordinate(julianDay + 1),
     julianDay: julianDay,
@@ -224,11 +225,11 @@ export const getSign = (date: Date) => {
 };
 
 /**
- * 月相を取得します。
- * @param lunaAge 月齢
+ * 旧暦日基準の月相を取得します。
+ * @param oldDay 旧暦日
  * @returns 月相
  */
-export const getLunaPhase = (lunaAge: number) => LUNA_PHASES[Math.floor(lunaAge) % LUNA_PHASES.length];
+export const getLunaPhase = (oldDay: number) => LUNA_PHASES[(oldDay - 1) % LUNA_PHASES.length];
 
 /**
  * 潮汐を取得します。
