@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
     color: colors.grey[500],
     textAlign: 'center',
   },
-  link: {
-    color: colors.grey[500],
-  },
 }));
 
 export const Footer = () => {
@@ -25,7 +22,7 @@ export const Footer = () => {
     <AppBar className={classes.appbar}>
       <Typography className={classes.copyright} variant="body2" data-testid="footer__copyright">
         {'© '}
-        <Link href={constants.url.homepage} target="_blank" className={classes.link} underline="always">
+        <Link href={constants.url.homepage} target="_blank" color="inherit" underline="always">
           {constants.meta.author}
         </Link>
         {' All Rights Reserved.'}
