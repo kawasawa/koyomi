@@ -1,18 +1,12 @@
 {
   "files": {
-    "main.css": "/koyomi/static/css/main.6eded38a.chunk.css",
-    "main.js": "/koyomi/static/js/main.2fbdfffe.chunk.js",
-    "main.js.map": "/koyomi/static/js/main.2fbdfffe.chunk.js.map",
+    "main.css": "/koyomi/static/css/main.00e14374.chunk.css",
+    "main.js": "/koyomi/static/js/main.6326a26f.chunk.js",
     "runtime-main.js": "/koyomi/static/js/runtime-main.8c8a6a06.js",
-    "runtime-main.js.map": "/koyomi/static/js/runtime-main.8c8a6a06.js.map",
-    "static/css/2.58a45539.chunk.css": "/koyomi/static/css/2.58a45539.chunk.css",
+    "static/css/2.362bc188.chunk.css": "/koyomi/static/css/2.362bc188.chunk.css",
     "static/js/2.82a94d11.chunk.js": "/koyomi/static/js/2.82a94d11.chunk.js",
-    "static/js/2.82a94d11.chunk.js.map": "/koyomi/static/js/2.82a94d11.chunk.js.map",
     "index.html": "/koyomi/index.html",
     "service-worker.js": "/koyomi/service-worker.js",
-    "service-worker.js.map": "/koyomi/service-worker.js.map",
-    "static/css/2.58a45539.chunk.css.map": "/koyomi/static/css/2.58a45539.chunk.css.map",
-    "static/css/main.6eded38a.chunk.css.map": "/koyomi/static/css/main.6eded38a.chunk.css.map",
     "static/js/2.82a94d11.chunk.js.LICENSE.txt": "/koyomi/static/js/2.82a94d11.chunk.js.LICENSE.txt",
     "static/media/astrology.e788c40f.webp": "/koyomi/static/media/astrology.e788c40f.webp",
     "static/media/autumn.e6792228.webp": "/koyomi/static/media/autumn.e6792228.webp",
@@ -47,9 +41,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.8c8a6a06.js",
-    "static/css/2.58a45539.chunk.css",
+    "static/css/2.362bc188.chunk.css",
     "static/js/2.82a94d11.chunk.js",
-    "static/css/main.6eded38a.chunk.css",
-    "static/js/main.2fbdfffe.chunk.js"
+    "static/css/main.00e14374.chunk.css",
+    "static/js/main.6326a26f.chunk.js"
   ]
 }
