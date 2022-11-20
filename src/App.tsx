@@ -1,8 +1,7 @@
 /* istanbul ignore file */
 import 'react-toastify/dist/ReactToastify.css';
 
-import { colors, createTheme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
+import { colors, createTheme, ThemeProvider } from '@mui/material';
 import i18n from 'i18next';
 import React from 'react';
 import { initReactI18next } from 'react-i18next';
@@ -29,19 +28,19 @@ const AppTheme = createTheme({
       textTransform: 'none',
     },
   },
-  overrides: {
-    MuiFilledInput: {
-      // TextField の下線表示を変更する
-      underline: {
-        '&:before': {
-          borderBottom: 'none',
-        },
-        '&:after': {
-          borderBottom: 'none',
-        },
-      },
-    },
-  },
+  // overrides: {
+  //   MuiFilledInput: {
+  //     // TextField の下線表示を変更する
+  //     underline: {
+  //       '&:before': {
+  //         borderBottom: 'none',
+  //       },
+  //       '&:after': {
+  //         borderBottom: 'none',
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 const App = () => (

@@ -1,7 +1,7 @@
 import 'date-fns';
 
-import { Container, Grid, makeStyles } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/lab';
+import { Container, Grid, makeStyles } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -47,30 +47,29 @@ import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
 import { formatDate } from '../utils/date';
 import { getAge } from '../utils/date';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative',
-    minHeight: '100vh',
-    backgroundImage: `url(${BannerImage})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    backgroundAttachment: 'fixed',
-  },
-  content: {
-    background: 'transparent',
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(4),
-  },
-  alert: {
-    marginBottom: theme.spacing(2),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     position: 'relative',
+//     minHeight: '100vh',
+//     backgroundImage: `url(${BannerImage})`,
+//     backgroundSize: 'cover',
+//     backgroundRepeat: 'no-repeat',
+//     backgroundPosition: 'center center',
+//     backgroundAttachment: 'fixed',
+//   },
+//   content: {
+//     background: 'transparent',
+//     marginTop: theme.spacing(2),
+//     marginBottom: theme.spacing(4),
+//   },
+//   alert: {
+//     marginBottom: theme.spacing(2),
+//   },
+// }));
 
 export const Top = () => {
   const params = useParams<{ date?: string }>();
   const history = useHistory();
-  const classes = useStyles();
   const [t] = useTranslation();
 
   const date = params.date ? new Date(params.date) : new Date();
@@ -219,16 +218,31 @@ export const Top = () => {
   ];
 
   return (
-    <div className={classes.root}>
+    <div
+    // className={classes.root}
+    >
       <Header date={date} />
-      <Container className={classes.content} maxWidth="lg">
+      <Container
+        // className={classes.content}
+        maxWidth="lg"
+      >
         {date.isTokyoLocalTime() && (
-          <Alert className={classes.alert} variant="standard" severity="error" data-testid="top__alert--tokyoLocalTime">
+          <Alert
+            // className={classes.alert}
+            variant="standard"
+            severity="error"
+            data-testid="top__alert--tokyoLocalTime"
+          >
             {t('message.warning.date__tokyoLocalTime')}
           </Alert>
         )}
         {1 <= age && (
-          <Alert className={classes.alert} variant="standard" severity="success" data-testid="top__alert--age">
+          <Alert
+            // className={classes.alert}
+            variant="standard"
+            severity="success"
+            data-testid="top__alert--age"
+          >
             {util.format(t('message.info.date__age'), age)}
           </Alert>
         )}

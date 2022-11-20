@@ -1,14 +1,15 @@
 import 'date-fns';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDatePicker, KeyboardDatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { LocalizationProvider } from '@mui/lab';
+// import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { DatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
 import jaLocale from 'date-fns/locale/ja';
 import React, { useCallback, useState } from 'react';
 
-export type JaDatePickerProps = {
-  disableKeyboardInput?: boolean | undefined;
-} & KeyboardDatePickerProps;
+// export type JaDatePickerProps = {
+//   disableKeyboardInput?: boolean | undefined;
+// } & DatePickerProps;
 
 export class JaDateFnsUtils extends DateFnsUtils {
   // ポップアップヘッダーの年
@@ -29,13 +30,14 @@ export class JaDateFnsUtils extends DateFnsUtils {
   };
 }
 
-export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerProps) => {
+//export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerProps) => {
+export const JaDatePicker = ({ ...props }: any) => {
   const [date, setDate] = useState<Date | undefined>(props.value ? new Date(props.value.toString()) : undefined);
   const [open, setOpen] = useState<boolean>(false);
 
-  const onClick = useCallback(() => {
-    if (disableKeyboardInput) setOpen(true);
-  }, [disableKeyboardInput, setOpen]);
+  // const onClick = useCallback(() => {
+  //   if (disableKeyboardInput) setOpen(true);
+  // }, [disableKeyboardInput, setOpen]);
   const onOpen = useCallback(() => {
     setOpen(true);
   }, [setOpen]);
@@ -43,31 +45,31 @@ export const JaDatePicker = ({ disableKeyboardInput, ...props }: JaDatePickerPro
     setOpen(false);
   }, [setOpen]);
   const onChange = useCallback(
-    (date: MaterialUiPickersDate) => {
+    (date: any) => {
       if (date) setDate(new Date(date.toString()));
     },
     [setDate]
   );
 
   return (
-    <MuiPickersUtilsProvider utils={JaDateFnsUtils} locale={jaLocale}>
-      <KeyboardDatePicker
+    <LocalizationProvider utils={JaDateFnsUtils} locale={jaLocale}>
+      <DatePicker
         {...props}
         label={`${date ? `${getEraYear(date)}年 ${getJpMonth(date)}` : undefined}`}
         format="yyyy年 MM月 dd日"
         okLabel={props.okLabel ?? 'OK'}
         cancelLabel={props.cancelLabel ?? 'キャンセル'}
-        InputProps={{ readOnly: disableKeyboardInput ?? false }}
-        onClick={onClick}
+        //InputProps={{ readOnly: disableKeyboardInput ?? false }}
+        //onClick={onClick}
         onOpen={onOpen}
         onClose={onClose}
-        onChange={(date, value) => {
-          onChange(date);
-          props.onChange && props.onChange(date, value);
-        }}
+        // onChange={(date, value) => {
+        //   onChange(date);
+        //   props.onChange && props.onChange(date, value);
+        // }}
         open={open}
       />
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };
 
