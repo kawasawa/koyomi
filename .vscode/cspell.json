@@ -1,7 +1,18 @@
 {
   "version": "0.2",
   "language": "en",
-  "ignorePaths": ["*.test.*"],
+  "ignorePaths": [
+    ".git/",
+    ".github/",
+    ".vscode/",
+    ".workspace/",
+    "build/",
+    "coverage/",
+    "dist/",
+    "node_modules/",
+    "*.test.*",
+    "yarn.lock"
+  ],
   "words": [
     "appbar",
     "appicon",
