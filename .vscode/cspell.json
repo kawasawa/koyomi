@@ -1,0 +1,31 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": ["*.test.*"],
+  "words": [
+    "appbar",
+    "appicon",
+    "apptitle",
+    "awasawa",
+    "cacheable",
+    "codecov",
+    "jikkan",
+    "junichoku",
+    "junishi",
+    "kazuki",
+    "koyomi",
+    "nijuhashuku",
+    "precache",
+    "precached",
+    "precaching",
+    "qreki",
+    "rokuyo",
+    "saku",
+    "setsu",
+    "testid",
+    "toastify",
+    "webp",
+    "λmoon",
+    "λsun"
+  ]
+}
