@@ -1,0 +1,16 @@
+# プロパティに引用符を付与
+quoteProps: as-needed
+# 行末にカンマを付与
+trailingComma: es5
+# 文末にセミコロンを付与
+semi: true
+# 括弧内にスペースを付与
+bracketSpacing: true
+# シングルクォートを使用
+singleQuote: true
+# インデントにスペースを使用
+useTabs: false
+# タブ幅を指定
+tabWidth: 2
+# 行の長さを指定
+printWidth: 120

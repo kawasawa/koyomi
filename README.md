@@ -1,22 +1,8 @@
 # こよみ
 
-<div>
-  <a href="https://kawasawa.github.io/koyomi/">
-    <img src="https://img.shields.io/badge/-GitHub Pages-2A579A.svg?logo=github" alt="Store">
-  </a>
-  <a href="https://github.com/kawasawa/koyomi/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/kawasawa/koyomi.svg" alt="License">
-  </a>
-  <a href="https://codecov.io/gh/kawasawa/koyomi">
-    <img src="https://codecov.io/gh/kawasawa/koyomi/branch/main/graph/badge.svg?token=Y8M4S5UMDL"/>
-  </a>
-</div>
-
 ## 概要
 
 暦の情報を一覧できる Web サイトです。旧暦や六曜のほか二十四節気、星座、干支、月相などの暦注を確認できます。
-
-![koyomi](./.images/koyomi-device.png)
 
 ### 日付の指定
 
@@ -25,6 +11,8 @@
 
 日付は URL で直接指定することもできます。  
 https://kawasawa.github.io/koyomi/2000-01-01
+
+![koyomi](./.workspace/koyomi-device.png)
 
 ### 表示される情報
 
@@ -48,32 +36,35 @@ https://kawasawa.github.io/koyomi/2000-01-01
    - 修正ユリウス日
    - リリウス日
 
-## 開発情報
+## 技術情報
 
 本プログラムは以下を主な基盤として使用し、構築されています。
 
-|                      | 使用技術      |
-| -------------------- | ------------- |
-| プログラミング言語   | TypeScript    |
-| フレームワーク       | React         |
-| デザインテンプレート | Material-UI   |
-| ルーティング管理     | React Router  |
-| 多言語対応           | React i18next |
+|                              | 技術スタック                                  |
+| ---------------------------- | --------------------------------------------- |
+| 開発言語                     | [TypeScript](https://www.typescriptlang.org/) |
+| フロントエンドフレームワーク | [React](https://ja.reactjs.org/)              |
+| CSS フレームワーク           | [Material UI 4](https://v4.mui.com/)          |
+| フォーマッター               | [Prettier](https://prettier.io/)              |
+| リンター                     | [ESLint](https://eslint.org/)                 |
+| パッケージマネージャー       | [Yarn](https://yarnpkg.com/)                  |
 
 ## 謝辞
 
 本プログラムの根幹をなす旧暦の導出は、長野様の旧暦計算スクリプト qreki.js を参考に作成されました。
 
-```
+```:
 qreki.js: 旧暦計算サンプルプログラム rev. 1.1
 Coded by H.Takano (C)1993,1994
 Arranged for ECMAScript(ECMA-262) by Nagano Yutaka (C)1999
 http://kikuchisan.net/wsp/java/java59.html
 ```
 
-また、月の満ち欠けを示すアイコンは、菊池様の下記サイトにて配布される画像を使用いたしました。
+月の満ち欠けを示すアイコンは、菊池様のサイトにて配布される画像を使用いたしました。
 
-```
+```:
 今日のこよみ
 http://kikuchisan.net/
 ```
+
+以上
