@@ -2,6 +2,7 @@
   "name": "koyomi",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kawasawa.github.io/koyomi",
   "dependencies": {
     "@date-io/date-fns": "1.*",
     "@material-ui/core": "^4.12.4",
@@ -54,14 +55,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "lint": "eslint . --ext=js,jsx,ts,tsx --max-warnings=0",
+    "test": "react-scripts test --coverage --no-cache --watchAll=false",
+    "test:ci": "react-scripts test --ci --coverage --silent --verbose --watchAll=false",
     "build": "react-scripts build && cp -f build/index.html build/404.html",
-    "build:win": "react-scripts build && copy /y build\\index.html build\\404.html",
-    "lint": "eslint . --ext js,jsx,ts,tsx --max-warnings 0",
-    "test": "react-scripts test --watchAll=false --passWithNoTests --noStackTrace",
-    "test:cov": "react-scripts test --watchAll=false --coverage",
-    "eject": "react-scripts eject",
-    "deploy:local": "yarn build && gh-pages -d build",
-    "deploy:local:win": "yarn build:win && gh-pages -d build"
+    "deploy:force": "yarn build && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -80,6 +78,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "https://kawasawa.github.io/koyomi"
+  }
 }

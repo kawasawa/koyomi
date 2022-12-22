@@ -1,21 +1,25 @@
-name: CI
-
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+    paths-ignore:
+      - .vscode/**
+      - .workspace/**
+      - '**.md'
+      - .env.development
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     env:
-      NODE_VERSION: 14
+      NODE_VERSION: 16
+
     steps:
-
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -26,18 +30,67 @@ jobs:
         run: yarn lint
 
       - name: Test
-        run: yarn test:cov
-
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+        run: yarn test:ci
 
       - name: Build
         run: yarn build
 
-      - name: Deploy App to GitHub Pages
+      - name: Archive Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage
+
+      - name: Archive Apps
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Notify Result
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: all
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage
+          path: coverage
+
+      - name: Publish Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Download Apps
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Deploy Apps
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
+
+      - name: Notify Result
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: all
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()

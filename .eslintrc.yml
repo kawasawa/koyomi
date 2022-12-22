@@ -1,0 +1,80 @@
+parser: '@typescript-eslint/parser'
+parserOptions:
+  # ESModules の機能を有効化
+  sourceType: module
+env:
+  # JavaScript のバージョン
+  es2015: true
+  # ブラウザで実行されるコードを検証
+  browser: true
+settings:
+  react:
+    # eslint-plugin-react で適用される React のバージョン
+    version: detect
+plugins:
+  - react
+  - react-hooks
+  - '@typescript-eslint'
+  - simple-import-sort
+extends:
+  # ESLint の JavaScript ルールセットで初期化
+  - eslint:recommended
+  # TypeScript のルールセットを追加
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
+  # React のルールセットを追加
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  # Prettier のルールセットを追加
+  - prettier
+rules:
+  # import, export のソート
+  simple-import-sort/imports: error
+  simple-import-sort/exports: error
+  # 循環的複雑度を制限
+  complexity:
+    - error
+    - 10
+  # ネストの深度を制限
+  max-depth:
+    - warn
+    - 5
+  # 厳密な等価比較を強制
+  eqeqeq: error
+  # マルチスペースの使用を禁止
+  no-multi-spaces: error
+  # undefined による初期化を禁止
+  no-undef-init: error
+  # var を禁止
+  no-var: error
+  # const を強制
+  prefer-const: error
+  # テンプレートリテラルを推奨
+  prefer-template: warn
+  # ドット表記を推奨
+  dot-notation: warn
+  # 関数の戻り値にも型推論を適用
+  '@typescript-eslint/explicit-module-boundary-types': 'off'
+  # 命名規則を指定
+  '@typescript-eslint/naming-convention':
+    - warn
+    - selector:
+        - parameter
+        - parameterProperty
+      format:
+        - camelCase
+      leadingUnderscore: allowSingleOrDouble
+    - selector:
+        - classMethod
+        - typeMethod
+      format:
+        - camelCase
+    - selector:
+        - class
+        - interface
+      format:
+        - PascalCase
+  # props の検証を無効化
+  react/prop-types: 'off'
+  # メモ化を強制
+  react-hooks/exhaustive-deps: error

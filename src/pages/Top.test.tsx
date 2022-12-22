@@ -3,7 +3,7 @@ import * as ReactToastify from 'react-toastify';
 import * as ReactRouterDom from 'react-router-dom';
 
 import { getMoonIcon, getSeasonImage, getZodiacImage, Top } from './Top';
-import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
+import JapaneseLunisolarCalendar from '../entities/JapaneseLunisolarCalendar';
 
 const mockUseHistoryPush = jest.fn();
 const mockUseTranslationT = jest.fn();

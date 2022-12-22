@@ -42,8 +42,8 @@ import { moonIcons } from '../assets/moon';
 import { DateCard, Footer, Header } from '../components';
 import { DateCardProps } from '../components/DateCard';
 import { constants } from '../constants';
-import { createCalendarInfo } from '../models/CalendarInfo';
-import JapaneseLunisolarCalendar from '../models/JapaneseLunisolarCalendar';
+import { createCalendarInfo } from '../entities/CalendarInfo';
+import JapaneseLunisolarCalendar from '../entities/JapaneseLunisolarCalendar';
 import { formatDate } from '../utils/date';
 import { getAge } from '../utils/date';
 
