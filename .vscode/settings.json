@@ -3,17 +3,6 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "cSpell.ignorePaths": [
-    ".git/",
-    ".github/",
-    ".vscode/",
-    ".workspace/",
-    "build/",
-    "coverage/",
-    "dist/",
-    "node_modules/",
-    "yarn.lock"
-  ],
   "eslint.nodePath": "./node_modules/eslint",
   "eslint.packageManager": "yarn"
 }
