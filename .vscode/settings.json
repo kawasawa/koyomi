@@ -4,5 +4,43 @@
   "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
   "typescript.updateImportsOnFileMove.enabled": "always",
   "eslint.nodePath": "./node_modules/eslint",
-  "eslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "jest.jestCommandLine": "yarn test",
+  "jest.autoRun": { "watch": false },
+
+  "todo-tree.filtering.excludeGlobs": [
+    "**/.git/*",
+    "**/.workspace/*",
+    "**/build/*",
+    "**/coverage/*",
+    "**/dist/*",
+    "**/node_modules/*",
+    "yarn.lock"
+  ],
+  "todo-tree.general.tags": [
+    "BUG",
+    "Bug",
+    "bug",
+    "FIXME",
+    "Fixme",
+    "fixme",
+    "HACK",
+    "Hack",
+    "hack",
+    "OPTIMIZE",
+    "Optimize",
+    "optimize",
+    "TODO",
+    "ToDo",
+    "Todo",
+    "todo",
+    "UNDONE",
+    "Undone",
+    "undone"
+  ],
+  "todo-tree.general.tagGroups": {
+    "BUG": ["Bug", "bug", "FIXME", "Fixme", "fixme"],
+    "HACK": ["Hack", "hack", "OPTIMIZE", "Optimize", "optimize"],
+    "TODO": ["ToDo", "Todo", "todo", "UNDONE", "Undone", "undone"]
+  }
 }

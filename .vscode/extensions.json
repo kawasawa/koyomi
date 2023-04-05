@@ -1,8 +1,10 @@
 {
   "recommendations": [
-    "ms-vscode.vscode-typescript-next",
     "streetsidesoftware.code-spell-checker",
+    "Gruntfuggly.todo-tree",
+    "ms-vscode.vscode-typescript-next",
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "Orta.vscode-jest"
   ]
 }
